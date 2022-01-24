@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="PDOGE logo" src="../assets/logo.png" class="logo">
+    <PreSale msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import PreSale from '@/components/PreSale.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    PreSale
   }
 }
 </script>
+<style scoped>
+.logo{
+  max-width:30%;
+  max-height:30%;
+  object-fit: contain;
+}
+</style>
