@@ -1,4 +1,3 @@
-export default{
-    chainId: 97,
-    preFuelTokenContract: '0x586b526fc95f1dC9C5E1E14d6E2217faa4B3Bca7',
-}
+
+export const CHAIN_ID = 97
+export const PRE_FUEL_TOKEN_CONTRACT = '0xECc5bf1Bb02BE011AF70A0a9C20A9820c51D0A90'

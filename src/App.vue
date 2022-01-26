@@ -11,6 +11,9 @@
 import Sidebar from '@/components/sidebar/Sidebar'
 import { sidebarWidth } from '@/components/sidebar/state'
 import NavBar from './components/navbar/NavBar'
+import { inject } from 'vue'
+import { useStore } from 'vuex'
+
 
 export default {
   name: 'App',
@@ -19,6 +22,13 @@ export default {
     NavBar
   },
   setup(){
+    const store = useStore()
+    const moralis = inject('$moralis')
+    moralis.enableWeb3()
+    const currentUser = moralis.User.current();
+    if (currentUser) {
+        store.commit('setUser', currentUser)
+    }
     return { sidebarWidth }
   }
 }

@@ -18,7 +18,7 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from "vuex"
-import {maxPurchaseAmount} from "../service/preFuelService"
+import {maxPurchaseAmount, getHumanReadableNumber} from "../service/preFuelService"
 
 export default {
   name: 'PreSale',
@@ -34,8 +34,7 @@ export default {
   },
   methods: {
     async updateMaxPurchaseAmount(){
-      this.maximumPurchase = await maxPurchaseAmount()  / 10 ** 18;
-      console.log(this.maximumPurchase)
+      this.maximumPurchase = getHumanReadableNumber(await maxPurchaseAmount())
     }
   }
 }
