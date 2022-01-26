@@ -8,7 +8,8 @@
         <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
       </div>
       <div class="mt-10">
-        {{user}}
+        <button @click="updateMaxPurchaseAmount">click me</button>
+        <span>{{maximumPurchase}}</span>
       </div>
     </div>
   </div>
@@ -17,13 +18,25 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from "vuex"
+import {maxPurchaseAmount} from "../service/preFuelService"
 
 export default {
   name: 'PreSale',
+  data(){
+    return {
+      maximumPurchase: 0
+    }
+  },
   computed: {
     ...mapGetters({
       user: "getUser"
     })
+  },
+  methods: {
+    async updateMaxPurchaseAmount(){
+      this.maximumPurchase = await maxPurchaseAmount()  / 10 ** 18;
+      console.log(this.maximumPurchase)
+    }
   }
 }
 </script>
