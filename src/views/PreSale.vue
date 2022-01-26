@@ -8,7 +8,7 @@
         <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
       </div>
       <div class="mt-10">
-        
+        {{user}}
       </div>
     </div>
   </div>
@@ -16,11 +16,14 @@
 
 <script>
 // @ is an alias to /src
+import { mapGetters } from "vuex"
 
 export default {
   name: 'PreSale',
-  components: {
-    
+  computed: {
+    ...mapGetters({
+      user: "getUser"
+    })
   }
 }
 </script>

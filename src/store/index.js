@@ -10,6 +10,9 @@ const store = createStore({
     setUser (state, payload) {
       state.user = payload
     }
+  },
+  getters: {
+    getUser : state => state.user
   }
 })
 

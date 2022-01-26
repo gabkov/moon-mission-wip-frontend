@@ -2,7 +2,8 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid justify-content-end">
             <div v-if="isAuthenticated">
-                {{ user.get('ethAddress') }} <button @click="logout">Logout</button>
+                 <button @click="logout">{{ user.get('ethAddress').substr(0,6) + '...' 
+                    + user.get('ethAddress').substr(user.get('ethAddress').length - 4,user.get('ethAddress').length) }} Log out</button>
             </div>
             <div v-else>
                 <button @click="login">Connect wallet</button>
