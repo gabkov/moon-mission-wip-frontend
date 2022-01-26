@@ -8,12 +8,7 @@
         <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
       </div>
       <div class="mt-10">
-        <template v-if="isAuthenticated">
-          {{ user.get('ethAddress') }} <button @click="logout">Logout</button>
-        </template>
-        <template v-else>
-          <button @click="login">Connect wallet</button>
-        </template>
+        
       </div>
     </div>
   </div>

@@ -1,54 +1,25 @@
 <template>
 <Sidebar />
+<NavBar />
 <div :style="{ 'margin-left': sidebarWidth }">
   <router-view />
 </div>
 </template>
 
 <script>
-import { onMounted, inject, computed } from 'vue'
-import { useStore } from 'vuex'
+
 import Sidebar from '@/components/sidebar/Sidebar'
 import { sidebarWidth } from '@/components/sidebar/state'
+import NavBar from './components/navbar/NavBar'
+
 export default {
   name: 'App',
   components: {
-    Sidebar
+    Sidebar, 
+    NavBar
   },
-  setup() {
-    const store = useStore()
-    const $moralis = inject('$moralis')
-
-    const setUser = (payload) => store.commit('setUser', payload)
-    
-    const login = async () => {
-      const user = await $moralis.Web3.authenticate()
-      setUser(user)
-    }
-
-    const logout = async () => {
-      await $moralis.User.logOut()
-      setUser({})
-    }
-
-    const handleCurrentUser = () => {
-      const user = $moralis.User.current()
-      if (user) {
-        setUser(user)
-      }
-    }
-
-    onMounted(() => {
-      handleCurrentUser()
-    })
-
-    return {
-      sidebarWidth,
-      login,
-      logout,
-      isAuthenticated: computed(() => Object.keys(store.state.user).length > 0),
-      user: computed(() => store.state.user)
-    }
+  setup(){
+    return { sidebarWidth }
   }
 }
 </script>
