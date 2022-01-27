@@ -20,13 +20,13 @@
 <script>
 // @ is an alias to /src
 import { mapGetters, mapActions } from "vuex"
-import {maxPurchaseAmount, getHumanReadableNumber, preFuelBalanceOf, buyPreFuel, busdBalanceOf} from "../service/preFuelService"
+import { preFuelBalanceOf, buyPreFuel} from "../service/preFuelService"
+import {busdBalanceOf} from "../service/busdService"
 
 export default {
   name: 'PreSale',
   data(){
     return {
-      maximumPurchase: 0,
       amountToBuy: 50
     }
   },
@@ -42,13 +42,7 @@ export default {
       setUserPreFuelBalance : "setUserPreFuelBalanceAsync",
       setUserBusdBalance : "setUserBusdBalanceAsync"
     }),
-    async updateMaxPurchaseAmount(){
-      this.maximumPurchase = getHumanReadableNumber(await maxPurchaseAmount())
-    },
-
-    async getUserPreFuelBalance(){
-      this.preFuelBalance = getHumanReadableNumber(await preFuelBalanceOf(this.user.get('ethAddress')))
-    },
+    
     async buyPreFuel(){
       const result = await buyPreFuel(this.amountToBuy)
       console.log(result);
