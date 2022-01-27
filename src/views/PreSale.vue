@@ -7,13 +7,16 @@
         <div class="text-xl font-semibold">Moralis starter boilerplate</div>
         <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
       </div>
-      <div class="mt-10">
+      <div v-if="isAuthenticated" class="mt-10">
         <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
         <button v-else @click="approve">APPROVE</button>
         <input type="number" v-model.number="amountToBuy">
         <span>PREFUEL: {{userPreFuelBalance}}</span>
         <span> BUSD: {{userBusdBalance}}</span>
       </div>
+      <dir v-else>
+        <button @click="login" >CONNECT WALLET</button>
+      </dir>
     </div>
   </div>
 </template>
@@ -23,6 +26,9 @@
 import { mapGetters, mapMutations } from "vuex"
 import { preFuelBalanceOf, buyPreFuel} from "../service/preFuelService"
 import {busdBalanceOf, isApprovedBusdForPreSale, approve} from "../service/busdService"
+import {loginUser} from "@/service/loginService"
+import Moralis from '../plugins/moralis'
+
 
 export default {
   name: 'PreSale',
@@ -37,7 +43,10 @@ export default {
       userPreFuelBalance: "getUserPreFuelBalance",
       userBusdBalance: "getUserBusdBalance",
       userApprovedBusd: "getUserApprovedBusd"
-    })
+    }),
+    isAuthenticated(){
+      return Object.keys(this.user).length > 0
+    }
   },
   methods: {
     ...mapMutations({
@@ -46,17 +55,21 @@ export default {
       setUserApprovedBusd : "setUserApprovedBusd"
     }),
     async buyPreFuel(){
-      const result = await buyPreFuel(this.amountToBuy)
-      console.log(result);
+      await buyPreFuel(this.amountToBuy)
     },
     async approve(){
       await approve()
     },
+    async login(){
+      await loginUser()
+    }
   },  
   mounted() {
-    preFuelBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserPreFuelBalance(newBalance))
-    busdBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserBusdBalance(newBalance))
-    isApprovedBusdForPreSale().then(result => this.setUserApprovedBusd(result))
+    if(Moralis.User.current()){
+      preFuelBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserPreFuelBalance(newBalance))
+      busdBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserBusdBalance(newBalance))
+      isApprovedBusdForPreSale().then(result => this.setUserApprovedBusd(result))
+    }
   }
 }
 </script>

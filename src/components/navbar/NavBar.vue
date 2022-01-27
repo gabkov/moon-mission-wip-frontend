@@ -15,7 +15,7 @@
 <script>
 import { onMounted, inject, computed } from 'vue'
 import { useStore } from 'vuex'
-import {loginUser, logoutUser} from "/src/service/loginService"
+import {loginUser, logoutUser} from "@/service/loginService"
 
 
 export default {
