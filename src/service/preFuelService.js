@@ -1,18 +1,59 @@
-import Moralis  from "../plugins/moralis"   
-import preFuel from "../abi/PreFuelToken.json"
+//import Moralis  from "../plugins/moralis"   
+import preFuelAbi from "../abi/PreFuelToken.json"
 import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
-import {BigNumber} from 'ethers'
+import {BigNumber, ethers} from 'ethers'
 
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer = provider.getSigner();
 
+const contractAddress = PRE_FUEL_TOKEN_CONTRACT;
+
+const contract = new ethers.Contract(
+    contractAddress,
+    preFuelAbi,
+    signer
+);
+
+/* const staticOptions = {
+    contractAddress: PRE_FUEL_TOKEN_CONTRACT,
+    abi: preFuelAbi,
+} */
 
 async function maxPurchaseAmount() {
-    const options = {
-        contractAddress: PRE_FUEL_TOKEN_CONTRACT,
-        functionName: "maxPreFuelPurchase",
-        abi: preFuel
+    /* const options = {
+        ...staticOptions,
+        functionName: "maxPreFuelPurchase"
     }
     
-    return await Moralis.executeFunction(options)
+    return await Moralis.executeFunction(options) */
+
+    return await contract.maxPreFuelPurchase()
+}
+
+async function buyPreFuel(amount) {
+    /* const options = {
+        ...staticOptions,
+        functionName: "buyPreFuel",
+        params: {
+            _busdSpent: getBigNumber(amount),
+        }
+    }
+    return await Moralis.executeFunction(options) */
+
+    return await contract.buyPreFuel(getBigNumber(amount))
+}
+
+async function preFuelBalanceOF(address) {
+    /* const options = {
+        ...staticOptions,
+        functionName: "balanceOf",
+        params: {
+            account: address,
+        }
+    } 
+    return await Moralis.executeFunction(options) */
+    
+    return await contract.balanceOf(address)
 }
 
 function getBigNumber(amount, decimal = 18) {
@@ -27,5 +68,7 @@ function getHumanReadableNumber(amount, decimal = 18) {
 export {
     maxPurchaseAmount,
     getBigNumber,
-    getHumanReadableNumber
+    getHumanReadableNumber,
+    buyPreFuel,
+    preFuelBalanceOF
 };
