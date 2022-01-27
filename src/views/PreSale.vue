@@ -8,8 +8,9 @@
         <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
       </div>
       <div class="mt-10">
-        <button @click="buyPreFuel">BUY</button>
-        <input type="number" :value="amountToBuy">
+        <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
+        <button v-else @click="approve">APPROVE</button>
+        <input type="number" v-model.number="amountToBuy">
         <span>PREFUEL: {{userPreFuelBalance}}</span>
         <span> BUSD: {{userBusdBalance}}</span>
       </div>
@@ -21,7 +22,7 @@
 // @ is an alias to /src
 import { mapGetters, mapActions } from "vuex"
 import { preFuelBalanceOf, buyPreFuel} from "../service/preFuelService"
-import {busdBalanceOf} from "../service/busdService"
+import {busdBalanceOf, isApproved, approve} from "../service/busdService"
 
 export default {
   name: 'PreSale',
@@ -34,23 +35,28 @@ export default {
     ...mapGetters({
       user: "getUser",
       userPreFuelBalance: "getUserPreFuelBalance",
-      userBusdBalance: "getUserBusdBalance"
+      userBusdBalance: "getUserBusdBalance",
+      userApprovedBusd: "getUserApprovedBusd"
     })
   },
   methods: {
     ...mapActions({
       setUserPreFuelBalance : "setUserPreFuelBalanceAsync",
-      setUserBusdBalance : "setUserBusdBalanceAsync"
+      setUserBusdBalance : "setUserBusdBalanceAsync",
+      setUserApprovedBusd : "setUserApprovedBusdAsync"
     }),
-    
     async buyPreFuel(){
       const result = await buyPreFuel(this.amountToBuy)
       console.log(result);
-    }
+    },
+    async approve(){
+      await approve()
+    },
   },  
   mounted() {
     preFuelBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserPreFuelBalance(newBalance))
     busdBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserBusdBalance(newBalance))
+    isApproved().then(result => this.setUserApprovedBusd(result))
   }
 }
 </script>

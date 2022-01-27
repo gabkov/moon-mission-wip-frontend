@@ -1,7 +1,8 @@
 import {preFuelBalanceOf} from "./preFuelService"
 import {busdBalanceOf} from "./busdService"
-import { preFuelContract } from "./contracts";
+import { preFuelContract, busdContract } from "./contracts";
 import store from '../store'
+import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
 
  // EVENTS
  preFuelContract.on("PreFuelPurchased", (from, to, boughtAmount) => {
@@ -16,3 +17,10 @@ import store from '../store'
     }
   });
 
+
+busdContract.on("Approval", (owner, spender, value) => {
+  console.log(`${owner} approved ${spender} to spend ${value} BUSD`)
+  if(store.state.user.get('ethAddress') === owner.toLowerCase() || spender === PRE_FUEL_TOKEN_CONTRACT){
+    store.dispatch("setUserApprovedBusdAsync", true)
+  }
+});

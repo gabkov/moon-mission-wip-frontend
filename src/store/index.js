@@ -8,7 +8,8 @@ const store = createStore({
     return {
       user: {},
       userPreFuelBalance: 0,
-      userBusdBalance: 0
+      userBusdBalance: 0,
+      userApprovedBusd: false
     }
   },
   actions: {
@@ -17,6 +18,9 @@ const store = createStore({
     },
     async setUserBusdBalanceAsync(context, payload){
       context.commit("setUserBusdBalance", getHumanReadableNumber(payload))
+    },
+    async setUserApprovedBusdAsync(context, payload){
+      context.commit("setUserApprovedBusd", payload)
     }
   },
   mutations: {
@@ -28,12 +32,16 @@ const store = createStore({
     },
     setUserBusdBalance(state, payload){
       state.userBusdBalance = payload
+    },
+    setUserApprovedBusd(state, payload){
+      state.userApprovedBusd = payload
     }
   },
   getters: {
     getUser : state => state.user,
     getUserPreFuelBalance : state => state.userPreFuelBalance,
-    getUserBusdBalance : state  => state.userBusdBalance
+    getUserBusdBalance : state  => state.userBusdBalance,
+    getUserApprovedBusd : state =>state.userApprovedBusd
   }
 })
 
