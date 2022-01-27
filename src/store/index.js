@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { getHumanReadableNumber } from '../service/utils'
+import {} from "../service/events"
 
 
 const store = createStore({
