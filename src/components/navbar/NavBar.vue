@@ -15,7 +15,7 @@
 <script>
 import { onMounted, inject, computed } from 'vue'
 import { useStore } from 'vuex'
-import {CHAIN_ID} from "/src/consts/constants"
+//import {CHAIN_ID} from "/src/consts/constants"
 
 
 export default {
@@ -27,7 +27,7 @@ export default {
     const setUser = (payload) => store.commit('setUser', payload)
     
     const login = async () => {
-      const user = await $moralis.Web3.authenticate({chainId: CHAIN_ID})
+      const user = await $moralis.Web3.authenticate()
       setUser(user)
     }
 

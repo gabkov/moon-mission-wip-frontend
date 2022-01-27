@@ -24,10 +24,9 @@ export default {
   setup(){
     const store = useStore()
     const moralis = inject('$moralis')
-    moralis.enableWeb3()
     const currentUser = moralis.User.current();
     if (currentUser) {
-        store.commit('setUser', currentUser)
+      store.commit('setUser', currentUser)
     }
     return { sidebarWidth }
   }

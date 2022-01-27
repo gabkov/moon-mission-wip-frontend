@@ -212,7 +212,7 @@
       "inputs": [
         {
           "internalType": "uint256",
-          "name": "_usdcSpent",
+          "name": "_busdSpent",
           "type": "uint256"
         }
       ],
