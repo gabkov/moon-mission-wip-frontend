@@ -7,7 +7,7 @@ async function busdBalanceOf(address) {
     return await busdContract.balanceOf(address)
 }
 
-async function isApproved(){
+async function isApprovedBusdForPreSale(){
     const userAllowance = await busdContract.allowance(store.state.user.get('ethAddress'), PRE_FUEL_TOKEN_CONTRACT)
     if(userAllowance > 0){
         return true
@@ -21,6 +21,6 @@ async function approve(){
 
 export {
     busdBalanceOf,
-    isApproved,
+    isApprovedBusdForPreSale,
     approve
 }

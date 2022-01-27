@@ -22,7 +22,7 @@
 // @ is an alias to /src
 import { mapGetters, mapMutations } from "vuex"
 import { preFuelBalanceOf, buyPreFuel} from "../service/preFuelService"
-import {busdBalanceOf, isApproved, approve} from "../service/busdService"
+import {busdBalanceOf, isApprovedBusdForPreSale, approve} from "../service/busdService"
 
 export default {
   name: 'PreSale',
@@ -56,7 +56,7 @@ export default {
   mounted() {
     preFuelBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserPreFuelBalance(newBalance))
     busdBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserBusdBalance(newBalance))
-    isApproved().then(result => this.setUserApprovedBusd(result))
+    isApprovedBusdForPreSale().then(result => this.setUserApprovedBusd(result))
   }
 }
 </script>
