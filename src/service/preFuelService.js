@@ -31,8 +31,12 @@ async function buyPreFuel(amount) {
     return await preFuelContract.buyPreFuel(getBigNumber(amount))  
 }
 
-async function preFuelBalanceOF(address) {
+async function preFuelBalanceOf(address) {
     return await preFuelContract.balanceOf(address)
+}
+
+async function busdBalanceOf(address) {
+    return await busdContract.balanceOf(address)
 }
 
 function getBigNumber(amount, decimal = 18) {
@@ -49,5 +53,6 @@ export {
     getBigNumber,
     getHumanReadableNumber,
     buyPreFuel,
-    preFuelBalanceOF
+    preFuelBalanceOf,
+    busdBalanceOf
 };

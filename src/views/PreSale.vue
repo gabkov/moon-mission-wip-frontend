@@ -10,7 +10,8 @@
       <div class="mt-10">
         <button @click="buyPreFuel">BUY</button>
         <input type="number" :value="amountToBuy">
-        <span>{{preFuelBalance}}</span>
+        <span>PREFUEL: {{userPreFuelBalance}}</span>
+        <span> BUSD: {{userBusdBalance}}</span>
       </div>
     </div>
   </div>
@@ -18,30 +19,35 @@
 
 <script>
 // @ is an alias to /src
-import { mapGetters } from "vuex"
-import {maxPurchaseAmount, getHumanReadableNumber, preFuelBalanceOF, buyPreFuel} from "../service/preFuelService"
+import { mapGetters, mapActions } from "vuex"
+import {maxPurchaseAmount, getHumanReadableNumber, preFuelBalanceOf, buyPreFuel, busdBalanceOf} from "../service/preFuelService"
 
 export default {
   name: 'PreSale',
   data(){
     return {
       maximumPurchase: 0,
-      preFuelBalance: 0,
-      amountToBuy: 100
+      amountToBuy: 50
     }
   },
   computed: {
     ...mapGetters({
-      user: "getUser"
+      user: "getUser",
+      userPreFuelBalance: "getUserPreFuelBalance",
+      userBusdBalance: "getUserBusdBalance"
     })
   },
   methods: {
+    ...mapActions({
+      setUserPreFuelBalance : "setUserPreFuelBalanceAsync",
+      setUserBusdBalance : "setUserBusdBalanceAsync"
+    }),
     async updateMaxPurchaseAmount(){
       this.maximumPurchase = getHumanReadableNumber(await maxPurchaseAmount())
     },
 
     async getUserPreFuelBalance(){
-      this.preFuelBalance = getHumanReadableNumber(await preFuelBalanceOF(this.user.get('ethAddress')))
+      this.preFuelBalance = getHumanReadableNumber(await preFuelBalanceOf(this.user.get('ethAddress')))
     },
     async buyPreFuel(){
       const result = await buyPreFuel(this.amountToBuy)
@@ -49,7 +55,8 @@ export default {
     }
   },  
   mounted() {
-    this.getUserPreFuelBalance()
+    preFuelBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserPreFuelBalance(newBalance))
+    busdBalanceOf(this.user.get('ethAddress')).then(newBalance => this.setUserBusdBalance(newBalance))
   }
 }
 </script>
