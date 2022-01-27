@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import { getHumanReadableNumber } from '../service/utils'
-import {} from "../service/events"
 
 
 const store = createStore({
@@ -12,26 +11,15 @@ const store = createStore({
       userApprovedBusd: false
     }
   },
-  actions: {
-    async setUserPreFuelBalanceAsync(context, payload){
-      context.commit("setUserPreFuelBalance", getHumanReadableNumber(payload))
-    },
-    async setUserBusdBalanceAsync(context, payload){
-      context.commit("setUserBusdBalance", getHumanReadableNumber(payload))
-    },
-    async setUserApprovedBusdAsync(context, payload){
-      context.commit("setUserApprovedBusd", payload)
-    }
-  },
   mutations: {
     setUser (state, payload) {
       state.user = payload
     },
     setUserPreFuelBalance(state, payload){
-      state.userPreFuelBalance = payload
+      state.userPreFuelBalance = getHumanReadableNumber(payload)
     },
     setUserBusdBalance(state, payload){
-      state.userBusdBalance = payload
+      state.userBusdBalance = getHumanReadableNumber(payload)
     },
     setUserApprovedBusd(state, payload){
       state.userApprovedBusd = payload

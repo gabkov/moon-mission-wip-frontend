@@ -20,7 +20,7 @@
 
 <script>
 // @ is an alias to /src
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapMutations } from "vuex"
 import { preFuelBalanceOf, buyPreFuel} from "../service/preFuelService"
 import {busdBalanceOf, isApproved, approve} from "../service/busdService"
 
@@ -40,10 +40,10 @@ export default {
     })
   },
   methods: {
-    ...mapActions({
-      setUserPreFuelBalance : "setUserPreFuelBalanceAsync",
-      setUserBusdBalance : "setUserBusdBalanceAsync",
-      setUserApprovedBusd : "setUserApprovedBusdAsync"
+    ...mapMutations({
+      setUserPreFuelBalance : "setUserPreFuelBalance",
+      setUserBusdBalance : "setUserBusdBalance",
+      setUserApprovedBusd : "setUserApprovedBusd"
     }),
     async buyPreFuel(){
       const result = await buyPreFuel(this.amountToBuy)
