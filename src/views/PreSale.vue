@@ -1,36 +1,42 @@
 <template>
   <div>
-    <img alt="PDOGE logo" src="../assets/logo.png" class="logo">
+    <img alt="PDOGE logo" src="../assets/logo.png" class="img-fluid logo mb-4">
 
     <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
       <div class="col">
-        <div class="card border-dark">
+        <div class="shadow card border-secondary border-3 h-100">
+          <h5 class="card-header">BUY PREFUEL</h5>
           <div class="card-body">
-            <h5 class="card-title">BUY PREFUEL</h5>
             <div v-if="isAuthenticated" class="card-text">
-              <input type="number" v-model.number="amountToBuy">
               <span>PREFUEL: {{preFuelBalance}}</span>
               <span> BUSD: {{busdBalance}}</span>
+              <input type="number" v-model.number="amountToBuy">
               <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
               <button v-else @click="approveBusdForPreSale">APPROVE BUSD</button>
             </div>
             <div class="card-text" v-else>
-              <button @click="login" >CONNECT WALLET</button>
+              <button v-if="!userLoading" @click="login" >CONNECT WALLET</button>
+              <div v-else class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col">
-        <div class="card border-dark">
+        <div class="shadow card border-secondary border-3 h-100">
+          <h5 class="card-header">SWAP FOR FUEL</h5>
           <div class="card-body">
-            <h5 class="card-title">SWAP FOR FUEL</h5>
             <div v-if="isAuthenticated" class="card-text">
               <span> FUEL: {{userFuelBalance}}</span>
               <button v-if="userApprovedPreFuel" @click="swapPreFuelForFuel" >SWAP PREFUEL TO FUEL</button>
               <button v-else @click="approvePreFuelForSwap">APPROVE PREFUEL</button>
             </div>
             <div class="card-text" v-else>
-              <button @click="login" >CONNECT WALLET</button>
+              <button v-if="!userLoading" @click="login" >CONNECT WALLET</button>
+              <div v-else class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
             </div>
           </div>
         </div>
@@ -67,7 +73,8 @@ export default {
   computed: {
     ...mapGetters({
       user: "getUser",
-      userAddress: "getUserAddress"
+      userAddress: "getUserAddress",
+      userLoading: "getUserLoading"
     }),
     isAuthenticated(){
       return Object.keys(this.user).length > 0

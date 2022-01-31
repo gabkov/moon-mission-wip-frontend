@@ -1,35 +1,32 @@
-<template class="container-fluid">
-<Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" />
-<NavBar @toggle-menu="toggleMenu"/>
-<div class="main-view">
-  <router-view />
-</div>
+<template>
+  <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" />
+  <NavBar @toggle-menu="toggleMenu" />
+  <div class="container-fluid">
+    <router-view />
+  </div>
 </template>
 
 <script>
-
-import Sidebar from '@/components/sidebar/Sidebar'
-import NavBar from './components/navbar/NavBar'
-
+import Sidebar from "@/components/sidebar/Sidebar";
+import NavBar from "./components/navbar/NavBar";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Sidebar, 
-    NavBar
+    Sidebar,
+    NavBar,
   },
-  data(){
-    return{
-      menuOpen: true
-    }
+  data() {
+    return {
+      menuOpen: true,
+    };
   },
-  methods:{
-    toggleMenu(){
-      console.log("called")
-      this.menuOpen = !this.menuOpen
-    }
-  }
-}
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+  },
+};
 </script>
 
 <style>
@@ -54,7 +51,4 @@ export default {
   color: #42b983;
 }
 
-.main-view {
-  
-}
 </style>

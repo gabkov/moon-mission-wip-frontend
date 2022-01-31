@@ -3,9 +3,11 @@ import store from '../store'
 
 
 const setUser = (payload) => store.commit('setUser', payload)
+const setUserLoading = (payload) => store.commit('setUserLoading', payload)
 
 
 async function loginUser(){
+    setUserLoading(true)
     await Moralis.authenticate().then(user => setUser(user))
     location.reload()
 }
