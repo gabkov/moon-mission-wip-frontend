@@ -2,11 +2,6 @@
   <div class="pre-sale">
     <img alt="PDOGE logo" src="../assets/logo.png" class="logo">
     <div class="text-moralis-gray" >
-      <img alt="Moralis logo" src="../assets/logo.svg">
-      <div class="mt-4">
-        <div class="text-xl font-semibold">Moralis starter boilerplate</div>
-        <div class="text-sm mt-1 text-moralis-green font-semibold">Powered by Vue.js</div>
-      </div>
       <div v-if="isAuthenticated" class="mt-10">
         <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
         <button v-else @click="approve">APPROVE</button>

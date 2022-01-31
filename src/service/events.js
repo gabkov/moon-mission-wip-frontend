@@ -4,7 +4,8 @@ import { preFuelContract, busdContract } from "./contracts";
 import store from '../store'
 import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
 
- // EVENTS
+ // EVENT SUBSCRIPTIONS
+ 
  preFuelContract.on("PreFuelPurchased", (from, to, boughtAmount) => {
     console.log(`${boughtAmount} pre fuel purchased by ${from} for ${to} BUSD`);
   
