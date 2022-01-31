@@ -1,23 +1,23 @@
 <template>
-  <div class="sidebar" :style="{ width: sidebarWidth }">
+  <div class="sidebar" :style="this.menuOpen ? {width: '55px'}: {width: '180px'}">
     <h1>
-      <span v-if="collapsed">
+      <span v-if="menuOpen">
         <div>V</div>
         <div>S</div>
       </span>
       <span v-else>Vue Sidebar</span>
     </h1>
 
-    <SidebarLink to="/" icon="fas fa-home">Home</SidebarLink>
-    <SidebarLink to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
-    <SidebarLink to="/analytics" icon="fas fa-chart-bar">Analytics</SidebarLink>
-    <SidebarLink to="/friends" icon="fas fa-users">Friends</SidebarLink>
-    <SidebarLink to="/image" icon="fas fa-image">Images</SidebarLink>
+    <SidebarLink :menuOpen="this.menuOpen" to="/" icon="fas fa-home">Home</SidebarLink>
+    <SidebarLink :menuOpen="this.menuOpen" to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
+    <SidebarLink :menuOpen="this.menuOpen" to="/analytics" icon="fas fa-chart-bar">Analytics</SidebarLink>
+    <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
+    <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink>
 
     <span
       class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
+      :class="{ 'rotate-180': menuOpen }"
+      @click="$emit('toggle-menu')"
     >
       <i class="fas fa-angle-double-left" />
     </span>
@@ -26,14 +26,12 @@
 
 <script>
 import SidebarLink from './SidebarLink'
-import { collapsed, toggleSidebar, sidebarWidth } from './state'
 
 export default {
-  props: {},
+  props: {
+    menuOpen: Boolean
+  },
   components: { SidebarLink },
-  setup() {
-    return { collapsed, toggleSidebar, sidebarWidth }
-  }
 }
 </script>
 

@@ -1,6 +1,7 @@
 <template>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid justify-content-end">
+    <nav class="navbar navbar-light bg-dark justify-content-end">
+      <button @click="$emit('toggle-menu')">OPEN</button>
+        <div>
             <div v-if="isAuthenticated">
                  <button @click="logout">{{ user.get('ethAddress').substr(0,6) + '...' 
                     + user.get('ethAddress').substr(user.get('ethAddress').length - 4,user.get('ethAddress').length) }} Log out</button>

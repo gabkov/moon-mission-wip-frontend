@@ -1,7 +1,7 @@
-<template>
-<Sidebar />
-<NavBar />
-<div :style="{ 'margin-left': sidebarWidth }">
+<template class="container-fluid">
+<Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" />
+<NavBar @toggle-menu="toggleMenu"/>
+<div class="main-view">
   <router-view />
 </div>
 </template>
@@ -9,7 +9,6 @@
 <script>
 
 import Sidebar from '@/components/sidebar/Sidebar'
-import { sidebarWidth } from '@/components/sidebar/state'
 import NavBar from './components/navbar/NavBar'
 
 
@@ -19,8 +18,16 @@ export default {
     Sidebar, 
     NavBar
   },
-  setup(){
-    return { sidebarWidth }
+  data(){
+    return{
+      menuOpen: true
+    }
+  },
+  methods:{
+    toggleMenu(){
+      console.log("called")
+      this.menuOpen = !this.menuOpen
+    }
   }
 }
 </script>
@@ -45,5 +52,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.main-view {
+  
 }
 </style>

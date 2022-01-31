@@ -1,22 +1,40 @@
 <template>
-  <div class="pre-sale">
+  <div>
     <img alt="PDOGE logo" src="../assets/logo.png" class="logo">
-    <div class="text-moralis-gray" >
-      <div v-if="isAuthenticated" class="mt-10">
-        <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
-        <button v-else @click="approveBusdForPreSale">APPROVE BUSD</button>
-        <input type="number" v-model.number="amountToBuy">
-        <span>PREFUEL: {{preFuelBalance}}</span>
-        <span> BUSD: {{busdBalance}}</span>
-        <div>
-          <button v-if="userApprovedPreFuel" @click="swapPreFuelForFuel" >SWAP PREFUEL TO FUEL</button>
-          <button v-else @click="approvePreFuelForSwap">APPROVE PREFUEL</button>
-          <span> FUEL: {{userFuelBalance}}</span>
+
+    <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
+      <div class="col">
+        <div class="card border-dark">
+          <div class="card-body">
+            <h5 class="card-title">BUY PREFUEL</h5>
+            <div v-if="isAuthenticated" class="card-text">
+              <input type="number" v-model.number="amountToBuy">
+              <span>PREFUEL: {{preFuelBalance}}</span>
+              <span> BUSD: {{busdBalance}}</span>
+              <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
+              <button v-else @click="approveBusdForPreSale">APPROVE BUSD</button>
+            </div>
+            <div class="card-text" v-else>
+              <button @click="login" >CONNECT WALLET</button>
+            </div>
+          </div>
         </div>
       </div>
-      <dir v-else>
-        <button @click="login" >CONNECT WALLET</button>
-      </dir>
+      <div class="col">
+        <div class="card border-dark">
+          <div class="card-body">
+            <h5 class="card-title">SWAP FOR FUEL</h5>
+            <div v-if="isAuthenticated" class="card-text">
+              <span> FUEL: {{userFuelBalance}}</span>
+              <button v-if="userApprovedPreFuel" @click="swapPreFuelForFuel" >SWAP PREFUEL TO FUEL</button>
+              <button v-else @click="approvePreFuelForSwap">APPROVE PREFUEL</button>
+            </div>
+            <div class="card-text" v-else>
+              <button @click="login" >CONNECT WALLET</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -108,7 +126,7 @@ export default {
       });
     },
   },  
-  async mounted() {
+  async created(){
     if(Moralis.User.current()){
       this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
       this.busdBalance = await busdBalanceOf(this.userAddress)
