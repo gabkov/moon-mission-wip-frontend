@@ -30,7 +30,7 @@ import {fuelBalanceOf} from "../service/fuelService"
 import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
 import Moralis from '../plugins/moralis'
-import {preFuelContract, busdContract} from "../service/contracts"
+import {preFuelContract, busdContract, fuelReedemContract} from "../service/contracts"
 import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
 
 
@@ -43,7 +43,7 @@ export default {
       busdBalance: 0,
       userApprovedBusd: false,
       userApprovedPreFuel: false,
-      fuelBalance: 0
+      userFuelBalance: 0
     }
   },
   computed: {
@@ -56,19 +56,8 @@ export default {
     }
   },
   methods: {
-    async buyPreFuel(){
-      await buyPreFuel(this.amountToBuy)
-
-      preFuelContract.on("PreFuelPurchased", async (from, to, boughtAmount) => {
-        
-        console.log(`${boughtAmount} pre fuel purchased by ${from} for ${to} BUSD`);
-        
-        if(this.userAddress === from.toLowerCase()){
-            this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
-            this.busdBalance = await busdBalanceOf(this.userAddress)
-        }
-      });
-    
+    async login(){
+      await loginUser()
     },
     async approveBusdForPreSale(){
       await approveBusdForPreSale()
@@ -82,26 +71,50 @@ export default {
       });
 
     },
-    async login(){
-      await loginUser()
-    },
-    async swapPreFuelForFuel(){
-      await swapPreFuelForFuel()
-    },
-    async isUserApprovedPreFuel(){
-      this.userApprovedPreFuel = await isApprovedPreFuelForSwap()
+    async buyPreFuel(){
+      await buyPreFuel(this.amountToBuy)
+      preFuelContract.on("PreFuelPurchased", async (from, to, boughtAmount) => {
+
+        console.log(`${boughtAmount} pre fuel purchased by ${from} for ${to} BUSD`);
+        
+        if(this.userAddress === from.toLowerCase()){
+            this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
+            this.busdBalance = await busdBalanceOf(this.userAddress)
+        }
+      });
+    
     },
     async approvePreFuelForSwap(){
       await approvePreFuelForSwap()
-    }
+      preFuelContract.on("Approval", (owner, spender) => {
+
+        console.log(`${owner} approved pre-sale contract ${spender} to spend PreFuel`)
+
+        if(this.userAddress === owner.toLowerCase() || spender === PRE_FUEL_TOKEN_CONTRACT){
+          this.userApprovedPreFuel = true
+        }
+      });
+    },
+    async swapPreFuelForFuel(){
+      await swapPreFuelForFuel()
+      fuelReedemContract.on("PreFuelToFuel", async (sender, amount) => {
+
+        console.log(`${sender} swapped ${amount} PreFuel for Fuel yaaay`)
+
+        if(this.userAddress === sender.toLowerCase()){
+          this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
+          this.userFuelBalance = await fuelBalanceOf(this.userAddress)
+        }
+      });
+    },
   },  
   async mounted() {
     if(Moralis.User.current()){
       this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
       this.busdBalance = await busdBalanceOf(this.userAddress)
       this.userApprovedBusd = await isApprovedBusdForPreSale();
-      this.fuelBalance = await fuelBalanceOf(this.userAddress)
-      this.isUserApprovedPreFuel()
+      this.userFuelBalance = await fuelBalanceOf(this.userAddress)
+      this.userApprovedPreFuel = await isApprovedPreFuelForSwap()
     }
   }
 }
