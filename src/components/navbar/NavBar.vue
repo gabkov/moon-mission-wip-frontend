@@ -1,6 +1,8 @@
 <template>
-    <nav class="navbar navbar-light bg-dark justify-content-end">
-      <button @click="$emit('toggle-menu')">OPEN</button>
+    <nav class="navbar navbar-light bg-dark justify-content-between">
+      <span class="collapse-icon" :class="{ 'rotate-180': !menuOpen }" @click="$emit('toggle-menu')">
+        <i class="fas fa-angle-double-left" />
+      </span>
         <div>
             <div v-if="isAuthenticated">
                  <button @click="logout">{{ user.get('ethAddress').substr(0,6) + '...' 
@@ -55,3 +57,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.collapse-icon {
+  bottom: 0;
+  padding: 0.75em;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  transition: 0.2s linear;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: 0.2s linear;
+}
+</style>

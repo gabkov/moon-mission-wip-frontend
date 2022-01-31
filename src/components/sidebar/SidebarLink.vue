@@ -1,3 +1,14 @@
+<template>
+  <router-link :to="to" class="link" :class="{ active: isActive }">
+    <i class="icon" :class="icon" />
+    <transition name="fade">
+      <span v-if="!menuOpen">
+        <slot />
+      </span>
+    </transition>
+  </router-link>
+</template>
+
 <script>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
@@ -16,17 +27,6 @@ export default {
   }
 }
 </script>
-
-<template>
-  <router-link :to="to" class="link" :class="{ active: isActive }">
-    <i class="icon" :class="icon" />
-    <transition name="fade">
-      <span v-if="!menuOpen">
-        <slot />
-      </span>
-    </transition>
-  </router-link>
-</template>
 
 <style scoped>
 .fade-enter-active,
