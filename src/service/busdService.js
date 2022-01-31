@@ -2,9 +2,10 @@ import {busdContract} from "./contracts"
 import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
 import {ethers} from 'ethers'
 import store from '../store'
+import { getHumanReadableNumber } from './utils'
 
 async function busdBalanceOf(address) {
-    return await busdContract.balanceOf(address)
+    return getHumanReadableNumber(await busdContract.balanceOf(address))
 }
 
 async function isApprovedBusdForPreSale(){
@@ -15,12 +16,12 @@ async function isApprovedBusdForPreSale(){
     return false
 }
 
-async function approve(){
+async function approveBusdForPreSale(){
     await busdContract.approve(PRE_FUEL_TOKEN_CONTRACT, ethers.constants.MaxUint256)
 }
 
 export {
     busdBalanceOf,
     isApprovedBusdForPreSale,
-    approve
+    approveBusdForPreSale
 }
