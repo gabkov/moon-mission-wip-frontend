@@ -1,8 +1,9 @@
 import preFuelAbi from "../abi/PreFuelToken.json"
 import fuelReedemAbi from "../abi/FuelReedem.json"
+import masterChefAbi from "../abi/MasterChefAbi.json"
 import ERC20 from "../abi/ERC20.json"
 import {ethers} from 'ethers'
-import {PRE_FUEL_TOKEN_CONTRACT, BUSD_TOKEN_CONTRACT, FUEL_TOKEN_CONTRACT, FUEL_REEDEM_CONTRACT} from "../consts/constants"
+import {PRE_FUEL_TOKEN_CONTRACT, BUSD_TOKEN_CONTRACT, FUEL_TOKEN_CONTRACT, FUEL_REEDEM_CONTRACT, MASTERCHEF} from "../consts/constants"
 
 // putting the contracts initalizations to a separate file so it is easier just to import from here instead of reinitializing everywhere
 
@@ -33,10 +34,21 @@ const fuelReedemContract = new ethers.Contract(
     signer
 );
 
+const masterChefContract = new ethers.Contract(
+    MASTERCHEF,
+    masterChefAbi,
+    signer
+);
+
+function getPoolContract(tokenAddress){
+    return new ethers.Contract(tokenAddress, ERC20, signer)
+}
 
 export {
     preFuelContract,
     busdContract,
     fuelContract,
-    fuelReedemContract
+    fuelReedemContract,
+    masterChefContract,
+    getPoolContract
 }

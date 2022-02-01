@@ -3,7 +3,7 @@
     <div v-if="!menuOpen">
       <SidebarLink :menuOpen="this.menuOpen" to="/" icon="fas fa-home">Home</SidebarLink>
       <SidebarLink :menuOpen="this.menuOpen" to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/analytics" icon="fas fa-chart-bar">Analytics</SidebarLink>
+      <SidebarLink :menuOpen="this.menuOpen" to="/farms" icon="fas fa-chart-bar">Farms</SidebarLink>
       <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
       <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink>
     </div>
@@ -69,5 +69,6 @@ export default {
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;
+  color: #212529
 }
 </style>
