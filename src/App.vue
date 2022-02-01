@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      menuOpen: true,
+      menuOpen: false,
     };
   },
   methods: {

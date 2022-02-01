@@ -4,7 +4,7 @@
 
     <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
       <div class="col">
-        <div class="shadow card border-secondary border-3 h-100">
+        <div class="shadow-lg card border-secondary border-3 h-100">
           <h5 class="card-header">BUY PREFUEL</h5>
           <div class="card-body">
             <div v-if="isAuthenticated" class="card-text">
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="shadow card border-secondary border-3 h-100">
+        <div class="shadow-lg card border-secondary border-3 h-100">
           <h5 class="card-header">SWAP FOR FUEL</h5>
           <div class="card-body">
             <div v-if="isAuthenticated" class="card-text">
