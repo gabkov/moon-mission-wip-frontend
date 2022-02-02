@@ -1,5 +1,5 @@
-import BigNumber from 'bignumber.js';
-import multicall from './multicall'
+import BigNumber from 'bignumber.js'
+import { multicall } from './multicall'
 import { getAPR, getFuelPrice, getTokenPrice } from './poolAnalytics'
 import masterChefAbi from "../abi/MasterChefAbi.json"
 import ERC20 from "../abi/ERC20.json"

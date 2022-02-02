@@ -1,18 +1,21 @@
-import { multiCallContract } from '../service/contracts';
-import { Interface } from '@ethersproject/abi';
+import { multiCallContract } from '../service/contracts'
+import { Interface } from '@ethersproject/abi'
 
-const multicall = async (calls) => {
+
+async function multicall(calls) {
   const calldata = calls.map((call) => {
-    const itf = new Interface(call.abi);
-    return [call.address.toLowerCase(), itf.encodeFunctionData(call.name, call.params)];
-  });
-  const { returnData } = await multiCallContract.aggregate(calldata);
+    const itf = new Interface(call.abi)
+    return [call.address.toLowerCase(), itf.encodeFunctionData(call.name, call.params)]
+  })
+  const { returnData } = await multiCallContract.aggregate(calldata)
   const res = returnData.map((call, i) => {
-    const itf = new Interface(calls[i].abi);
-    return itf.decodeFunctionResult(calls[i].name, call);
-  });
+    const itf = new Interface(calls[i].abi)
+    return itf.decodeFunctionResult(calls[i].name, call)
+  })
 
-  return res;
-};
+  return res
+}
 
-export default multicall;
+export {
+  multicall
+}
