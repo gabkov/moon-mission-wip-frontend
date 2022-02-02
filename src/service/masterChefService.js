@@ -1,5 +1,5 @@
 import {masterChefContract} from "./contracts"
-import { getBigNumber } from "./utils"
+import { getBigNumber } from "../utils/format"
 
 
 async function deposit(pid, amount){

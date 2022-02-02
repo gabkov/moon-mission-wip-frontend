@@ -1,4 +1,4 @@
-import { getBigNumber } from "./utils"
+import { getBigNumber } from "../utils/format"
 import {preFuelContract} from "./contracts"
 import {ethers} from 'ethers'
 import store from '../store'

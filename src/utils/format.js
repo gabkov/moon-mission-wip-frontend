@@ -1,5 +1,10 @@
 import BigNumber from 'bignumber.js';
 
+
+export const getBigNumber = (amount, decimal = 18) => {
+  return new BigNumber(amount).times(new BigNumber(10).pow(decimal));
+}
+
 export const getRawBalanceNumber = (balance, decimals = 18) => {
   const rawBlance = new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals));
   return rawBlance.toFixed(decimals);
