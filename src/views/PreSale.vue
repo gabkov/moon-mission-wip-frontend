@@ -55,7 +55,7 @@ import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
 import Moralis from '../plugins/moralis'
 import {preFuelContract, busdContract, fuelReedemContract} from "../service/contracts"
-import {PRE_FUEL_TOKEN_CONTRACT} from "../consts/constants"
+import {CONSTANTS} from "../consts/constants"
 
 
 export default {
@@ -74,7 +74,8 @@ export default {
     ...mapGetters({
       user: "getUser",
       userAddress: "getUserAddress",
-      userLoading: "getUserLoading"
+      userLoading: "getUserLoading",
+      chainId: "getChainId"
     }),
     isAuthenticated(){
       return Object.keys(this.user).length > 0
@@ -90,7 +91,7 @@ export default {
 
         console.log(`${owner} approved pre-sale contract ${spender} to spend BUSD`)
 
-        if(this.userAddress === owner.toLowerCase() || spender === PRE_FUEL_TOKEN_CONTRACT){
+        if(this.userAddress === owner.toLowerCase() || spender === CONSTANTS[this.chainId].PRE_FUEL_TOKEN_CONTRACT){
           this.userApprovedBusd = true
         }
       });
@@ -115,7 +116,7 @@ export default {
 
         console.log(`${owner} approved pre-sale contract ${spender} to spend PreFuel`)
 
-        if(this.userAddress === owner.toLowerCase() || spender === PRE_FUEL_TOKEN_CONTRACT){
+        if(this.userAddress === owner.toLowerCase() || spender === CONSTANTS[this.chainId].PRE_FUEL_TOKEN_CONTRACT){
           this.userApprovedPreFuel = true
         }
       });

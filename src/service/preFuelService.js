@@ -1,9 +1,11 @@
 import { getBigNumber } from "./utils"
 import {preFuelContract} from "./contracts"
-import {FUEL_REEDEM_CONTRACT} from "../consts/constants"
 import {ethers} from 'ethers'
 import store from '../store'
 import { getHumanReadableNumber } from './utils'
+import {CONSTANTS} from "../consts/constants"
+
+const constants = CONSTANTS[store.state.chainId] 
 
 async function maxPurchaseAmount() {
     return await preFuelContract.maxPreFuelPurchase()
@@ -18,7 +20,7 @@ async function preFuelBalanceOf(address) {
 }
 
 async function isApprovedPreFuelForSwap(){
-    const userAllowance = await preFuelContract.allowance(store.state.user.get('ethAddress'), FUEL_REEDEM_CONTRACT)
+    const userAllowance = await preFuelContract.allowance(store.state.user.get('ethAddress'), constants.FUEL_REEDEM_CONTRACT)
     if(userAllowance > 0){
         return true
     }
@@ -26,7 +28,7 @@ async function isApprovedPreFuelForSwap(){
 }
 
 async function approvePreFuelForSwap(){
-    await preFuelContract.approve(FUEL_REEDEM_CONTRACT, ethers.constants.MaxUint256)
+    await preFuelContract.approve(constants.FUEL_REEDEM_CONTRACT, ethers.constants.MaxUint256)
 }
 
 
