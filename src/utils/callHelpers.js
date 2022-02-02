@@ -149,7 +149,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
   const fuelPrice = await getFuelPrice()
 
   const poolAPR = getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvlMC)
-  const daily = new BigNumber(poolAPR).div(365).toFixed(2)
+  const daily = new BigNumber(poolAPR).div(365).toFixed(3)
 
   let rewards = new BigNumber(0)
   const pendingFuelBN = new BigNumber(pendingFuel.toString())
