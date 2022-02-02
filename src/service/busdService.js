@@ -1,7 +1,7 @@
 import {busdContract} from "./contracts"  
 import {ethers} from 'ethers'
 import store from '../store'
-import { getHumanReadableNumber } from './utils'
+import { getHumanReadableNumber } from '../utils/format'
 import {CONSTANTS} from "../consts/constants"
 
 const constants = CONSTANTS[store.state.chainId] 

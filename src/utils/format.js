@@ -1,5 +1,16 @@
 import BigNumber from 'bignumber.js';
+import {ethers} from 'ethers'
 
+
+export const getHumanReadableNumber = (amount, decimal = 18) => {
+    const remainder = amount.mod(1e14);
+
+    if(amount > 1){
+        return ethers.utils.formatUnits(amount.sub(remainder), decimal)
+    } else {
+        return ethers.utils.formatUnits(amount, decimal)
+    }
+}
 
 export const getBigNumber = (amount, decimal = 18) => {
   return new BigNumber(amount).times(new BigNumber(10).pow(decimal));
