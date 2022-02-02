@@ -20,7 +20,6 @@ async function isApprovedMasterChef(tokenAddress){
 }
 
 async function approveTokenForMasterChef(tokenAddress){
-    console.log(tokenAddress);
     const tokenContract = getPoolContract(tokenAddress)
     const tx = await tokenContract.approve(MASTERCHEF, ethers.constants.MaxUint256)
 

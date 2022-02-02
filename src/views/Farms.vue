@@ -8,21 +8,27 @@
           <div>LP SUPPLY: {{item.lpSupply}}</div>
           <div>DEPOSIT FEE: {{item.depositFeeBP}}</div>
           <div v-if="item.isApproved">
-                <span>STAKED {{ item.userPoolInfo.amount}}</span>
-                <span> BALANCE {{POOLS.testnet[index].name}} {{item.tokenBalance}} </span>
+                <span>PENDING FUEL: {{item.pendingFuel}}</span>
+                <span> STAKED {{ item.userPoolInfo.amount}}</span>
+                <span> BALANCE {{POOLS[CHAIN_ID][index].name}} {{item.tokenBalance}} </span>
                 <input  type="number" v-model.number="amountToDeposit">
           </div>
-          <button v-if="item.isApproved" @click="depositToken(index, amountToDeposit, item.lpToken)">STAKE</button>
-          <button v-else @click="approveToken(item.lpToken)" >APPROVE {{POOLS.testnet[index].name}}</button>
+          <div v-if="item.isApproved">
+            <button @click="withdrawToken(index, 0, item.lpToken)">HARVEST</button>
+            <button @click="depositToken(index, amountToDeposit, item.lpToken)">STAKE</button>
+            <button @click="withdrawToken(index, amountToDeposit, item.lpToken)">WITHDRAW</button>
+          </div>
+          <button v-else @click="approveToken(item.lpToken)" >APPROVE {{POOLS[CHAIN_ID][index].name}}</button>
       </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
-import {deposit, getPoolInfo, poolLength, getUserPoolInfo} from "../service/masterChefService"
+import {deposit, getPoolInfo, poolLength, getUserPoolInfo, withdraw, pendingFuelForUser} from "../service/masterChefService"
 import {isApprovedMasterChef, approveTokenForMasterChef, getTokenBalanceForUser} from "../service/poolService"
 import { POOLS } from "../consts/pools"
+import {CHAIN_ID} from "../consts/constants"
 
 export default {
     name: "Farms",
@@ -30,6 +36,7 @@ export default {
         return {
             amountToDeposit: 100,
             POOLS,
+            CHAIN_ID,
             poolInfos: []
         }
     },
@@ -44,15 +51,23 @@ export default {
         }
     },
     methods: {
-        async depositToken(pid, amount, tokenAddress){
-            const receipt = await deposit(pid, amount)
-            const event = receipt.events.filter(event => event.event === "Deposit")
+        async updatePoolInfo(receipt, eventName, pid, tokenAddress){
+            const event = receipt.events.filter(event => event.event === eventName)
             const sender = event[0].args[0]
              if (sender.toLowerCase() === this.userAddress){
                  const poolIndex = this.poolInfos.findIndex((pool => pool.lpToken == tokenAddress));
                  this.poolInfos[poolIndex].tokenBalance = await getTokenBalanceForUser(tokenAddress, this.userAddress)
-                 this.poolInfos[poolIndex].userPoolInfo = await getUserPoolInfo(poolIndex, this.userAddress)
+                 this.poolInfos[poolIndex].userPoolInfo = await getUserPoolInfo(pid, this.userAddress)
+                 this.poolInfos[poolIndex].pendingFuel = await pendingFuelForUser(pid, this.userAddress)
              }
+        },
+        async depositToken(pid, amount, tokenAddress){
+            const receipt = await deposit(pid, amount)
+            await this.updatePoolInfo(receipt, "Deposit", pid, tokenAddress)
+        },
+        async withdrawToken(pid, amount, tokenAddress){
+            const receipt = await withdraw(pid, amount)
+            await this.updatePoolInfo(receipt, "Withdraw", pid, tokenAddress)
         },
         async approveToken(tokenAddress){
             const receipt = await approveTokenForMasterChef(tokenAddress)
@@ -69,7 +84,8 @@ export default {
                     {
                         isApproved: await isApprovedMasterChef(poolInfo.lpToken), 
                         tokenBalance: await getTokenBalanceForUser(poolInfo.lpToken, this.userAddress),
-                        userPoolInfo: await getUserPoolInfo(index, this.userAddress)
+                        userPoolInfo: await getUserPoolInfo(index, this.userAddress),
+                        pendingFuel : await pendingFuelForUser(index, this.userAddress)
                     }, poolInfo)
                 this.poolInfos.push(extended)
             }

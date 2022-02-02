@@ -8,13 +8,14 @@ async function poolLength(){
 
 async function deposit(pid, amount){
     const tx = await masterChefContract.deposit(pid, getBigNumber(amount))
-
     const receipt = tx.wait()
     return receipt
 }
 
 async function withdraw(pid, amount){
-    await masterChefContract.withdraw(pid, amount)
+    const tx = await masterChefContract.withdraw(pid, getBigNumber(amount))
+    const receipt = tx.wait()
+    return receipt
 }
 
 async function getPoolInfo(pid){
@@ -26,10 +27,15 @@ async function getUserPoolInfo(pid, userAddress){
     return {amount: getHumanReadableNumber(poolUserInfo.amount),rewardDebt :poolUserInfo.rewardDebt }
 }
 
+async function pendingFuelForUser(pid, userAddress){
+    return getHumanReadableNumber(await masterChefContract.pendingFuel(pid, userAddress))
+}
+
 export {
     poolLength,
     deposit,
     withdraw,
     getPoolInfo,
-    getUserPoolInfo
+    getUserPoolInfo,
+    pendingFuelForUser
 }
