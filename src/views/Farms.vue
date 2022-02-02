@@ -20,6 +20,7 @@
           </div>
           <button v-else @click="approveToken(item.lpToken)" >APPROVE {{pools[index].name}}</button>
       </div>
+      {{this.formatNumber(data.fuelPerBlock)}}
       <dir></dir> 
       stakedAmount: {{this.formatNumber(this.getBalanceNumber(data.stakedAmount, data.lpDecimals))}}
       stakedAmountUSD: {{this.formatNumber(data.stakedAmountUSD)}}

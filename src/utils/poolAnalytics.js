@@ -6,14 +6,14 @@ import store from '../store'
 
 const constants = CONSTANTS[store.state.chainId] 
 
-export const getAPR = (poolWeight, fuelPerSecond, fuelDecimals, fuelPrice, tvl) => {
+export const getAPR = (poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl) => {
   if (new BigNumber(tvl.toString()).eq(0)) {
     return 0;
   }
+  const fuelPerSecond = new BigNumber(fuelPerBlock).div(3) // average block time for bsc is 3 so we divide the per block value with 3
 
-  // FUEL PER SECOND NOT PER BLOCK !!!!!!!
   const fuelPerSecondPool = new BigNumber(fuelPerSecond).times(poolWeight).div(new BigNumber(10).pow(new BigNumber(fuelDecimals.toString())));
-  //!!!!!!!!!!!
+  
   const fuelTokensPerYear = fuelPerSecondPool.times(YEAR_IN_SECONDS);
 
   const fuelValuePerYear = fuelPrice.times(fuelTokensPerYear);

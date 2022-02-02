@@ -45,7 +45,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
       params: [pool.pid, account]
     }
   ]
-  const [stakedInfo, poolInfo, totalAllocPoint, fuelPerSecond, stakingTokenBalance, pendingFuel] = await multicall(calls)
+  const [stakedInfo, poolInfo, totalAllocPoint, fuelPerBlock, stakingTokenBalance, pendingFuel] = await multicall(calls)
 
   // Calling liquidity pair balances for amount in stable
   const liquidityCalls = [
@@ -148,7 +148,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
 
   const fuelPrice = await getFuelPrice()
 
-  const poolAPR = getAPR(poolWeight, fuelPerSecond, fuelDecimals, fuelPrice, tvlMC)
+  const poolAPR = getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvlMC)
   const daily = new BigNumber(poolAPR).div(365).toFixed(2)
 
   let rewards = new BigNumber(0)
@@ -160,7 +160,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
     stakedAmountUSD: stakedAmountUSD,
     allocPoint: new BigNumber(poolInfo.allocPoint.toString()).div(100),
     totalAllocPoint,
-    fuelPerSecond,
+    fuelPerBlock,
     tvl,
     lpDecimals: new BigNumber(lpDecimals.toString()).toNumber(),
     poolAPR,
