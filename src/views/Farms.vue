@@ -10,7 +10,7 @@
           <div v-if="item.isApproved">
                 <span>PENDING FUEL: {{item.pendingFuel}}</span>
                 <span> STAKED {{ item.userPoolInfo.amount}}</span>
-                <span> BALANCE {{POOLS[chainId][index].name}} {{item.tokenBalance}} </span>
+                <span> BALANCE {{pools[index].name}} {{item.tokenBalance}} </span>
                 <input  type="number" v-model.number="amountToDeposit">
           </div>
           <div v-if="item.isApproved">
@@ -18,7 +18,7 @@
             <button @click="depositToken(index, amountToDeposit, item.lpToken)">STAKE</button>
             <button @click="withdrawToken(index, amountToDeposit, item.lpToken)">WITHDRAW</button>
           </div>
-          <button v-else @click="approveToken(item.lpToken)" >APPROVE {{POOLS[chainId][index].name}}</button>
+          <button v-else @click="approveToken(item.lpToken)" >APPROVE {{pools[index].name}}</button>
       </div>
   </div>
 </template>
@@ -27,14 +27,13 @@
 import { mapGetters } from "vuex"
 import {deposit, getPoolInfo, poolLength, getUserPoolInfo, withdraw, pendingFuelForUser} from "../service/masterChefService"
 import {isApprovedMasterChef, approveTokenForMasterChef, getTokenBalanceForUser} from "../service/poolService"
-import { POOLS } from "../consts/pools"
+
 
 export default {
     name: "Farms",
     data(){
         return {
             amountToDeposit: 100,
-            POOLS,
             poolInfos: []
         }
     },
@@ -43,7 +42,8 @@ export default {
             user: "getUser",
             userAddress: "getUserAddress",
             userLoading: "getUserLoading",
-            chainId: "getChainId"
+            chainId: "getChainId",
+            pools: "getPools"
         }),
         isAuthenticated(){
             return Object.keys(this.user).length > 0
