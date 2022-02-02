@@ -8,6 +8,8 @@ import store from '../store'
 
 const constants = CONSTANTS[store.state.chainId] 
 
+// PRESALE INFO ATIRASA MULTICALLRA
+
 async function callPoolAnalytics(mcAddress, pool, account) {
   const calls = [
     {
