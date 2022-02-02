@@ -20,6 +20,15 @@
           </div>
           <button v-else @click="approveToken(item.lpToken)" >APPROVE {{pools[index].name}}</button>
       </div>
+      <dir></dir> 
+      stakedAmount: {{this.formatNumber(this.getBalanceNumber(data.stakedAmount, data.lpDecimals))}}
+      stakedAmountUSD: {{this.formatNumber(data.stakedAmountUSD)}}
+      allocPoint: {{this.shortenNumber(data.allocPoint)}}
+      tvl: {{this.formatNumber(data.tvl)}}
+      poolAPR: {{this.shortenNumber(data.poolAPR)}}
+      daily: {{data.daily}}%
+      stakingTokenBalance: {{this.formatNumber(this.getBalanceNumber(data.stakingTokenBalance, data.lpDecimals))}}
+      rewards: {{this.formatNumber(data.rewards)}}
   </div>
 </template>
 
@@ -27,14 +36,21 @@
 import { mapGetters } from "vuex"
 import {deposit, getPoolInfo, poolLength, getUserPoolInfo, withdraw, pendingFuelForUser} from "../service/masterChefService"
 import {isApprovedMasterChef, approveTokenForMasterChef, getTokenBalanceForUser} from "../service/poolService"
+import {callPoolAnalytics} from "../utils/callHelpers"
+import {formatNumber, getBalanceNumber, shortenNumber} from "../utils/format"
+import {CONSTANTS } from '../consts/constants'
+import store from '../store'
+import { POOLS } from '../consts/pools'
 
+const constants = CONSTANTS[store.state.chainId] 
 
 export default {
     name: "Farms",
     data(){
         return {
             amountToDeposit: 100,
-            poolInfos: []
+            poolInfos: [],
+            data: {}
         }
     },
     computed: {
@@ -50,6 +66,15 @@ export default {
         }
     },
     methods: {
+        formatNumber(num){
+            return formatNumber(num)
+        },
+        getBalanceNumber(num, decimals){
+            return getBalanceNumber(num, decimals)
+        },
+        shortenNumber(num){
+            return shortenNumber(num)
+        },
         async updatePoolInfo(receipt, eventName, pid, tokenAddress){
             const event = receipt.events.filter(event => event.event === eventName)
             const sender = event[0].args[0]
@@ -92,6 +117,7 @@ export default {
     },
     async created(){
         await this.buildPoolInfo();
+        this.data = await callPoolAnalytics(constants.MASTERCHEF, POOLS[97][0], this.userAddress)
     }
 }
 </script>

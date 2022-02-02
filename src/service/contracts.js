@@ -27,7 +27,7 @@ const busdContract = new ethers.Contract(
 );
 
 const fuelContract = new ethers.Contract(
-    constants.FUEL_TOKEN_CONTRACT,
+    constants.FUEL_TOKEN_ADDRESS,
     ERC20,
     signer
 );
