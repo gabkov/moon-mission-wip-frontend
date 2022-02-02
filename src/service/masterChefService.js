@@ -1,10 +1,6 @@
 import {masterChefContract} from "./contracts"
-import { getBigNumber, getHumanReadableNumber } from "./utils"
+import { getBigNumber } from "./utils"
 
-
-async function poolLength(){
-    return await masterChefContract.poolLength()
-}
 
 async function deposit(pid, amount){
     const tx = await masterChefContract.deposit(pid, getBigNumber(amount))
@@ -18,24 +14,9 @@ async function withdraw(pid, amount){
     return receipt
 }
 
-async function getPoolInfo(pid){
-    return await masterChefContract.poolInfo(pid)
-}
 
-async function getUserPoolInfo(pid, userAddress){
-    const poolUserInfo = await masterChefContract.userInfo(pid, userAddress)
-    return {amount: getHumanReadableNumber(poolUserInfo.amount),rewardDebt :poolUserInfo.rewardDebt }
-}
-
-async function pendingFuelForUser(pid, userAddress){
-    return getHumanReadableNumber(await masterChefContract.pendingFuel(pid, userAddress))
-}
 
 export {
-    poolLength,
     deposit,
     withdraw,
-    getPoolInfo,
-    getUserPoolInfo,
-    pendingFuelForUser
 }

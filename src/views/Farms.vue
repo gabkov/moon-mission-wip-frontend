@@ -23,8 +23,8 @@
 
 <script>
 import { mapGetters } from "vuex"
-import {deposit, /* getPoolInfo, poolLength, */ /* getUserPoolInfo, */ withdraw /* pendingFuelForUser */} from "../service/masterChefService"
-import {/* isApprovedMasterChef, */ approveTokenForMasterChef /* getTokenBalanceForUser */} from "../service/poolService"
+import {deposit, withdraw } from "../service/masterChefService"
+import {approveTokenForMasterChef } from "../service/poolService"
 import {callPoolAnalytics} from "../utils/callHelpers"
 import {formatNumber, getBalanceNumber, shortenNumber} from "../utils/format"
 import {CONSTANTS } from '../consts/constants'
