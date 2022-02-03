@@ -1,41 +1,46 @@
 <template>
-  <div >
-      <div v-for="(pool) in poolInfos" :key="pool.pid" >
-          <div>stakedAmount: {{this.formatNumber(this.getBalanceNumber(pool.stakedAmount, pool.lpDecimals))}}</div>
-          <div>stakedAmountUSD: {{this.formatNumber(pool.stakedAmountUSD)}}</div>
-          <div>allocPoint: {{this.shortenNumber(pool.allocPoint)}}</div>
-          <div>tvl: {{this.formatNumber(pool.tvl)}}</div>
-          <div>poolAPR: {{pool.poolAPR}}%</div>
-          <div>daily: {{pool.daily}}%</div>
-          <div>{{pool.name}} Balance: {{this.formatNumber(this.getBalanceNumber(pool.stakingTokenBalance, pool.lpDecimals))}}</div>
-          <div>rewards: {{this.formatNumber(pool.rewards)}}</div>
-         
-          <div v-if="isPoolApproved(pool.userAllowance)">
-            <input  type="number" v-model.number="amountToDeposit">
-            <button @click="withdrawToken(pool.pid, 0, pool.address)">HARVEST</button>
-            <button @click="depositToken(pool.pid, amountToDeposit, pool.address)">STAKE</button>
-            <button @click="withdrawToken(pool.pid, amountToDeposit, pool.address)">WITHDRAW</button>
-          </div>
-          <button v-else @click="approveToken(pool.address)" >APPROVE {{pool.name}}</button>
+<h2>FARMS</h2>
+  <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
+      <div class="col" v-for="(pool) in poolInfos" :key="pool.pid" >
+          <FarmCard 
+          :poolName="pool.name" 
+          :allocPoint="pool.allocPoint"
+          :daily="pool.daily"
+          :pid="pool.pid"
+          :poolAddress="pool.address"
+          :poolAPR="pool.poolAPR"
+          :rewards="pool.rewards"
+          :stakedAmount="pool.stakedAmount"
+          :stakedAmountUSD="pool.stakedAmountUSD"
+          :tvl="pool.tvl"
+          :userAllowance="pool.userAllowance"
+          :lpDecimals="pool.lpDecimals"
+          :stakingTokenBalance="pool.stakingTokenBalance"
+          @deposit-token="this.depositToken"
+          @withdraw-token="this.withdrawToken"
+          @approve-token="this.approveToken"
+          />
       </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+import FarmCard from '../components/farmcard/FarmCard.vue'
 import {deposit, withdraw } from "../service/masterChefService"
 import {approveTokenForMasterChef } from "../service/poolService"
 import {callPoolAnalytics} from "../utils/callHelpers"
-import {formatNumber, getBalanceNumber, shortenNumber} from "../utils/format"
 
 
 export default {
     name: "Farms",
+    components: {
+       FarmCard
+    },
     data(){
         return {
             amountToDeposit: 100,
             poolInfos: [],
-            data: {},
         }
     },
     computed: {
@@ -51,18 +56,6 @@ export default {
         }
     },
     methods: {
-        isPoolApproved(allowance){
-            return allowance > 0
-        },
-        formatNumber(num){
-            return formatNumber(num)
-        },
-        getBalanceNumber(num, decimals){
-            return getBalanceNumber(num, decimals)
-        },
-        shortenNumber(num){
-            return shortenNumber(num)
-        },
         async updatePoolInfo(tokenAddress){
             const poolIndex = this.poolInfos.findIndex((pool => pool.address == tokenAddress))
             const poolInfo = await callPoolAnalytics(this.pools[poolIndex], this.userAddress)
@@ -90,11 +83,11 @@ export default {
                 const poolInfo = await callPoolAnalytics(pool, this.userAddress)
                 const extended = Object.assign(pool, poolInfo)
                 this.poolInfos.push(extended)
-            });
+            })
         }
     },
     async created(){
-        await this.buildPoolInfo();
+        await this.buildPoolInfo()
     }
 }
 </script>

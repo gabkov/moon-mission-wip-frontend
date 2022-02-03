@@ -8,7 +8,7 @@
 
 <script>
 import Sidebar from "@/components/sidebar/Sidebar";
-import NavBar from "./components/navbar/NavBar";
+import NavBar from "@/components/navbar/NavBar";
 
 export default {
   name: "App",

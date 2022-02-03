@@ -4,8 +4,8 @@
       <SidebarLink :menuOpen="this.menuOpen" to="/" icon="fas fa-home">Home</SidebarLink>
       <SidebarLink :menuOpen="this.menuOpen" to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
       <SidebarLink :menuOpen="this.menuOpen" to="/farms" icon="fas fa-chart-bar">Farms</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink>
+      <!-- <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
+      <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink> -->
     </div>
 
     <span class="collapse-icon" :class="{ 'rotate-180': menuOpen }" @click="$emit('toggle-menu')">

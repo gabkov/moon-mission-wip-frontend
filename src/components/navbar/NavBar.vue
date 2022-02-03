@@ -23,6 +23,9 @@ import {loginUser, logoutUser} from "@/service/loginService"
 
 export default {
   name: 'NavBar',
+  props: {
+    menuOpen: Boolean
+  },
   setup() {
     const store = useStore()
     const $moralis = inject('$moralis')
