@@ -10,14 +10,21 @@
       <div>daily: {{ daily }}%</div>
       <div>{{ poolName }} Balance: {{this.formatNumber(this.getBalanceNumber(stakingTokenBalance, lpDecimals))}}</div>
       <div>rewards: {{ this.formatNumber(rewards) }}</div>
-
-      <div v-if="isPoolApproved(userAllowance)">
-        <input  type="number" v-model.number="amountToDeposit">
-        <button @click="$emit('withdraw-token', pid, 0, poolAddress)">HARVEST</button>
-        <button @click="$emit('deposit-token', pid, amountToDeposit, poolAddress)">STAKE</button>
-        <button @click="$emit('withdraw-token', pid, amountToDeposit, poolAddress)">WITHDRAW</button>
+      <div v-if="isAuthenticated">
+        <div v-if="isPoolApproved(userAllowance)">
+          <input  type="number" v-model.number="amountToDeposit">
+          <button @click="$emit('withdraw-token', pid, 0, poolAddress)">HARVEST</button>
+          <button @click="$emit('deposit-token', pid, amountToDeposit, poolAddress)">STAKE</button>
+          <button @click="$emit('withdraw-token', pid, amountToDeposit, poolAddress)">WITHDRAW</button>
+        </div>
+        <button v-else @click="$emit('approve-token', poolAddress)" >APPROVE {{poolName}}</button>
       </div>
-      <button v-else @click="$emit('approve-token', poolAddress)" >APPROVE {{poolName}}</button>
+      <div class="card-text" v-else>
+        <button v-if="!userLoading" @click="login" >CONNECT WALLET</button>
+        <div v-else class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +32,8 @@
 <script>
 import {formatNumber, getBalanceNumber, shortenNumber} from "@/utils/format"
 import BigNumber from 'bignumber.js';
+import { mapGetters } from "vuex"
+import {loginUser} from "@/service/loginService"
 
 export default {
   name: "FarmCard",
@@ -48,7 +57,22 @@ export default {
       amountToDeposit: 100
     }
   },
+  computed: {
+        ...mapGetters({
+            user: "getUser",
+            userAddress: "getUserAddress",
+            userLoading: "getUserLoading",
+            chainId: "getChainId",
+            pools: "getPools"
+        }),
+        isAuthenticated(){
+            return Object.keys(this.user).length > 0
+        }
+    },
   methods: {
+    async login(){
+      await loginUser()
+    },
     isPoolApproved(allowance) {
       return allowance > 0;
     },

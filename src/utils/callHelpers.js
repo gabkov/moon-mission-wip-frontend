@@ -9,8 +9,6 @@ import preFuelAbi from "../abi/PreFuelToken.json"
 
 const constants = CONSTANTS[store.state.chainId] 
 
-// PRESALE INFO ATIRASA MULTICALLRA
-
 async function callPreSaleInfo(account){
   const calls = [
     {
@@ -75,28 +73,12 @@ async function callPreSaleInfo(account){
 }
 
 async function callPoolAnalytics( pool, account) {
-  const calls = [
+  const userRelatedCalls = [
     {
       address:  constants.MASTERCHEF,
       name:  'userInfo',
       abi:  masterChefAbi,
       params: [pool.pid, account]
-    },
-    {
-      address: constants.MASTERCHEF,
-      name: 'poolInfo',
-      abi: masterChefAbi,
-      params: [pool.pid]
-    },
-    {
-      address: constants.MASTERCHEF,
-      name: 'totalAllocPoint',
-      abi: masterChefAbi
-    },
-    {
-      address: constants.MASTERCHEF,
-      name: 'fuelPerBlock',
-      abi: masterChefAbi
     },
     {
       address: pool.address,
@@ -109,10 +91,20 @@ async function callPoolAnalytics( pool, account) {
       name: 'pendingFuel',
       abi: masterChefAbi,
       params: [pool.pid, account]
-    }
+    },
+    {
+      address: pool.address,
+      abi: ERC20,
+      name: 'allowance',
+      params: [account, constants.MASTERCHEF]
+    },
   ]
-  const [stakedInfo, poolInfo, totalAllocPoint, fuelPerBlock, stakingTokenBalance, pendingFuel] = await multicall(calls)
-
+  // Initialise these values in case user not logged in the basic infos still available
+  let stakedInfo = {amount: new BigNumber(0)}
+  let [stakingTokenBalance, pendingFuel, userAllowance] =  new Array(4).fill(new BigNumber(0));
+  if(account !== null){
+      [stakedInfo, stakingTokenBalance, pendingFuel, userAllowance] = await multicall(userRelatedCalls)
+  }
   // Calling liquidity pair balances for amount in stable
   const liquidityCalls = [
     {
@@ -132,12 +124,6 @@ async function callPoolAnalytics( pool, account) {
       name: 'totalSupply'
     },
     {
-      address: pool.address,
-      abi: ERC20,
-      name: 'allowance',
-      params: [account, constants.MASTERCHEF]
-    },
-    {
       address: pool.quoteTokenAddress,
       name: 'balanceOf',
       abi: ERC20,
@@ -152,10 +138,26 @@ async function callPoolAnalytics( pool, account) {
       address: constants.FUEL_TOKEN_ADDRESS,
       name: 'decimals',
       abi: ERC20
+    },
+    {
+      address: constants.MASTERCHEF,
+      name: 'poolInfo',
+      abi: masterChefAbi,
+      params: [pool.pid]
+    },
+    {
+      address: constants.MASTERCHEF,
+      name: 'totalAllocPoint',
+      abi: masterChefAbi
+    },
+    {
+      address: constants.MASTERCHEF,
+      name: 'fuelPerBlock',
+      abi: masterChefAbi
     }
   ]
 
-  const [lpSupplyPool, lpDecimals, lpTotalSupply, userAllowance, quoteBalance, quoteDecimals, fuelDecimals] = await multicall(liquidityCalls)
+  const [lpSupplyPool, lpDecimals, lpTotalSupply, quoteBalance, quoteDecimals, fuelDecimals, poolInfo, totalAllocPoint, fuelPerBlock] = await multicall(liquidityCalls)
   const lpSupply = lpSupplyPool.lpSupply
   const stakedAmount = stakedInfo.amount
 

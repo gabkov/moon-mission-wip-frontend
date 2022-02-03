@@ -80,7 +80,7 @@ export default {
 
         async buildPoolInfo(){
             this.pools.forEach(async pool => {
-                const poolInfo = await callPoolAnalytics(pool, this.userAddress)
+                const poolInfo = await callPoolAnalytics(pool, Object.keys(this.user).length > 0 ? this.userAddress : null)
                 const extended = Object.assign(pool, poolInfo)
                 this.poolInfos.push(extended)
             })
