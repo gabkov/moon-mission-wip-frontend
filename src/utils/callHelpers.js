@@ -5,32 +5,96 @@ import masterChefAbi from "../abi/MasterChefAbi.json"
 import ERC20 from "../abi/ERC20.json"
 import {CONSTANTS } from '../consts/constants'
 import store from '../store'
+import preFuelAbi from "../abi/PreFuelToken.json"
 
 const constants = CONSTANTS[store.state.chainId] 
 
 // PRESALE INFO ATIRASA MULTICALLRA
 
-async function callPoolAnalytics(mcAddress, pool, account) {
+async function callPreSaleInfo(account){
   const calls = [
     {
-      address:  mcAddress,
+      address:  constants.PRE_FUEL_TOKEN_CONTRACT,
+      name:  'balanceOf',
+      abi:  preFuelAbi,
+      params: [account]
+    },
+    {
+      address:  constants.PRE_FUEL_TOKEN_CONTRACT,
+      name:  'allowance',
+      abi:  preFuelAbi,
+      params: [account, constants.FUEL_REEDEM_CONTRACT]
+    },
+    {
+      address: constants.PRE_FUEL_TOKEN_CONTRACT,
+      name: 'decimals',
+      abi: ERC20
+    },
+    {
+      address:  constants.BUSD_TOKEN_CONTRACT,
+      name:  'balanceOf',
+      abi:  ERC20,
+      params: [account]
+    },
+    {
+      address:  constants.BUSD_TOKEN_CONTRACT,
+      name:  'allowance',
+      abi:  ERC20,
+      params: [account, constants.PRE_FUEL_TOKEN_CONTRACT]
+    },
+    {
+      address: constants.BUSD_TOKEN_CONTRACT,
+      name: 'decimals',
+      abi: ERC20
+    },
+    {
+      address:  constants.FUEL_TOKEN_ADDRESS,
+      name:  'balanceOf',
+      abi:  ERC20,
+      params: [account]
+    },
+    {
+      address: constants.FUEL_TOKEN_ADDRESS,
+      name: 'decimals',
+      abi: ERC20
+    },
+  ]
+
+  const [preFuelBalance, preFuelAllowance, preFuelDecimals, busdBalance, busdAllowance, busdDecimals, fuelBalance, fuelDecimals] = await multicall(calls)
+
+  return {
+    preFuelBalance: new BigNumber(preFuelBalance.toString()), 
+    preFuelAllowance: new BigNumber(preFuelAllowance.toString()),
+    preFuelDecimals: new BigNumber(preFuelDecimals.toString()).toNumber(),
+    busdBalance: new BigNumber(busdBalance.toString()), 
+    busdAllowance: new BigNumber(busdAllowance.toString()), 
+    busdDecimals: new BigNumber(busdDecimals.toString()).toNumber(),
+    fuelBalance: new BigNumber(fuelBalance.toString()),
+    fuelDecimals: new BigNumber(fuelDecimals.toString()).toNumber(),
+  }
+}
+
+async function callPoolAnalytics( pool, account) {
+  const calls = [
+    {
+      address:  constants.MASTERCHEF,
       name:  'userInfo',
       abi:  masterChefAbi,
       params: [pool.pid, account]
     },
     {
-      address: mcAddress,
+      address: constants.MASTERCHEF,
       name: 'poolInfo',
       abi: masterChefAbi,
       params: [pool.pid]
     },
     {
-      address: mcAddress,
+      address: constants.MASTERCHEF,
       name: 'totalAllocPoint',
       abi: masterChefAbi
     },
     {
-      address: mcAddress,
+      address: constants.MASTERCHEF,
       name: 'fuelPerBlock',
       abi: masterChefAbi
     },
@@ -41,7 +105,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
       params: [account]
     },
     {
-      address: mcAddress,
+      address: constants.MASTERCHEF,
       name: 'pendingFuel',
       abi: masterChefAbi,
       params: [pool.pid, account]
@@ -52,7 +116,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
   // Calling liquidity pair balances for amount in stable
   const liquidityCalls = [
     {
-      address: mcAddress,
+      address: constants.MASTERCHEF,
       name: 'poolInfo',
       abi: masterChefAbi,
       params: [pool.pid]
@@ -71,7 +135,7 @@ async function callPoolAnalytics(mcAddress, pool, account) {
       address: pool.address,
       abi: ERC20,
       name: 'allowance',
-      params: [account, mcAddress]
+      params: [account, constants.MASTERCHEF]
     },
     {
       address: pool.quoteTokenAddress,
@@ -174,5 +238,6 @@ async function callPoolAnalytics(mcAddress, pool, account) {
 }
 
 export {
-  callPoolAnalytics
+  callPoolAnalytics,
+  callPreSaleInfo
 }

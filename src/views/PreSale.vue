@@ -8,10 +8,10 @@
           <h5 class="card-header">BUY PREFUEL</h5>
           <div class="card-body">
             <div v-if="isAuthenticated" class="card-text">
-              <span>PREFUEL: {{preFuelBalance}}</span>
-              <span> BUSD: {{busdBalance}}</span>
+              <span>PREFUEL: {{this.formatNumber(this.getBalanceNumber(userPreSaleData.preFuelBalance, userPreSaleData.preFuelDecimals))}}</span>
+              <span> BUSD: {{this.formatNumber(this.getBalanceNumber(userPreSaleData.busdBalance, userPreSaleData.busdDecimals))}}</span>
               <input type="number" v-model.number="amountToBuy">
-              <button v-if="userApprovedBusd" @click="buyPreFuel">BUY PREFUEL</button>
+              <button v-if="isApprovedBusdForPreSale(userPreSaleData.busdAllowance)" @click="buyPreFuel">BUY PREFUEL</button>
               <button v-else @click="approveBusdForPreSale">APPROVE BUSD</button>
             </div>
             <div class="card-text" v-else>
@@ -28,8 +28,8 @@
           <h5 class="card-header">SWAP FOR FUEL</h5>
           <div class="card-body">
             <div v-if="isAuthenticated" class="card-text">
-              <span> FUEL: {{userFuelBalance}}</span>
-              <button v-if="userApprovedPreFuel" @click="swapPreFuelForFuel" >SWAP PREFUEL TO FUEL</button>
+              <span> FUEL: {{this.formatNumber(this.getBalanceNumber(userPreSaleData.fuelBalance, userPreSaleData.fuelDecimals))}}</span>
+              <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" >SWAP PREFUEL TO FUEL</button>
               <button v-else @click="approvePreFuelForSwap">APPROVE PREFUEL</button>
             </div>
             <div class="card-text" v-else>
@@ -48,14 +48,13 @@
 <script>
 // @ is an alias to /src
 import { mapGetters } from "vuex"
-import { preFuelBalanceOf, buyPreFuel, isApprovedPreFuelForSwap, approvePreFuelForSwap} from "../service/preFuelService"
-import {busdBalanceOf, isApprovedBusdForPreSale, approveBusdForPreSale} from "../service/busdService"
-import {fuelBalanceOf} from "../service/fuelService"
+import { buyPreFuel, approvePreFuelForSwap} from "../service/preFuelService"
+import {approveBusdForPreSale} from "../service/busdService"
 import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
 import Moralis from '../plugins/moralis'
-import {preFuelContract, busdContract, fuelReedemContract} from "../service/contracts"
-import {CONSTANTS} from "../consts/constants"
+import { callPreSaleInfo } from '../utils/callHelpers'
+import {formatNumber, getBalanceNumber} from "../utils/format"
 
 
 export default {
@@ -63,11 +62,7 @@ export default {
   data(){
     return {
       amountToBuy: 50,
-      preFuelBalance: 0,
-      busdBalance: 0,
-      userApprovedBusd: false,
-      userApprovedPreFuel: false,
-      userFuelBalance: 0
+      userPreSaleData: {}
     }
   },
   computed: {
@@ -85,62 +80,39 @@ export default {
     async login(){
       await loginUser()
     },
+    formatNumber(num){
+      return formatNumber(num)
+    },
+    getBalanceNumber(num, decimals){
+      return getBalanceNumber(num, decimals)
+    },
+    isApprovedBusdForPreSale(allowance){
+      return allowance > 0
+    },
+    isApprovedPreFuelForSwap(allowance){
+      return allowance > 0
+    },
     async approveBusdForPreSale(){
       await approveBusdForPreSale()
-      busdContract.on("Approval", (owner, spender) => {
-
-        console.log(`${owner} approved pre-sale contract ${spender} to spend BUSD`)
-
-        if(this.userAddress === owner.toLowerCase() || spender === CONSTANTS[this.chainId].PRE_FUEL_TOKEN_CONTRACT){
-          this.userApprovedBusd = true
-        }
-      });
-
+      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
     },
     async buyPreFuel(){
       await buyPreFuel(this.amountToBuy)
-      preFuelContract.on("PreFuelPurchased", async (from, to, boughtAmount) => {
-
-        console.log(`${boughtAmount} pre fuel purchased by ${from} for ${to} BUSD`);
-        
-        if(this.userAddress === from.toLowerCase()){
-            this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
-            this.busdBalance = await busdBalanceOf(this.userAddress)
-        }
-      });
+      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
     
     },
     async approvePreFuelForSwap(){
       await approvePreFuelForSwap()
-      preFuelContract.on("Approval", (owner, spender) => {
-
-        console.log(`${owner} approved pre-sale contract ${spender} to spend PreFuel`)
-
-        if(this.userAddress === owner.toLowerCase() || spender === CONSTANTS[this.chainId].PRE_FUEL_TOKEN_CONTRACT){
-          this.userApprovedPreFuel = true
-        }
-      });
+      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
     },
     async swapPreFuelForFuel(){
       await swapPreFuelForFuel()
-      fuelReedemContract.on("PreFuelToFuel", async (sender, amount) => {
-
-        console.log(`${sender} swapped ${amount} PreFuel for Fuel yaaay`)
-
-        if(this.userAddress === sender.toLowerCase()){
-          this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
-          this.userFuelBalance = await fuelBalanceOf(this.userAddress)
-        }
-      });
+      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
     },
   },  
   async created(){
     if(Moralis.User.current()){
-      this.preFuelBalance = await preFuelBalanceOf(this.userAddress)
-      this.busdBalance = await busdBalanceOf(this.userAddress)
-      this.userApprovedBusd = await isApprovedBusdForPreSale();
-      this.userFuelBalance = await fuelBalanceOf(this.userAddress)
-      this.userApprovedPreFuel = await isApprovedPreFuelForSwap()
+      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
     }
   }
 }

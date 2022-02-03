@@ -13,7 +13,7 @@ function getHumanReadableNumber  (amount, decimal = 18)  {
 }
 
 function getBigNumber(amount, decimal = 18)  {
-  return new BigNumber(amount).times(new BigNumber(10).pow(decimal))
+  return ethers.utils.parseUnits(amount.toString(), decimal);
 }
 
 function getRawBalanceNumber(balance, decimals = 18)  {
