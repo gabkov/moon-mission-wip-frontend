@@ -27,11 +27,7 @@ import {deposit, withdraw } from "../service/masterChefService"
 import {approveTokenForMasterChef } from "../service/poolService"
 import {callPoolAnalytics} from "../utils/callHelpers"
 import {formatNumber, getBalanceNumber, shortenNumber} from "../utils/format"
-import {CONSTANTS } from '../consts/constants'
-import store from '../store'
 
-
-const constants = CONSTANTS[store.state.chainId] 
 
 export default {
     name: "Farms",
@@ -40,7 +36,6 @@ export default {
             amountToDeposit: 100,
             poolInfos: [],
             data: {},
-        
         }
     },
     computed: {
@@ -68,30 +63,26 @@ export default {
         shortenNumber(num){
             return shortenNumber(num)
         },
-        async updatePoolInfo(receipt, eventName, tokenAddress){
-            const event = receipt.events.filter(event => event.event === eventName)
-            const sender = event[0].args[0]
-             if (sender.toLowerCase() === this.userAddress){
-                 const poolIndex = this.poolInfos.findIndex((pool => pool.address == tokenAddress));
-                 const poolInfo = await callPoolAnalytics(constants.MASTERCHEF, this.pools[poolIndex], this.userAddress)
-                 const extended = Object.assign(this.pools[poolIndex], poolInfo)
-                 this.poolInfos[poolIndex] = extended
-             }
+        async updatePoolInfo(tokenAddress){
+            const poolIndex = this.poolInfos.findIndex((pool => pool.address == tokenAddress))
+            const poolInfo = await callPoolAnalytics(this.pools[poolIndex], this.userAddress)
+            const extended = Object.assign(this.pools[poolIndex], poolInfo)
+            this.poolInfos[poolIndex] = extended
         },
 
         async depositToken(pid, amount, tokenAddress){
-            const receipt = await deposit(pid, amount)
-            await this.updatePoolInfo(receipt, "Deposit", tokenAddress)
+            await deposit(pid, amount)
+            await this.updatePoolInfo(tokenAddress)
         },
 
         async withdrawToken(pid, amount, tokenAddress){
-            const receipt = await withdraw(pid, amount)
-            await this.updatePoolInfo(receipt, "Withdraw", tokenAddress)
+            await withdraw(pid, amount)
+            await this.updatePoolInfo(tokenAddress)
         },
 
         async approveToken(tokenAddress){
-            const receipt = await approveTokenForMasterChef(tokenAddress)
-            await this.updatePoolInfo(receipt, "Approval", tokenAddress)
+            await approveTokenForMasterChef(tokenAddress)
+            await this.updatePoolInfo(tokenAddress)
         },
 
         async buildPoolInfo(){
