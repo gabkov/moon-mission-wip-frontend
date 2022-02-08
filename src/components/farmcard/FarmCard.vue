@@ -60,10 +60,7 @@ export default {
   computed: {
         ...mapGetters({
             user: "getUser",
-            userAddress: "getUserAddress",
             userLoading: "getUserLoading",
-            chainId: "getChainId",
-            pools: "getPools"
         }),
         isAuthenticated(){
             return Object.keys(this.user).length > 0

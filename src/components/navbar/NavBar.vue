@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { onMounted, inject, computed } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 import {loginUser, logoutUser} from "@/service/loginService"
 
@@ -28,9 +28,6 @@ export default {
   },
   setup() {
     const store = useStore()
-    const $moralis = inject('$moralis')
-
-    const setUser = (payload) => store.commit('setUser', payload)
     
     const login = async () => {
       await loginUser()
@@ -39,17 +36,6 @@ export default {
     const logout = async () => {
       await logoutUser()
     }
-
-    const handleCurrentUser = () => {
-      const user = $moralis.User.current()
-      if (user) {
-        setUser(user)
-      }
-    }
-
-    onMounted(() => {
-      handleCurrentUser()
-    })
 
     return {
       login,
