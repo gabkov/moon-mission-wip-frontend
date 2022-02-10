@@ -1,11 +1,14 @@
 import { createStore } from 'vuex'
+import { POOLS } from '../consts/pools'
 
 
 const store = createStore({
   state () {
     return {
       user: {},
-      userLoading: false
+      userLoading: false,
+      chainId: process.env.VUE_APP_CHAIN_ID,
+      pools: POOLS[process.env.VUE_APP_CHAIN_ID]
     }
   },
   mutations: {
@@ -14,12 +17,14 @@ const store = createStore({
     },
     setUserLoading(state, payload){
       state.userLoading = payload
-    }
+    },
   },
   getters: {
     getUser : state => state.user,
     getUserAddress: state => state.user.get('ethAddress'),
-    getUserLoading: state => state.userLoading
+    getUserLoading: state => state.userLoading,
+    getChainId: state => state.chainId,
+    getPools: state => state.pools
   }
 })
 

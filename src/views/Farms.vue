@@ -1,103 +1,55 @@
 <template>
-  <div >
-      <div v-for="(item, index) in poolInfos" :key="item.pid" >
-          <div>LP TOKEN: {{item.lpToken}}</div>
-          <div>ALLOCATION: {{item.allocPoint}}</div>
-          <div>LAST REWARD BLOCK: {{item.lastRewardBlock}}</div>
-          <div>ACC FUEL PER SHARE: {{item.accFuelPerShare}}</div>
-          <div>LP SUPPLY: {{item.lpSupply}}</div>
-          <div>DEPOSIT FEE: {{item.depositFeeBP}}</div>
-          <div v-if="item.isApproved">
-                <span>PENDING FUEL: {{item.pendingFuel}}</span>
-                <span> STAKED {{ item.userPoolInfo.amount}}</span>
-                <span> BALANCE {{POOLS[CHAIN_ID][index].name}} {{item.tokenBalance}} </span>
-                <input  type="number" v-model.number="amountToDeposit">
-          </div>
-          <div v-if="item.isApproved">
-            <button @click="withdrawToken(index, 0, item.lpToken)">HARVEST</button>
-            <button @click="depositToken(index, amountToDeposit, item.lpToken)">STAKE</button>
-            <button @click="withdrawToken(index, amountToDeposit, item.lpToken)">WITHDRAW</button>
-          </div>
-          <button v-else @click="approveToken(item.lpToken)" >APPROVE {{POOLS[CHAIN_ID][index].name}}</button>
-      </div>
+  <h2>FARMS</h2>
+  <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
+    <div class="col" v-for="pool in this.poolInfos" :key="pool.pid">
+      <FarmCard
+        :poolName="pool.name"
+        :allocPoint="pool.allocPoint"
+        :daily="pool.daily"
+        :pid="pool.pid"
+        :poolAddress="pool.address"
+        :poolAPR="pool.poolAPR"
+        :rewards="pool.rewards"
+        :stakedAmount="pool.stakedAmount"
+        :stakedAmountUSD="pool.stakedAmountUSD"
+        :tvl="pool.tvl"
+        :userAllowance="pool.userAllowance"
+        :lpDecimals="pool.lpDecimals"
+        :stakingTokenBalance="pool.stakingTokenBalance"
+        @deposit-token="this.depositToken"
+        @withdraw-token="this.withdrawToken"
+        @approve-token="this.approveToken"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import {deposit, getPoolInfo, poolLength, getUserPoolInfo, withdraw, pendingFuelForUser} from "../service/masterChefService"
-import {isApprovedMasterChef, approveTokenForMasterChef, getTokenBalanceForUser} from "../service/poolService"
-import { POOLS } from "../consts/pools"
-import {CHAIN_ID} from "../consts/constants"
+import FarmCard from "../components/farmcard/FarmCard.vue";
 
 export default {
-    name: "Farms",
-    data(){
-        return {
-            amountToDeposit: 100,
-            POOLS,
-            CHAIN_ID,
-            poolInfos: []
-        }
+  name: "Farms",
+  components: {
+    FarmCard,
+  },
+  props: {
+    poolInfos: Object,
+  },
+  methods: {
+    async depositToken(pid, amount, tokenAddress) {
+      this.$emit('deposit-token', pid, amount, tokenAddress)
     },
-    computed: {
-        ...mapGetters({
-            user: "getUser",
-            userAddress: "getUserAddress",
-            userLoading: "getUserLoading"
-        }),
-        isAuthenticated(){
-            return Object.keys(this.user).length > 0
-        }
+
+    async withdrawToken(pid, amount, tokenAddress) {
+      this.$emit('withdraw-token', pid, amount, tokenAddress)
     },
-    methods: {
-        async updatePoolInfo(receipt, eventName, pid, tokenAddress){
-            const event = receipt.events.filter(event => event.event === eventName)
-            const sender = event[0].args[0]
-             if (sender.toLowerCase() === this.userAddress){
-                 const poolIndex = this.poolInfos.findIndex((pool => pool.lpToken == tokenAddress));
-                 this.poolInfos[poolIndex].tokenBalance = await getTokenBalanceForUser(tokenAddress, this.userAddress)
-                 this.poolInfos[poolIndex].userPoolInfo = await getUserPoolInfo(pid, this.userAddress)
-                 this.poolInfos[poolIndex].pendingFuel = await pendingFuelForUser(pid, this.userAddress)
-             }
-        },
-        async depositToken(pid, amount, tokenAddress){
-            const receipt = await deposit(pid, amount)
-            await this.updatePoolInfo(receipt, "Deposit", pid, tokenAddress)
-        },
-        async withdrawToken(pid, amount, tokenAddress){
-            const receipt = await withdraw(pid, amount)
-            await this.updatePoolInfo(receipt, "Withdraw", pid, tokenAddress)
-        },
-        async approveToken(tokenAddress){
-            const receipt = await approveTokenForMasterChef(tokenAddress)
-            const sender = receipt.events[0].args[0]
-            if (sender.toLowerCase() === this.userAddress){
-                const poolIndex = this.poolInfos.findIndex((pool => pool.lpToken == tokenAddress));
-                this.poolInfos[poolIndex].isApproved = true
-            }  
-        },
-        async buildPoolInfo(){
-            for (let index = 0; index < await poolLength(); index++) {
-                const poolInfo = await getPoolInfo(index)
-                const extended = Object.assign(
-                    {
-                        isApproved: await isApprovedMasterChef(poolInfo.lpToken), 
-                        tokenBalance: await getTokenBalanceForUser(poolInfo.lpToken, this.userAddress),
-                        userPoolInfo: await getUserPoolInfo(index, this.userAddress),
-                        pendingFuel : await pendingFuelForUser(index, this.userAddress)
-                    }, poolInfo)
-                this.poolInfos.push(extended)
-            }
-        }
+
+    async approveToken(tokenAddress) {
+      this.$emit('approve-token', tokenAddress)
     },
-    async created(){
-        await this.buildPoolInfo();
-    }
-}
+  },
+  emits: ["deposit-token", "withdraw-token", "approve-token"],
+};
 </script>
 
-
-<style scoped>
-
-</style>
+<style scoped></style>
