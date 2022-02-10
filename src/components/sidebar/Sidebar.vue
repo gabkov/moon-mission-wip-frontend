@@ -1,17 +1,18 @@
 <template>
-  <div class="sidebar" :style="this.menuOpen ? {width: '0px', padding: 0}: {width: '180px'}">
-    <div v-if="!menuOpen">
-      <SidebarLink :menuOpen="this.menuOpen" to="/" icon="fas fa-home">Home</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/farms" icon="fas fa-chart-bar">Farms</SidebarLink>
-      <!-- <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink> -->
-    </div>
+  <div class="fixed flex flex-col top-14 left-0 w-14 hover:w-48 md:w-48 bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
+    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+      <ul class="flex flex-col py-4 space-y-2">
 
-    <span class="collapse-icon" :class="{ 'rotate-180': menuOpen }" @click="$emit('toggle-menu')">
-      <i class="fas fa-angle-double-left" />
-    </span>
+        <SidebarLink to="/" menuOption="Home"/>
+        <SidebarLink to="/pre-sale" menuOption="Pre-sale"/>
+        <SidebarLink to="/farms" menuOption="Farms"/>
+
+      </ul>
+      <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
+    </div>
   </div>
+
+
 </template>
 
 <script>
@@ -34,41 +35,5 @@ export default {
 </style>
 
 <style scoped>
-.sidebar {
-  color: white;
-  background-color: var(--sidebar-bg-color);
 
-  float: left;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  padding: 0.5em;
-
-  transition: 0.3s ease;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar h1 {
-  height: 2.5em;
-}
-
-.collapse-icon {
-  position: absolute;
-  bottom: 0;
-  padding: 0.75em;
-
-  color: rgba(255, 255, 255, 0.7);
-
-  transition: 0.2s linear;
-}
-
-.rotate-180 {
-  transform: rotate(180deg);
-  transition: 0.2s linear;
-  color: #212529
-}
 </style>
