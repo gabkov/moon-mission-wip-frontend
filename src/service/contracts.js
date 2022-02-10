@@ -6,13 +6,20 @@ import ERC20 from "../abi/ERC20.json"
 import {ethers} from 'ethers'
 import store from '../store'
 import {CONSTANTS} from "../consts/constants"
+import Moralis from '../plugins/moralis'
+
 
 const constants = CONSTANTS[store.state.chainId] 
 
 // putting the contracts initalizations to a separate file so it is easier just to import from here instead of reinitializing everywhere
+let signer = null
+if (!Moralis.User.current()) {
+    signer = new ethers.providers.JsonRpcProvider(constants.NODE_URL);
+}else{
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+}
 
-const provider = new ethers.providers.Web3Provider(window.ethereum);
-const signer = provider.getSigner();
 
 const preFuelContract = new ethers.Contract(
     constants.PRE_FUEL_TOKEN_CONTRACT,
