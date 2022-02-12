@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SidebarLink from './SidebarLink'
+import SidebarLink from './SidebarLink.vue'
 
 export default {
   props: {

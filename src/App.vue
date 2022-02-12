@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import Sidebar from "@/components/sidebar/Sidebar"
-import NavBar from "@/components/navbar/NavBar"
+import Sidebar from "@/components/sidebar/Sidebar.vue"
+import NavBar from "@/components/navbar/NavBar.vue"
 import { callPoolAnalytics } from "./utils/callHelpers"
 import { mapGetters, mapMutations } from "vuex"
 import { deposit, withdraw } from "./service/masterChefService"

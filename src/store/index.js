@@ -7,8 +7,8 @@ const store = createStore({
     return {
       user: {},
       userLoading: false,
-      chainId: process.env.VUE_APP_CHAIN_ID,
-      pools: POOLS[process.env.VUE_APP_CHAIN_ID]
+      chainId: import.meta.env.VITE_APP_CHAIN_ID,
+      pools: POOLS[import.meta.env.VITE_APP_CHAIN_ID]
     }
   },
   mutations: {

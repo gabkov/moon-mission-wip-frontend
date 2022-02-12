@@ -2,7 +2,7 @@
 
   <div class="bg-gray-800 shadow-lg rounded-lg flex flex-col justify-between p-5 border-b-4 border-gray-600 text-white font-medium group">
     <div class="py-1 flex items-center justify-between">
-      <img class="w-12" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+      <img class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
       <div class="text-center">
         <div>FUEL</div>
         <div class="bg-violet-600 shadow-md shadow-purple-800/80 rounded-full">5X</div>
