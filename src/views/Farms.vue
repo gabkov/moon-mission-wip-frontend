@@ -1,26 +1,25 @@
 <template>
   <h2>FARMS</h2>
-  <div class="row row-cols-1 row-cols-sm-3 g-3 justify-content-center">
-    <div class="col" v-for="pool in this.poolInfos" :key="pool.pid">
-      <FarmCard
-        :poolName="pool.name"
-        :allocPoint="pool.allocPoint"
-        :daily="pool.daily"
-        :pid="pool.pid"
-        :poolAddress="pool.address"
-        :poolAPR="pool.poolAPR"
-        :rewards="pool.rewards"
-        :stakedAmount="pool.stakedAmount"
-        :stakedAmountUSD="pool.stakedAmountUSD"
-        :tvl="pool.tvl"
-        :userAllowance="pool.userAllowance"
-        :lpDecimals="pool.lpDecimals"
-        :stakingTokenBalance="pool.stakingTokenBalance"
-        @deposit-token="this.depositToken"
-        @withdraw-token="this.withdrawToken"
-        @approve-token="this.approveToken"
-      />
-    </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
+    <FarmCard
+      v-for="pool in this.poolInfos" :key="pool.pid"
+      :poolName="pool.name"
+      :allocPoint="pool.allocPoint"
+      :daily="pool.daily"
+      :pid="pool.pid"
+      :poolAddress="pool.address"
+      :poolAPR="pool.poolAPR"
+      :rewards="pool.rewards"
+      :stakedAmount="pool.stakedAmount"
+      :stakedAmountUSD="pool.stakedAmountUSD"
+      :tvl="pool.tvl"
+      :userAllowance="pool.userAllowance"
+      :lpDecimals="pool.lpDecimals"
+      :stakingTokenBalance="pool.stakingTokenBalance"
+      @deposit-token="this.depositToken"
+      @withdraw-token="this.withdrawToken"
+      @approve-token="this.approveToken"
+    />
   </div>
 </template>
 
@@ -37,15 +36,15 @@ export default {
   },
   methods: {
     async depositToken(pid, amount, tokenAddress) {
-      this.$emit('deposit-token', pid, amount, tokenAddress)
+      this.$emit("deposit-token", pid, amount, tokenAddress);
     },
 
     async withdrawToken(pid, amount, tokenAddress) {
-      this.$emit('withdraw-token', pid, amount, tokenAddress)
+      this.$emit("withdraw-token", pid, amount, tokenAddress);
     },
 
     async approveToken(tokenAddress) {
-      this.$emit('approve-token', tokenAddress)
+      this.$emit("approve-token", tokenAddress);
     },
   },
   emits: ["deposit-token", "withdraw-token", "approve-token"],

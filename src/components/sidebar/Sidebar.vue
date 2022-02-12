@@ -27,11 +27,7 @@ export default {
 </script>
 
 <style>
-:root {
-  --sidebar-bg-color: #212529;
-  --sidebar-item-hover: #909090;
-  --sidebar-item-active: #495057;;
-}
+
 </style>
 
 <style scoped>
