@@ -8,7 +8,12 @@ const setUserLoading = (payload) => store.commit('setUserLoading', payload)
 
 async function loginUser(){
     setUserLoading(true)
-    await Moralis.authenticate().then(user => setUser(user))
+    try {
+        await Moralis.authenticate().then(user => setUser(user))
+    } catch (error) {
+        setUserLoading(false)
+        return
+    }
     location.reload()
 }
 

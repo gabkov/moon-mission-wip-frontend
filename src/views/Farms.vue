@@ -1,6 +1,5 @@
 <template>
-  <h2>FARMS</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4 gap-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-4">
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :poolName="pool.name"
@@ -16,6 +15,7 @@
       :userAllowance="pool.userAllowance"
       :lpDecimals="pool.lpDecimals"
       :stakingTokenBalance="pool.stakingTokenBalance"
+      :depositFeeBp="pool.depositFeeBp"
       @deposit-token="this.depositToken"
       @withdraw-token="this.withdrawToken"
       @approve-token="this.approveToken"
