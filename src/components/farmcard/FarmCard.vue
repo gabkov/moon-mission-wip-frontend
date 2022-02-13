@@ -2,14 +2,16 @@
   <Modal 
   :showModal="showModal"
   :poolName="poolName"
-  :stakingTokenBalance="this.formatNumber(this.getBalanceNumber(stakingTokenBalance, lpDecimals))"
-  :stakedAmount="this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals))"
+  :stakingTokenBalance="stakingTokenBalance"
+  :stakedAmount="stakedAmount"
   :pid="pid"
   :poolAddress="poolAddress"
   :methodType="methodType"
   @close-modal="showModal=false"
+  @deposit-token="this.depositToken"
+  @withdraw-token="this.withdrawToken"
   />
-  <div class="flex justify-around flex-col self-baseline w-full max-w-sm bg-gray-800 shadow-lg rounded-3xl p-5 border-2 border-gray-600 text-white font-medium">
+  <div class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 shadow-lg rounded-3xl p-5 border-2 border-gray-600 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
@@ -61,11 +63,11 @@
                 <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
               </div>
             </div>
-            <div v-else class="pt-1">
+            <div v-else class="pt-3">
               <button class="w-full btn-primary" @click="$emit('approve-token', poolAddress)" >APPROVE {{poolName}}</button>
             </div>
           </div>
-            <div v-else class="pt-1">
+            <div v-else class="pt-3">
               <button v-if="!userLoading" class="w-full btn-primary animate-pulse" @click="login" >CONNECT WALLET</button>
               <div v-else class="pt-4 flex justify-center items-center" >
                 <svg role="status" class="mr-2 w-9 h-9 animate-spin text-gray-600 fill-blue-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +84,7 @@
         <div v-if="showDetails">
           <div class="pt-2 text-md flex items-center justify-between">
             <div>Total Liquidity:</div>
-            <div>${{ this.formatNumber(tvl) }}</div>
+            <div>${{ this.formatNumber(tvl, 0) }}</div>
           </div>
           <div class="flex flex-col space-y-0.5 text-violet-500">
             <div class="flex">
@@ -102,7 +104,7 @@
 </template>
 
 <script>
-import {formatNumber, getBalanceNumber, shortenNumber} from "@/utils/format"
+import {formatNumber, getBalanceNumber, shortenNumber, getRawBalanceNumber} from "@/utils/format"
 import BigNumber from 'bignumber.js';
 import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
@@ -154,11 +156,14 @@ export default {
     isPoolApproved(allowance) {
       return allowance > 0;
     },
-    formatNumber(num) {
-      return formatNumber(num);
+    formatNumber(num, numberOfDecimalValues) {
+      return formatNumber(num, numberOfDecimalValues);
     },
     getBalanceNumber(num, decimals) {
       return getBalanceNumber(num, decimals);
+    },
+    getRawBalanceNumber(num, decimals) {
+      return getRawBalanceNumber(num, decimals);
     },
     shortenNumber(num) {
       return shortenNumber(num);
@@ -166,8 +171,16 @@ export default {
     openModal(methodType){
         this.methodType = methodType
         this.showModal = true
-    }
+    },
+    async depositToken(pid, amount, tokenAddress) {
+      this.$emit("deposit-token", pid, amount, tokenAddress);
+    },
+
+    async withdrawToken(pid, amount, tokenAddress) {
+      this.$emit("withdraw-token", pid, amount, tokenAddress);
+    },
   },
+  emits: ["deposit-token", "withdraw-token", "approve-token"],
 };
 </script>
 

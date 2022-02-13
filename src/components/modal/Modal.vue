@@ -1,8 +1,8 @@
 <template>
-<div v-show="showModal" class="w-full h-full">
-    <div id="modal-bg" class="z-20 w-full h-full bg-gray-600 top-0 left-0 opacity-40 absolute"></div>
+<div v-show="showModal" class="fixed top-0 left-0 z-50 w-full h-full">
+    <div id="modal-bg" class="w-full h-full bg-gray-600 top-0 left-0 opacity-40 absolute"></div>
     
-    <div id="modal-box" class="z-30 sm:w-full max-w-md flex flex-col gap-2 -translate-y-1/2 p-6 bg-black rounded-3xl top-1/2 left-1/2 -translate-x-1/2 absolute">
+    <div id="modal-box" class="w-11/12 max-w-md flex flex-col gap-2 -translate-y-1/2 p-6 bg-black rounded-3xl top-1/2 left-1/2 -translate-x-1/2 absolute">
         <div class="pb-8 flex items-center justify-between"> 
             <div class="text-xl font-medium">{{methodType === depositToken ? "Stake " : "Unstake "}} {{poolName}}</div>
             <div class="cursor-pointer" @click="$emit('close-modal'); amount=0">
@@ -13,7 +13,7 @@
             <div>
                 <div class="flex items-center justify-between">
                     <div>{{methodType === depositToken ? "Stake " : "Unstake "}}</div>
-                    <div>Balance: {{methodType === depositToken ? stakingTokenBalance : stakedAmount}}</div>
+                    <div>Balance: {{methodType === depositToken ? this.formatNumber(getRawBalanceNumber(stakingTokenBalance), 3) : this.formatNumber(getRawBalanceNumber(stakedAmount), 3)}}</div>
                 </div>
             </div>
             <div class="flex items-center justify-between">
@@ -22,14 +22,16 @@
             </div>
         </div>
         <div class="flex items-center justify-evenly mb-6">
-            <button class="btn-primary w-full" @click="$emit('close-modal'); amount=0" >Cancel</button>
-            <button class="btn-primary w-full" v-bind:class="(amount===0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
+            <button @click="$emit('close-modal'); amount=0" class="btn-primary w-full" >Cancel</button>
+            <button @click="$emit(methodType, pid, amount, poolAddress)" class="btn-primary w-full" v-bind:class="(amount == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import {formatNumber, getRawBalanceNumber} from "@/utils/format"
+import BigNumber from 'bignumber.js'
 
 export default {
     name: "Modal",
@@ -43,16 +45,23 @@ export default {
     props:{
         showModal: Boolean,
         poolName: String,
-        stakingTokenBalance: String,
-        stakedAmount: String,
+        stakingTokenBalance: Array,
+        stakedAmount: BigNumber,
         pid: Number,
         poolAddress: String,
         methodType: String
     },
     methods:{
         setMaxBalance(){
-            this.amount = (this.methodType === this.depositToken) ? this.stakingTokenBalance : this.stakedAmount
-        }
+            this.amount = (this.methodType === this.depositToken) ? getRawBalanceNumber(this.stakingTokenBalance) : getRawBalanceNumber(this.stakedAmount)
+        },
+        formatNumber(num, numberOfDecimalValues) {
+            return formatNumber(num, numberOfDecimalValues);
+        },
+
+        getRawBalanceNumber(num, decimals) {
+            return getRawBalanceNumber(num, decimals);
+        },
     }
 }
 </script>
