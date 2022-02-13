@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 p-4 gap-4">
+  <div class="flex flex-wrap justify-center p-6 gap-4">
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :poolName="pool.name"

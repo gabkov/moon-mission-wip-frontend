@@ -9,7 +9,7 @@
             + user.get('ethAddress').substr(user.get('ethAddress').length - 4,user.get('ethAddress').length) }} Log out</button>
     </div>
     <div v-else>
-        <button class=" flex items-center justify-start md:justify-center btn-primary" @click="login">Connect wallet</button>
+        <button class="animate-pulse flex items-center justify-start md:justify-center btn-primary" @click="login">Connect wallet</button>
     </div>
     
   </div>

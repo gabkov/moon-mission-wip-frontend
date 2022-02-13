@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-gray-800 shadow-lg rounded-3xl p-5 border-2 border-gray-600 text-white font-medium">
+  <div class="flex justify-around flex-col self-baseline w-full max-w-sm bg-gray-800 shadow-lg rounded-3xl p-5 border-2 border-gray-600 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
-      <div class="pb-4 flex flex-col justify-between">
+      <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
           <img class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
           <div class="grid text-center">
-            <div>{{ poolName }}</div>
-            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">5X</div>
+            <div class="text-xl" >{{ poolName }}</div>
+            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">{{this.shortenNumber(allocPoint)}}X</div>
           </div>
         </div>
         <div class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}%</div>
-        <div class="flex flex-col space-y-0.3 ">
+        <div class="flex flex-col space-y-1 ">
           <div class="text-sm flex items-center justify-between">
             <div>APR:</div>
             <div>{{ poolAPR }}%</div>
@@ -56,7 +56,7 @@
             </div>
           </div>
             <div v-else class="pt-1">
-              <button v-if="!userLoading" class="w-full btn-primary" @click="login" >CONNECT WALLET</button>
+              <button v-if="!userLoading" class="w-full btn-primary animate-pulse" @click="login" >CONNECT WALLET</button>
               <div v-else class="pt-4 flex justify-center items-center" >
                 <svg role="status" class="mr-2 w-9 h-9 animate-spin text-gray-600 fill-blue-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -67,8 +67,8 @@
             </div>
         </div>
       </div>
-      <div class="flex flex-col justify-between">
-        <button @click="showDetails=!showDetails" class="hover:font-bold pt-4 self-center">{{!showDetails ? "Details ⮛" : "Hide ⮙"}}</button> 
+      <div class="pt-6 flex flex-col justify-between">
+        <button @click="showDetails=!showDetails" class="hover:font-bold self-center">{{!showDetails ? "Details ⮛" : "Hide ⮙"}}</button> 
         <div v-if="showDetails">
           <div class="pt-2 text-md flex items-center justify-between">
             <div>Total Liquidity:</div>
@@ -79,37 +79,6 @@
             <a class="text-sm" href="">View Contract 🡕</a>
             <a class="text-sm" href="">See pair info 🡕</a>
           </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
-  
-  <div class="shadow-lg card border-secondary border-3 h-100">
-    <div class="card-body">
-      <h5 class="card-title">{{ poolName }}</h5>
-      <div>stakedAmount: {{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
-      <div>stakedAmountUSD: {{ this.formatNumber(stakedAmountUSD) }}</div>
-      <div>allocPoint: {{ this.shortenNumber(allocPoint) }}</div>
-      <div>tvl: {{ this.formatNumber(tvl) }}</div>
-      <div>poolAPR: {{ poolAPR }}%</div>
-      <div>daily: {{ daily }}%</div>
-      <div>{{ poolName }} Balance: {{this.formatNumber(this.getBalanceNumber(stakingTokenBalance, lpDecimals))}}</div>
-      <div>rewards: {{ this.formatNumber(rewards) }}</div>
-      <div v-if="!isAuthenticated">
-        <div v-if="isPoolApproved(userAllowance)">
-          <input  type="number" v-model.number="amountToStake">
-          <button @click="$emit('withdraw-token', pid, 0, poolAddress)">HARVEST</button>
-          <button @click="$emit('deposit-token', pid, amountToStake, poolAddress)">STAKE</button>
-          <button @click="$emit('withdraw-token', pid, amountToWithdraw, poolAddress)">WITHDRAW</button>
-        </div>
-        <button v-else @click="$emit('approve-token', poolAddress)" >APPROVE {{poolName}}</button>
-      </div>
-      <div v-else>
-        <button v-if="!userLoading" @click="login" >CONNECT WALLET</button>
-        <div v-else class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
     </div>
