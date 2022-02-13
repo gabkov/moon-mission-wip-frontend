@@ -5,7 +5,7 @@
     <div id="modal-box" class="w-11/12 max-w-md flex flex-col gap-2 -translate-y-1/2 p-6 bg-black rounded-3xl top-1/2 left-1/2 -translate-x-1/2 absolute">
         <div class="pb-8 flex items-center justify-between"> 
             <div class="text-xl font-medium">{{methodType === depositToken ? "Stake " : "Unstake "}} {{poolName}}</div>
-            <div class="cursor-pointer" @click="$emit('close-modal'); amount=0">
+            <div class="cursor-pointer" @click="closeModal(); amount=0">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
         </div>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="flex items-center justify-evenly mb-6">
-            <button @click="$emit('close-modal'); amount=0" class="btn-primary w-full" >Cancel</button>
+            <button @click="closeModal(); amount=0" class="btn-primary w-full" >Cancel</button>
             <button @click="$emit(methodType, pid, amount, poolAddress)" class="btn-primary w-full" v-bind:class="(amount == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
         </div>
     </div>
@@ -62,6 +62,27 @@ export default {
         getRawBalanceNumber(num, decimals) {
             return getRawBalanceNumber(num, decimals);
         },
+        closeModal(){
+            this.$emit("close-modal")
+        }
+    },
+    watch: {
+        stakingTokenBalance: {
+            handler(){
+                if(this.amount > 0){ // only close the modal if value was submited
+                    this.closeModal()
+                    this.amount = 0
+                }
+            }
+        },
+        stakedAmount: {
+            handler(){
+                if(this.amount > 0){
+                    this.closeModal()
+                    this.amount = 0
+                }
+            }
+        }
     }
 }
 </script>
