@@ -1,4 +1,14 @@
 <template>
+  <Modal 
+  :showModal="showModal"
+  :poolName="poolName"
+  :stakingTokenBalance="this.formatNumber(this.getBalanceNumber(stakingTokenBalance, lpDecimals))"
+  :stakedAmount="this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals))"
+  :pid="pid"
+  :poolAddress="poolAddress"
+  :methodType="methodType"
+  @close-modal="showModal=false"
+  />
   <div class="flex justify-around flex-col self-baseline w-full max-w-sm bg-gray-800 shadow-lg rounded-3xl p-5 border-2 border-gray-600 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
@@ -27,28 +37,28 @@
         <div class="py-3">
           <div class="text-xs"><span class="text-violet-500">Fuel</span> Earned</div>
           <div class="flex items-center justify-between">
-            <div class="text-lg" >{{ this.formatNumber(rewards) }}</div>
+            <div class="text-xl" >{{ this.formatNumber(rewards) }}</div>
             <button @click="$emit('withdraw-token', pid, 0, poolAddress)" class="btn-primary">Harvest</button>
           </div>
           <div class="text-xs"><span class="text-violet-500">BTC</span> staked</div>
           <div v-if="isAuthenticated">
             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
               <div class="pt-0.5">
-                <div class="text-lg" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
+                <div class="text-xl" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
                 <div class="text-[10px] text-gray-500" >~{{ this.formatNumber(stakedAmountUSD) }} USD</div>
               </div>
               <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
-                <button @click="$emit('withdraw-token', pid, amountToWithdraw, poolAddress)"
+                <button @click="openModal('withdraw-token')"
                   class="inline-flex items-center justify-center p-0.5 mr-1 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
                   <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">－</span>
                 </button>
-                <button @click="$emit('deposit-token', pid, amountToStake, poolAddress)" 
+                <button @click="openModal('deposit-token')" 
                         class="inline-flex items-center justify-center p-0.5 mr-2 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
                   <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">＋</span>
                 </button>
               </div>
               <div v-else>
-                <button class="btn-primary" @click="$emit('deposit-token', pid, amountToStake, poolAddress)">Stake</button>
+                <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
               </div>
             </div>
             <div v-else class="pt-1">
@@ -75,9 +85,15 @@
             <div>${{ this.formatNumber(tvl) }}</div>
           </div>
           <div class="flex flex-col space-y-0.5 text-violet-500">
-            <a class="text-sm" href="">Get {{poolName}} 🡕</a>
-            <a class="text-sm" href="">View Contract 🡕</a>
-            <a class="text-sm" href="">See pair info 🡕</a>
+            <div class="flex">
+              <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+            <div class="flex">
+              <a class="text-sm" href="">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+            <div class="flex">
+              <a class="text-sm" href="">See pair info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
           </div>
         </div>
       </div>
@@ -90,9 +106,13 @@ import {formatNumber, getBalanceNumber, shortenNumber} from "@/utils/format"
 import BigNumber from 'bignumber.js';
 import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
+import Modal from "../modal/Modal.vue"
 
 export default {
   name: "FarmCard",
+  components:{
+    Modal
+  },
   props: {
     pid: Number,
     poolName: String,
@@ -113,7 +133,9 @@ export default {
     return {
       amountToStake: 100,
       amountToWithdraw: 0,
-      showDetails: false
+      showDetails: false,
+      showModal: false,
+      methodType: ""
     }
   },
   computed: {
@@ -141,6 +163,10 @@ export default {
     shortenNumber(num) {
       return shortenNumber(num);
     },
+    openModal(methodType){
+        this.methodType = methodType
+        this.showModal = true
+    }
   },
 };
 </script>

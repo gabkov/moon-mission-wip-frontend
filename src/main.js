@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import Moralis from './plugins/moralis'
 import './index.css'
+import 'flowbite'
+
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 //import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
