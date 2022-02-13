@@ -40,7 +40,7 @@
           <div class="text-xs"><span class="text-violet-500">Fuel</span> Earned</div>
           <div class="flex items-center justify-between">
             <div class="text-xl" >{{ this.formatNumber(rewards) }}</div>
-            <button @click="$emit('withdraw-token', pid, 0, poolAddress)" class="btn-primary">Harvest</button>
+            <button @click="$emit('withdraw-token', pid, 0, poolAddress)" class="btn-primary" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
           </div>
           <div class="text-xs"><span class="text-violet-500">BTC</span> staked</div>
           <div v-if="isAuthenticated">
