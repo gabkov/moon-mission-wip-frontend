@@ -21,7 +21,7 @@
       @approve-token="this.approveToken"
     />
   </div>
-<div v-show="tableView" class="mt-4 mx-20">
+<div v-show="tableView" class="mt-16 mx-20">
       <div class="w-full overflow-hidden rounded-lg shadow-md">
         <div class="w-full overflow-x-auto">
           <table class="table-auto w-full">

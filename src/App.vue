@@ -1,8 +1,8 @@
 <template>
-  <div class=" min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-gray-700 text-white">
+  <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-[url('./src/assets/background/bg-space.jpg')] bg-fixed bg-no-repeat bg-cover text-white">
     <NavBar @toggle-menu="toggleMenu" />
     <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" />
-    <div class="h-full ml-14 mt-14 mb-10 md:ml-48">
+    <div class="h-full ml-14 mt-20 mb-10 md:ml-48">
       <router-view
         :poolInfos="poolInfos"
         @deposit-token="this.depositToken"
