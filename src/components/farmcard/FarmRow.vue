@@ -33,16 +33,16 @@
             </div>
         </td>
         <td class="px-4 py-5">
-            <div class="flex">
-                <div class="text-violet-500">Details</div>
-                <svg v-if="!rowOpen" class="w-5 h-5 self-end text-violet-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                <svg v-else class="w-5 h-5 self-end text-violet-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+            <div class="flex text-violet-500">
+                <div class="">Details</div>
+                <svg v-if="!rowOpen" class="w-5 h-5 self-end " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <svg v-else class="w-5 h-5 self-end " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
             </div>
         </td>
     </tr>
     <tr class="w-full bg-zinc-900 max-h-0" >
         <td colspan="6" class="max-h-0" >
-            <div class="flex lg:flex-row flex-col-reverse items-center gap-1 px-8 max-h-0" v-bind:class="rowOpen ? 'animate-menu-open duration-[400ms] py-[5.5rem] ' : 'animate-menu-close duration-[400ms] py-0 '">
+            <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-8" v-show="rowOpen">
                 <div class="flex lg:self-center self-start flex-col space-y-1 text-violet-500 w-full max-w-[12rem]">
                     <div class="flex flex-row">
                         <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
