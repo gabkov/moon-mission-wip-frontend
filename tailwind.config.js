@@ -10,16 +10,26 @@ module.exports = {
         body: ['Mitr', 'sans-serif'],
       },
       animation:{
-        "menu-open": "growDown 200ms ease-in-out forwards",
-        "menu-close": "growUp 200ms normal ease-in-out forwards",
-        "menuopen": "max-height 1s ease-in-out"
+        "menu-open": "growDown 400ms normal ease-in-out forwards",
+        "menu-close": "growUp 400ms normal ease-in-out forwards"
+      },
+      keyframes: {
+        growDown: {
+          'from': { transform: 'scaleY(0)' },
+          'to': { transform: 'scaleY(1)' },
+        },
+        growUp: {
+          'from': { transform: 'scaleY(1)' },
+          'to': { transform: 'scaleY(0)' },
+        }
       }
     },
   },
   variants: {
-    animation: ['responsive', 'motion-safe', 'motion-reduce', 'hover']
+    animation: ['responsive', 'motion-safe', 'motion-reduce', 'hover'],
   },
   plugins: [
     require('flowbite/plugin')
   ],
 }
+
