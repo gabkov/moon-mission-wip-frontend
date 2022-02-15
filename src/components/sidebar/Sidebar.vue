@@ -1,5 +1,5 @@
 <template>
-  <div class="opacity-90 fixed flex flex-col top-14 left-0 w-14 hover:w-48 md:w-48 bg-gradient-to-r from-gray-900 to-gray-800 h-full text-white transition-all duration-300 border-r-2 border-gray-600 shadow-2xl shadow-sky-500 z-10 sidebar">
+  <div class="opacity-95 fixed flex flex-col top-14 left-0 w-14 hover:w-48 md:w-48 bg-gradient-to-r from-gray-900 to-gray-800 h-full text-white transition-all duration-300 border-r-2 shadow-xl shadow-sky-500 sm:shadow-2xl sm:shadow-sky-500 border-gray-600 z-10 ">
     <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
       <ul class="flex flex-col py-4 space-y-2">
 

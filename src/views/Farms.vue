@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4">
+  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4 opacity-[0.98]">
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :poolName="pool.name"
@@ -21,7 +21,7 @@
       @approve-token="this.approveToken"
     />
   </div>
-<div v-show="tableView" class="mt-16 mx-20">
+<div v-show="tableView" class="mt-16 mx-20 opacity-[0.98]">
       <div class="w-full overflow-hidden rounded-lg shadow-md">
         <div class="w-full overflow-x-auto">
           <table class="table-auto w-full">
