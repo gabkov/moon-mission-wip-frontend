@@ -11,7 +11,7 @@
     @deposit-token="this.depositToken"
     @withdraw-token="this.withdrawToken"
     />
-    <tr  @click="rowOpen=!rowOpen" class="bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
+    <tr @click="rowOpen=!rowOpen" class="flex flex-wrap justify-evenly sm:table-row bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
         <td class="px-4 py-5">
             <div class="flex items-center text-sm">
                 <div class="w-9 h-9 mr-3 rounded-full">
@@ -26,22 +26,28 @@
                 <div class="text-md">{{ this.formatNumber(rewards) }}</div>
             </div>
         </td>
-        <td class="px-4 py-5">
+        <td class="hidden lg:table-cell lg:px-4 lg:py-5">
             <div class="flex flex-col">
                 <div class="text-xs">APR</div>
                 <div class="text-md">{{poolAPR}}%</div>
             </div>
         </td>
-        <td class="px-4 py-5">
+        <td class="hidden lg:table-cell lg:px-4 lg:py-5">
+            <div class="flex flex-col">
+                <div class="text-xs">Daily APR</div>
+                <div class="text-md">{{daily}}%</div>
+            </div>
+        </td>
+        <td class="hidden lg:table-cell lg:px-4 lg:py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Liquidity</div>
-                <div>${{ this.formatNumber(tvl, 0) }}</div>
+                <div class="whitespace-nowrap">${{ this.formatNumber(tvl, 0) }}</div>
             </div>
         </td>
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Multiplier</div>
-                <div>{{this.shortenNumber(allocPoint)}}x</div>
+                <div class="text-center bg-violet-600 rounded-full w-11">{{this.shortenNumber(allocPoint)}}x</div>
             </div>
         </td>
         <td class="px-4 py-5">
@@ -53,8 +59,8 @@
         </td>
     </tr>
     <tr class="w-full bg-zinc-900 max-h-0" >
-        <td colspan="6" class="max-h-0" >
-            <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-8" v-show="rowOpen">
+        <td colspan="7" class="max-h-0" >
+            <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-4 sm:p-8" v-show="rowOpen">
                 <div class="flex lg:self-center self-start flex-col space-y-1 text-violet-500 w-full max-w-[12rem]">
                     <div class="flex flex-row">
                         <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
@@ -66,41 +72,53 @@
                         <a class="text-sm" href="">See pair info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </div>
                 </div>
-                <div class="flex items-center justify-between w-full max-w-4xl gap-4">
-                    <div class=" p-4 flex flex-col border-2 border-gray-500 rounded-xl w-full">
-                        <div class="text-xs" ><span class="text-yellow-300 uppercase">Fuel</span> Earned</div>
-                        <div class="flex items-center justify-between">
+                <div class="flex flex-row w-full justify-between lg:hidden mb-2">
+                    <div class="text-md">Liquidity</div>
+                    <div class="whitespace-nowrap">${{ this.formatNumber(tvl, 0) }}</div>
+                </div>
+                <div class="flex flex-row w-full justify-between lg:hidden">
+                    <div class="text-md">Daily APR</div>
+                    <div class="text-md">{{daily}}%</div>
+                </div>
+                <div class="flex flex-row w-full justify-between lg:hidden mt-2">
+                    <div class="text-md">APR</div>
+                    <div class="text-md">{{poolAPR}}%</div>
+                </div>
+                <div class="flex md:flex-row flex-col items-center justify-between w-full max-w-4xl gap-4">
+                    <div class="p-4 flex flex-col border-2 border-gray-500 rounded-2xl w-full">
+                        <div class="text-xs uppercase" ><span class="text-yellow-300 ">Fuel</span> Earned</div>
+                        <div class="flex items-center justify-between gap-2">
                             <div class="text-xl">{{ this.formatNumber(rewards) }}</div>
-                            <button class="btn-primary" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
+                            <button class="btn-primary" @click="$emit('withdraw-token', pid, 0, poolAddress)" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
                         </div>
                     </div>
-                    <div class="p-4 flex place-self-end flex-col border-2 border-gray-500 rounded-xl w-full"> 
+                    <div class="p-4 flex place-self-end flex-col border-2 border-gray-500 rounded-2xl w-full"> 
                         <div v-if="isAuthenticated">
                             <div class="text-xs uppercase"><span class="text-violet-500">BTC</span> staked</div>
-                            <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
-                            <div class="pt-0.5">
-                                <div class="text-xl" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
-                                <div class="text-[10px] text-gray-500" >~{{ this.formatNumber(stakedAmountUSD) }} USD</div>
-                            </div>
-                            <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
-                                <button @click="openModal('withdraw-token')"
-                                class="inline-flex items-center justify-center p-0.5 mr-1 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
-                                <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">－</span>
-                                </button>
-                                <button @click="openModal('deposit-token')" 
-                                        class="inline-flex items-center justify-center p-0.5 mr-2 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
-                                <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">＋</span>
-                                </button>
-                            </div>
-                            <div v-else>
-                                <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
-                            </div>
+                            <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between gap-2">
+                                <div class="pt-1">
+                                    <div class="text-xl" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
+                                    <div class="text-[10px] text-gray-500" >~{{ this.formatNumber(stakedAmountUSD) }} USD</div>
+                                </div>
+                                <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
+                                    <button @click="openModal('withdraw-token')"
+                                    class="inline-flex items-center justify-center p-0.5 mr-1 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
+                                    <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">－</span>
+                                    </button>
+                                    <button @click="openModal('deposit-token')" 
+                                            class="inline-flex items-center justify-center p-0.5 mr-2 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
+                                    <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">＋</span>
+                                    </button>
+                                </div>
+                                <div v-else>
+                                    <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
+                                </div>
                             </div>
                             <div v-else class="pt-3">
                             <button class="w-full btn-primary" @click="$emit('approve-token', poolAddress)" >Approve {{poolName}}</button>
                             </div>
                         </div>
-                        <div v-else class="pt-3">
+                        <div v-else class="">
                             <div class="text-xs uppercase">Start Farming</div>
                             <button v-if="!userLoading" class="w-full btn-primary" @click="login" >Connect Wallet</button>
                             <div v-else class="pt-4 flex justify-center items-center" >
@@ -185,6 +203,14 @@ export default {
             this.methodType = methodType
             this.showModal = true
         },
-    }
+        async depositToken(pid, amount, tokenAddress) {
+            this.$emit("deposit-token", pid, amount, tokenAddress);
+        },
+
+        async withdrawToken(pid, amount, tokenAddress) {
+            this.$emit("withdraw-token", pid, amount, tokenAddress);
+        },
+    },
+    emits: ["deposit-token", "withdraw-token", "approve-token"],
 }
 </script>

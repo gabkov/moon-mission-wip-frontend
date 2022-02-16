@@ -2,8 +2,8 @@
 <div class="flex flex-col">
   <ViewSelector
   :tableView="tableView"
-  @card-view="tableView=false"
-  @table-view="tableView=true"
+  @card-view="setTableView('false')"
+  @table-view="setTableView('true')"
   />
   <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4">
     <FarmCard
@@ -13,7 +13,7 @@
       :daily="pool.daily"
       :pid="pool.pid"
       :poolAddress="pool.address"
-      :poolAPR="pool.poolAPR"
+      :poolAPR="pool.poolAPR" 
       :rewards="pool.rewards"
       :stakedAmount="pool.stakedAmount"
       :stakedAmountUSD="pool.stakedAmountUSD"
@@ -27,11 +27,11 @@
       @approve-token="this.approveToken"
     />
   </div>
-  <div v-show="tableView" class="mt-6 mx-20">
+  <div v-show="tableView" class="mt-6 mx-5 sm:mx-10 lg:mx-20">
         <div class="w-full overflow-hidden rounded-xl border-[1.5px] border-gray-400">
           <div class="w-full overflow-x-auto">
             <table class="table-auto w-full">
-              <tbody class="divide-y divide-gray-700 bg-gray-800">
+              <tbody class="divide-y divide-gray-700 bg-gray-800 ">
                 <FarmRow
                   v-for="pool in this.poolInfos" :key="pool.pid"
                   :poolName="pool.name"
@@ -69,7 +69,7 @@ export default {
   name: "Farms",
   data(){
     return{
-      tableView: false
+      tableView: localStorage.getItem("tableView") === 'true' || false
     }
   },
   components: {
@@ -92,6 +92,10 @@ export default {
     async approveToken(tokenAddress) {
       this.$emit("approve-token", tokenAddress);
     },
+    setTableView(value){
+      localStorage.setItem("tableView", value)
+      this.tableView = value === 'true'
+    }
   },
   emits: ["deposit-token", "withdraw-token", "approve-token"],
 };

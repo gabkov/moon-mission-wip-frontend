@@ -9,7 +9,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
         </div>
-        <div class="bg-gray-500 rounded-xl p-2 mb-6 space-y-2">
+        <div v-bind:class="isBalanceZero() ? 'border-2 border-rose-500' : ''" class="bg-gray-500 rounded-xl p-2 mb-6 space-y-2">
             <div>
                 <div class="flex items-center justify-between">
                     <div>{{methodType === depositToken ? "Stake " : "Unstake "}}</div>
@@ -20,10 +20,11 @@
                 <input class=" w-full mr-2 bg-gray-600 rounded-xl border-2 border-gray-800"  type="text" v-model.number="amount">
                 <button class="btn-primary rounded-full text-sm" @click="setMaxBalance()">MAX</button>
             </div>
+            <div v-bind:class="isBalanceZero() ? 'text-rose-500 text-sm ' : 'hidden'" >No tokens to stake</div>
         </div>
         <div class="flex items-center justify-evenly mb-6">
             <button @click="closeModal(); amount=0" class="btn-primary w-full" >Cancel</button>
-            <button @click="$emit(methodType, pid, amount, poolAddress)" class="btn-primary w-full" v-bind:class="(amount == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
+            <button @click="$emit(methodType, pid, amount, poolAddress); confirmClicked=true" class="btn-primary w-full" :disabled="amount===0" v-bind:class="(amount == 0 || confirmClicked)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
         </div>
     </div>
 </div>
@@ -39,7 +40,8 @@ export default {
         return{
             depositToken: "deposit-token",
             withdrawToken: "withdraw-token",
-            amount: 0
+            amount: 0,
+            confirmClicked: false
         }
     },
     props:{
@@ -52,6 +54,16 @@ export default {
         methodType: String
     },
     methods:{
+        isBalanceZero(){
+            if(this.methodType === this.depositToken && new BigNumber(this.stakingTokenBalance).eq(0)){
+                return true
+            }
+            if(this.methodType!== this.depositToken && new BigNumber(this.stakedAmount).eq(0)){
+                return true
+            }
+            return false
+
+        },
         setMaxBalance(){
             this.amount = (this.methodType === this.depositToken) ? getRawBalanceNumber(this.stakingTokenBalance) : getRawBalanceNumber(this.stakedAmount)
         },
@@ -72,6 +84,7 @@ export default {
                 if(this.amount > 0){ // only close the modal if value was submited
                     this.closeModal()
                     this.amount = 0
+                    this.confirmClicked = false
                 }
             }
         },
@@ -80,6 +93,7 @@ export default {
                 if(this.amount > 0){
                     this.closeModal()
                     this.amount = 0
+                    this.confirmClicked = false
                 }
             }
         }
