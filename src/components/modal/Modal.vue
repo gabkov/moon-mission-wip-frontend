@@ -1,8 +1,8 @@
 <template>
-<div v-show="showModal" class="fixed top-0 left-0 z-50 w-full h-full">
-    <div id="modal-bg" class="w-full h-full bg-gray-600 top-0 left-0 opacity-40 absolute"></div>
+<div v-show="showModal" class="fixed top-0 left-0 w-full h-full z-10 ">
+    <div class="w-full h-full bg-gray-600 top-0 left-0 opacity-40 absolute"></div>
     
-    <div id="modal-box" class="w-11/12 max-w-md flex flex-col gap-2 -translate-y-1/2 p-6 bg-black rounded-3xl top-1/2 left-1/2 -translate-x-1/2 absolute">
+    <div class="w-11/12 max-w-md flex flex-col gap-2 -translate-y-1/2 p-6 bg-black rounded-3xl top-1/2 left-1/2 -translate-x-1/2 absolute">
         <div class="pb-8 flex items-center justify-between"> 
             <div class="text-xl font-medium">{{methodType === depositToken ? "Stake " : "Unstake "}} {{poolName}}</div>
             <div class="cursor-pointer" @click="closeModal(); amount=0">

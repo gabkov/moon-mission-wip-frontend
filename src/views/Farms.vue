@@ -5,7 +5,7 @@
   @card-view="tableView=false"
   @table-view="tableView=true"
   />
-  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4 opacity-[0.98]">
+  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4">
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :poolName="pool.name"
@@ -27,8 +27,8 @@
       @approve-token="this.approveToken"
     />
   </div>
-  <div v-show="tableView" class="mt-6 mx-20 opacity-[0.98]">
-        <div class="w-full overflow-hidden rounded-xl drop-shadow-[0_0_3px_#ddd6fe] ">
+  <div v-show="tableView" class="mt-6 mx-20">
+        <div class="w-full overflow-hidden rounded-xl border-[1.5px] border-gray-400">
           <div class="w-full overflow-x-auto">
             <table class="table-auto w-full">
               <tbody class="divide-y divide-gray-700 bg-gray-800">

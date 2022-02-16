@@ -11,7 +11,7 @@
   @deposit-token="this.depositToken"
   @withdraw-token="this.withdrawToken"
   />
-  <div class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
+  <div v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
@@ -148,7 +148,7 @@ export default {
         isAuthenticated(){
             return Object.keys(this.user).length > 0
         }
-    },
+  },
   methods: {
     async login(){
       await loginUser()
