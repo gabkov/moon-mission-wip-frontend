@@ -8,7 +8,7 @@
         <SidebarLink to="/farms" menuOption="Farms"/>
 
       </ul>
-      <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>
+      <p v-show="menuOpen" class="mb-14 px-5 py-3 text-center text-xs">Copyright @2021</p>
     </div>
   </div>
 
