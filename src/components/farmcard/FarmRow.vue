@@ -11,7 +11,7 @@
     @deposit-token="this.depositToken"
     @withdraw-token="this.withdrawToken"
     />
-    <tr @click="rowOpen=!rowOpen" class="flex flex-wrap justify-evenly sm:table-row bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
+    <tr @click="rowOpen=!rowOpen" class="flex flex-wrap justify-evenly items-center sm:table-row bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
         <td class="px-4 py-5">
             <div class="flex items-center text-sm">
                 <div class="w-9 h-9 mr-3 rounded-full">

@@ -1,7 +1,7 @@
 <template>
-  <div class="opacity-95 fixed flex flex-col top-14 left-0 w-14 hover:w-48 md:w-48 bg-gradient-to-r from-gray-900 to-gray-800 h-full text-white transition-all duration-300 border-r-2 shadow-xl shadow-sky-500 sm:shadow-2xl sm:shadow-sky-500 border-gray-600 z-[1]">
+  <div v-bind:class="menuOpen? 'w-44':'w-14'" class="opacity-95 fixed flex flex-col top-14 left-0 bg-gradient-to-r from-gray-900 to-gray-800 h-full rounded-r-xl text-white transition-all duration-300 border-r-4 border-t-[3px] shadow-xl shadow-sky-500 sm:shadow-2xl sm:shadow-sky-500 border-gray-600 z-[1]">
     <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
-      <ul class="flex flex-col py-4 space-y-2">
+      <ul class="flex flex-col py-4 space-y-3">
 
         <SidebarLink to="/" menuOption="Home"/>
         <SidebarLink to="/pre-sale" menuOption="Pre-sale"/>
