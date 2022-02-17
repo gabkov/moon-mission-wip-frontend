@@ -129,7 +129,7 @@ export default {
   data(){
     return {
       amountToBuy: 50,
-      userPreSaleData: {},
+      userPreSaleData: Object,
       preFuelBalance: 0,
       preFuelDecimals: 18,
       fuelBalance: 0,

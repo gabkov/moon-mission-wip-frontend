@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      poolInfos: [],
+      poolInfos: new Array(),
       menuOpen: true,
     }
   },
