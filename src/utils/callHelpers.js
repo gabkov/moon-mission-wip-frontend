@@ -7,9 +7,63 @@ import {CONSTANTS } from '../consts/constants'
 import store from '../store'
 import preFuelAbi from "../abi/PreFuelToken.json"
 
-const constants = CONSTANTS[store.state.chainId] 
+const constants = CONSTANTS[store.state.chainId]
 
-async function callPreSaleInfo(account){
+async function callPreSaleBasicInfo(){
+  const calls = [
+    {
+      address:  constants.PRE_FUEL_TOKEN_CONTRACT,
+      name:  'balanceOf',
+      abi:  preFuelAbi,
+      params: [constants.PRE_FUEL_TOKEN_CONTRACT]
+    },
+    {
+      address: constants.PRE_FUEL_TOKEN_CONTRACT,
+      name: 'decimals',
+      abi: ERC20
+    },
+    {
+      address:  constants.FUEL_TOKEN_ADDRESS,
+      name:  'balanceOf',
+      abi:  ERC20,
+      params: [constants.FUEL_REEDEM_CONTRACT]
+    },
+    {
+      address: constants.FUEL_TOKEN_ADDRESS,
+      name: 'decimals',
+      abi: ERC20
+    },
+    {
+      address:  constants.PRE_FUEL_TOKEN_CONTRACT,
+      name:  'startBlock',
+      abi:  preFuelAbi,
+    },
+    {
+      address:  constants.PRE_FUEL_TOKEN_CONTRACT,
+      name:  'endBlock',
+      abi:  preFuelAbi,
+    },
+    {
+      address:  constants.FUEL_REEDEM_CONTRACT,
+      name:  'startBlock',
+      abi:  preFuelAbi,
+    },
+  ]
+
+  const [preFuelRemaining, preFuelDecimals, fuelRemaining, fuelDecimals, preSaleStartBlock, preSaleEndBlock, swapStartBlock] = await multicall(calls)
+
+  return {
+    preFuelRemaining: new BigNumber(preFuelRemaining.toString()), 
+    preFuelDecimals: new BigNumber(preFuelDecimals.toString()).toNumber(),
+    fuelRemaining: new BigNumber(fuelRemaining.toString()),
+    fuelDecimals: new BigNumber(fuelDecimals.toString()).toNumber(),
+    preSaleStartBlock: new BigNumber(preSaleStartBlock).toNumber(),
+    preSaleEndBlock: new BigNumber(preSaleEndBlock).toNumber(), 
+    swapStartBlock: new BigNumber(swapStartBlock).toNumber()
+  }
+}
+
+async function callPreSaleUserInfo(account){
   const calls = [
     {
       address:  constants.PRE_FUEL_TOKEN_CONTRACT,
@@ -245,5 +299,6 @@ async function callPoolAnalytics( pool, account) {
 
 export {
   callPoolAnalytics,
-  callPreSaleInfo
+  callPreSaleUserInfo,
+  callPreSaleBasicInfo
 }

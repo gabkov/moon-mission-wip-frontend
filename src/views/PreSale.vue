@@ -6,7 +6,7 @@
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>PREFUEL Remaining:</div>
-          <div>0</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.preFuelRemaining, preSaleBasicInfo.preFuelDecimals), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your PREFUEL balance:</div>
@@ -20,11 +20,11 @@
           <div>You can buy up to:</div>
           <div>600 PREFUEL</div>
         </div>
-        <div class="text-sm sm:text-base flex items-center justify-between">
+        <div v-show="preSaleStart===0" class="text-sm sm:text-base flex items-center justify-between">
           <div>Blocks til pre-sale ends:</div>
-          <div class="text-violet-500">0</div>
+          <div class="text-violet-500">{{preSaleEnd}}</div>
         </div>
-        <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until presale active: <span class="text-violet-500">0</span></div>
+        <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until presale: <span class="text-violet-500">{{preSaleStart}}</span></div>
         <div v-if="isAuthenticated">
           <div class="flex flex-col sm:flex-row justify-between gap-2" v-if="isApprovedBusdForPreSale(userPreSaleData.busdAllowance)">
             <div class="relative w-full mt-1">
@@ -52,7 +52,7 @@
         <div class="text-2xl text-center mb-4 text-violet-500">SWAP PREFUEL FOR <span class="text-yellow-300">FUEL</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>FUEL Remaining:</div>
-          <div>0</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.fuelRemaining, preSaleBasicInfo.fuelDecimals), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your FUEL balance:</div>
@@ -67,7 +67,7 @@
           <div>1:1 Swap</div>
         </div>
         
-        <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">0</span></div>
+        <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
             <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{preFuelBalance}}</span> PREFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
@@ -95,8 +95,9 @@ import {approveBusdForPreSale} from "../service/busdService"
 import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
 import Moralis from '../plugins/moralis'
-import { callPreSaleInfo } from '../utils/callHelpers'
+import { callPreSaleUserInfo, callPreSaleBasicInfo } from '../utils/callHelpers'
 import {formatNumber, getBalanceNumber, getRawBalanceNumber} from "../utils/format"
+import { getJsonRpcProvider } from '../service/contracts'
 
 
 export default {
@@ -111,7 +112,12 @@ export default {
       fuelBalance: 0,
       fuelDecimals: 18,
       busdBalance: 0,
-      busdDecimals: 18
+      busdDecimals: 18,
+      preSaleBasicInfo: {},
+      currentBlock: 0,
+      preSaleStart: 0,
+      preSaleEnd: 0,
+      swapStart: 0
     }
   },
   computed: {
@@ -144,31 +150,39 @@ export default {
     isApprovedPreFuelForSwap(allowance){
       return allowance > 0
     },
+    async getCurrentBlock(){
+      return await getJsonRpcProvider().getBlockNumber()
+    },
     setMaxBusdBalance(){
       const rawBalance = getRawBalanceNumber(this.busdBalance)
       this.amount = rawBalance > 3000 ? 3000 : rawBalance // 3000 BUSD is the max per wallet
     },
     async approveBusdForPreSale(){
       await approveBusdForPreSale()
-      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     },
     async buyPreFuel(){
       await buyPreFuel(this.amount)
-      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     
     },
     async approvePreFuelForSwap(){
       await approvePreFuelForSwap()
-      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     },
     async swapPreFuelForFuel(){
       await swapPreFuelForFuel()
-      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     },
   },  
   async created(){
+    this.preSaleBasicInfo = await callPreSaleBasicInfo()
+    this.currentBlock = await this.getCurrentBlock()
+    this.preSaleStart = this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock
+    this.preSaleEnd = this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock
+    this.swapStart = this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock 
     if(Moralis.User.current()){
-      this.userPreSaleData = await callPreSaleInfo(this.userAddress)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
       this.preFuelDecimals = this.userPreSaleData.preFuelDecimals
       this.preFuelBalance = this.userPreSaleData.preFuelBalance
       this.fuelDecimals = this.userPreSaleData.fuelDecimals
