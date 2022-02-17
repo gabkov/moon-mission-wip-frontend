@@ -159,6 +159,7 @@ async function callPoolAnalytics( pool, account) {
 
   const [lpSupplyPool, lpDecimals, lpTotalSupply, quoteBalance, quoteDecimals, fuelDecimals, poolInfo, totalAllocPoint, fuelPerBlock] = await multicall(liquidityCalls)
   const lpSupply = lpSupplyPool.lpSupply
+  const depositFeeBp = lpSupplyPool.depositFeeBP
   const stakedAmount = stakedInfo.amount
 
   const stakedAmountDecimalFixed = new BigNumber(stakedAmount.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
@@ -235,7 +236,8 @@ async function callPoolAnalytics( pool, account) {
     daily,
     stakingTokenBalance,
     userAllowance: new BigNumber(userAllowance.toString()),
-    rewards: rewards.div(new BigNumber(10).pow(18)) // DCAU decimals
+    rewards: rewards.div(new BigNumber(10).pow(18)), // DCAU decimals
+    depositFeeBp: new BigNumber(depositFeeBp).toNumber()
   }
 }
 

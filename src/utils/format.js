@@ -30,18 +30,20 @@ function getFullDisplayBalance(balance, decimals = 18)  {
   return balance.dividedBy(new BigNumber(10).pow(decimals)).toFixed()
 }
 
-function formatNumber(num, minPrecision = 2, maxPrecision = 2)  {
+function formatNumber(num, numberOfDecimalValues = 3)  {
   if (num === undefined) {
     return 0
   }
 
-  const bnNumber = new BigNumber(num).toNumber()
-  const options = {
-    minimumFractionDigits: minPrecision,
-    maximumFractionDigits: maxPrecision
+  const fmt = {
+    decimalSeparator: '.',
+    groupSeparator: ' ',
+    groupSize: 3,
   }
 
-  return bnNumber.toLocaleString(undefined, options)
+  const bnNumber = new BigNumber(num)
+  
+  return bnNumber.toFormat(numberOfDecimalValues, fmt)
 }
 
 function shortenNumber(value) {

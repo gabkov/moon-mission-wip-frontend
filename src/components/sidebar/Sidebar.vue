@@ -1,21 +1,22 @@
 <template>
-  <div class="sidebar" :style="this.menuOpen ? {width: '0px', padding: 0}: {width: '180px'}">
-    <div v-if="!menuOpen">
-      <SidebarLink :menuOpen="this.menuOpen" to="/" icon="fas fa-home">Home</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/pre-sale" icon="fas fa-columns">Pre-sale</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/farms" icon="fas fa-chart-bar">Farms</SidebarLink>
-      <!-- <SidebarLink :menuOpen="this.menuOpen" to="/friends" icon="fas fa-users">Friends</SidebarLink>
-      <SidebarLink :menuOpen="this.menuOpen" to="/image" icon="fas fa-image">Images</SidebarLink> -->
-    </div>
+  <div v-bind:class="menuOpen? 'w-44':'w-14'" class="opacity-[0.96] fixed flex flex-col top-14 left-0 bg-gradient-to-r from-gray-900 to-gray-800 h-full rounded-r-xl text-white transition-all duration-300 border-r-4 border-t-[3px] shadow-xl shadow-sky-500  border-gray-600 z-[1]">
+    <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+      <ul class="flex flex-col py-4 space-y-3">
 
-    <span class="collapse-icon" :class="{ 'rotate-180': menuOpen }" @click="$emit('toggle-menu')">
-      <i class="fas fa-angle-double-left" />
-    </span>
+        <SidebarLink to="/" menuOption="Home"/>
+        <SidebarLink to="/pre-sale" menuOption="Pre-sale"/>
+        <SidebarLink to="/farms" menuOption="Farms"/>
+
+      </ul>
+      <p v-show="menuOpen" class="mb-14 px-5 py-3 text-center text-xs">Copyright @2021</p>
+    </div>
   </div>
+
+
 </template>
 
 <script>
-import SidebarLink from './SidebarLink'
+import SidebarLink from './SidebarLink.vue'
 
 export default {
   props: {
@@ -26,49 +27,9 @@ export default {
 </script>
 
 <style>
-:root {
-  --sidebar-bg-color: #212529;
-  --sidebar-item-hover: #909090;
-  --sidebar-item-active: #495057;;
-}
+
 </style>
 
 <style scoped>
-.sidebar {
-  color: white;
-  background-color: var(--sidebar-bg-color);
 
-  float: left;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  padding: 0.5em;
-
-  transition: 0.3s ease;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar h1 {
-  height: 2.5em;
-}
-
-.collapse-icon {
-  position: absolute;
-  bottom: 0;
-  padding: 0.75em;
-
-  color: rgba(255, 255, 255, 0.7);
-
-  transition: 0.2s linear;
-}
-
-.rotate-180 {
-  transform: rotate(180deg);
-  transition: 0.2s linear;
-  color: #212529
-}
 </style>
