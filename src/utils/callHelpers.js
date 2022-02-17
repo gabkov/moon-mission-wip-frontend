@@ -101,7 +101,8 @@ async function callPoolAnalytics( pool, account) {
   ]
   // Initialise these values in case user not logged in the basic infos still available
   let stakedInfo = {amount: new BigNumber(0)}
-  let [stakingTokenBalance, pendingFuel, userAllowance] =  new Array(4).fill(new BigNumber(0));
+  let stakingTokenBalance = [0]
+  let [pendingFuel, userAllowance] =  new Array(2).fill(new BigNumber(0));
   if(account !== null){
       [stakedInfo, stakingTokenBalance, pendingFuel, userAllowance] = await multicall(userRelatedCalls)
   }
