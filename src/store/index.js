@@ -5,7 +5,7 @@ import { POOLS } from '../consts/pools'
 const store = createStore({
   state () {
     return {
-      user: Object,
+      user: {},
       userLoading: false,
       chainId: import.meta.env.VITE_APP_CHAIN_ID,
       pools: POOLS[import.meta.env.VITE_APP_CHAIN_ID]

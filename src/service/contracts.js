@@ -11,13 +11,22 @@ import Moralis from '../plugins/moralis'
 
 const constants = CONSTANTS[store.state.chainId] 
 
+
 // putting the contracts initalizations to a separate file so it is easier just to import from here instead of reinitializing everywhere
+
+
+
 let signer = null
 if (!Moralis.User.current()) {
-    signer = new ethers.providers.JsonRpcProvider(constants.NODE_URL);
+    signer = getJsonRpcProvider()
 }else{
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
+}
+
+
+function getJsonRpcProvider(){
+    return new ethers.providers.JsonRpcProvider(constants.NODE_URL)
 }
 
 
@@ -63,6 +72,7 @@ function getPoolContract(tokenAddress){
 }
 
 export {
+    getJsonRpcProvider,
     preFuelContract,
     busdContract,
     fuelContract,

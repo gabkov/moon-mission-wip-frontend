@@ -7,7 +7,7 @@
 
 @layer components {
     .btn-primary {
-      @apply bg-sky-500 text-white font-medium text-lg rounded-xl px-5 py-2 text-center mr-2 hover:bg-sky-700  drop-shadow-[0px_0_4px_#0ea5e9] border-2 border-sky-400;
+      @apply bg-sky-500 text-white font-medium text-lg rounded-2xl px-5 py-2 text-center mr-2 hover:bg-sky-700  drop-shadow-[0px_0_4px_#0ea5e9] border-2 border-sky-400;
     }
 
     html {

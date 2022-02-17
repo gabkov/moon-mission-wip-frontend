@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="flex items-center justify-between">
-                <input class=" w-full mr-2 bg-gray-600 rounded-xl border-2 border-gray-800"  type="text" v-model.number="amount">
+                <input class=" w-full mr-2 bg-gray-600 rounded-xl border-2 border-gray-800"  type="number" v-model.number="amount">
                 <button class="btn-primary rounded-full text-sm" @click="setMaxBalance()">MAX</button>
             </div>
             <div v-bind:class="isBalanceZero() ? 'text-rose-500 text-sm ' : 'hidden'" >No tokens to stake</div>
