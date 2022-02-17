@@ -5,11 +5,11 @@
       <div class="flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
-          <div>PREFUEL Remaining:</div>
+          <div>pFUEL Remaining:</div>
           <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.preFuelRemaining, preSaleBasicInfo.preFuelDecimals), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
-          <div>Your PREFUEL balance:</div>
+          <div>Your pFUEL balance:</div>
           <div>{{this.formatNumber(this.getBalanceNumber(preFuelBalance, preFuelDecimals), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
@@ -28,14 +28,15 @@
         <div v-if="isAuthenticated">
           <div class="flex flex-col sm:flex-row justify-between gap-2" v-if="isApprovedBusdForPreSale(userPreSaleData.busdAllowance)">
             <div class="relative w-full mt-1">
-              <input type="number" v-model.number="amount" :class="amount > 3000 ? 'focus:border-red-500 focus:ring-red-500' : ''" class="bg-gray-600 border-2 border-gray-300 rounded-full  block w-full  p-2.5">
-              <div class="flex absolute inset-y-0 right-0 items-center pr-0 ">
+              <div class="text-[0.6rem] pl-5">MAX is your max balance or $3000</div>
+              <input placeholder="Buy with BUSD" type="number" v-model.number="amount" :class="amount > 3000 ? 'focus:border-red-500 focus:ring-red-500' : ''" class="text-yellow-300 bg-gray-600 border-2 border-gray-300 rounded-full  block w-full  p-2.5">
+              <div class="flex absolute inset-y-1 right-0 items-center pr-0 pt-[0.9rem]">
                 <button @click="setMaxBusdBalance()" class="btn-primary  px-3 pt-[0.09rem] pb-[0.09rem] rounded-2xl" type="submit">MAX</button>
               </div>
             </div>
-            <button class="btn-primary w-full" :disabled="amount === 0" v-bind:class="(amount == 0 )? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">BUY PREFUEL</button>
+            <button class="btn-primary w-full mr-0 sm:mt-4" :disabled="amount === 0" v-bind:class="(amount == 0 )? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">BUY PREFUEL</button>
           </div>
-          <button class="btn-primary w-full" v-else @click="approveBusdForPreSale">Approve BUSD for pre-sale</button>
+          <button v-else class="btn-primary w-full" @click="approveBusdForPreSale">Approve BUSD for pre-sale</button>
         </div>
         <div v-else>
           <button v-if="!userLoading" class="w-full btn-primary" @click="login" >Connect Wallet</button>
@@ -69,7 +70,7 @@
         
         <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
-            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{preFuelBalance}}</span> PREFUEL for FUEL</button>
+            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{preFuelBalance}}</span> pFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>
@@ -81,6 +82,34 @@
             </svg>
             <span class="text-sm">Signing...</span>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gray-800  p-6 self-center  w-full max-w-2xl rounded-xl drop-shadow-[0px_0_3px_#9ca3af] border-2 border-gray-400">
+      <div class="flex flex-col">
+        <div class="self-center text-2xl mb-3">Pre-sale info</div>
+        <div class="text-sm sm:text-base flex items-center justify-between">
+          <div>Rate:</div>
+          <div>$5 per FUEL</div>
+        </div>
+        <div class="text-sm sm:text-base flex items-center justify-between">
+          <div>Cap:</div>
+          <div>600 FUEL per wallet</div>
+        </div>
+        <div class="text-sm sm:text-base flex items-center justify-between">
+          <div>Pre-sale supply:</div>
+          <div>30 000</div>
+        </div>
+        <div class="text-sm sm:text-base flex items-center justify-between">
+          <div>Minted for liquidty:</div>
+          <div>7 500</div>
+        </div>
+        <div class="text-sm sm:text-base flex items-center justify-between">
+          <div>Total FUEL supply:</div>
+          <div>100 000</div>
+        </div>
+        <div class="mt-4 text-sm sm:text-base flex items-center ">
+          Initial liquidity will be supplied at 2x presale price ($10) if presale fills, or at least 1.5x presale price if not
         </div>
       </div>
     </div>
@@ -105,7 +134,7 @@ export default {
   inheritAttrs:false,
   data(){
     return {
-      amount: 0,
+      amount: "",
       userPreSaleData: {},
       preFuelBalance: 0,
       preFuelDecimals: 18,
