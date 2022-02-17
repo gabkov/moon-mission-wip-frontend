@@ -18,8 +18,8 @@ import { useRoute } from 'vue-router'
 
 export default {
   props: {
-    to: { type: String, required: true },
-    menuOption: { type: String, required: true },
+    to: String,
+    menuOption: String,
     menuOpen: Boolean
   },
   setup(props) {
