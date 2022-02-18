@@ -7,7 +7,7 @@ const store = createStore({
     return {
       user: {},
       userLoading: false,
-      chainId: import.meta.env.VITE_APP_CHAIN_ID,
+      chainId: parseInt(import.meta.env.VITE_APP_CHAIN_ID),
       pools: POOLS[import.meta.env.VITE_APP_CHAIN_ID]
     }
   },
