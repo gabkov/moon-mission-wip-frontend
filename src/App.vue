@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       poolInfos: [],
-      menuOpen: true,
+      menuOpen:  localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : true,
     }
   },
   computed: {
@@ -46,7 +46,8 @@ export default {
       setUser: "setUser",
     }),
     toggleMenu() {
-      this.menuOpen = !this.menuOpen
+      localStorage.setItem("menuOpen", !this.menuOpen)
+      this.menuOpen = localStorage.getItem("menuOpen") === 'true'
     },
     async updatePoolInfo(tokenAddress) {
       const poolIndex = this.poolInfos.findIndex((pool) => pool.address == tokenAddress)

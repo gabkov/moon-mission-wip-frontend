@@ -26,7 +26,7 @@ async function loginUser(){
                 }
             }
         }
-        await Moralis.authenticate({signingMessage: "High Five ✋"}).then(user => setUser(user))
+        await Moralis.authenticate({signingMessage: "Connect wallet"}).then(user => setUser(user))
     } catch (error) {
         setUserLoading(false)
         return
