@@ -17,6 +17,7 @@ const constants = CONSTANTS[store.state.chainId]
 
 
 let signer = null
+
 if (!Moralis.User.current()) {
     signer = getJsonRpcProvider()
 }else{
@@ -24,44 +25,51 @@ if (!Moralis.User.current()) {
     signer = provider.getSigner();
 }
 
+store.watch(state => state.user,(userObject) => {
+    if(Object.keys(userObject).length > 0){
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        signer = provider.getSigner()
+    }
+})
+
 
 function getJsonRpcProvider(){
     return new ethers.providers.JsonRpcProvider(constants.NODE_URL)
 }
 
 
-const preFuelContract = new ethers.Contract(
+const preFuelContract = () => new ethers.Contract(
     constants.PRE_FUEL_TOKEN_CONTRACT,
     preFuelAbi,
     signer
 );
 
-const busdContract = new ethers.Contract(
+const busdContract = () => new ethers.Contract(
     constants.BUSD_TOKEN_CONTRACT,
     ERC20,
     signer
 );
 
-const fuelContract = new ethers.Contract(
+const fuelContract = () => new ethers.Contract(
     constants.FUEL_TOKEN_ADDRESS,
     ERC20,
     signer
 );
 
-const fuelReedemContract = new ethers.Contract(
+const fuelReedemContract = () => new ethers.Contract(
     constants.FUEL_REEDEM_CONTRACT,
     fuelReedemAbi,
     signer
 );
 
-const masterChefContract = new ethers.Contract(
+const masterChefContract = () => new ethers.Contract(
     constants.MASTERCHEF,
     masterChefAbi,
     signer
 );
 
 
-const multiCallContract = new ethers.Contract(
+const multiCallContract = () => new ethers.Contract(
     constants.MULTICALL,
     multiCallAbi,
     signer

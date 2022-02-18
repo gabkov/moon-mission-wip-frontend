@@ -82,9 +82,16 @@ export default {
     const user = Moralis.User.current()
     if (user) {
       this.setUser(user)
+    } else {
+      await this.buildPoolInfo(user)
     }
-    await this.buildPoolInfo(user)
   },
+  watch: {
+    async user(){
+      this.poolInfos.splice(0)
+      await this.buildPoolInfo(this.user)
+    }
+  }
 }
 </script>
 

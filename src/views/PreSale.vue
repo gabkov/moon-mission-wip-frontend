@@ -203,6 +203,15 @@ export default {
       await swapPreFuelForFuel()
       this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     },
+    async fillUserPreSaleInfo(){
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+      this.preFuelDecimals = this.userPreSaleData.preFuelDecimals
+      this.preFuelBalance = this.userPreSaleData.preFuelBalance
+      this.fuelDecimals = this.userPreSaleData.fuelDecimals
+      this.fuelBalance = this.userPreSaleData.fuelBalance
+      this.busdDecimals = this.userPreSaleData.busdDecimals
+      this.busdBalance = this.userPreSaleData.busdBalance
+    }
   },  
   async created(){
     this.preSaleBasicInfo = await callPreSaleBasicInfo()
@@ -211,13 +220,14 @@ export default {
     this.preSaleEnd = this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock
     this.swapStart = this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock 
     if(Moralis.User.current()){
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
-      this.preFuelDecimals = this.userPreSaleData.preFuelDecimals
-      this.preFuelBalance = this.userPreSaleData.preFuelBalance
-      this.fuelDecimals = this.userPreSaleData.fuelDecimals
-      this.fuelBalance = this.userPreSaleData.fuelBalance
-      this.busdDecimals = this.userPreSaleData.busdDecimals
-      this.busdBalance = this.userPreSaleData.busdBalance
+      await this.fillUserPreSaleInfo()
+    }
+  },
+  watch: {
+    async user(userObject){
+      if(Object.keys(userObject).length > 0){
+        await this.fillUserPreSaleInfo()
+      }
     }
   }
 }

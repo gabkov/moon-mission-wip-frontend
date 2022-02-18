@@ -25,9 +25,7 @@ async function loginUser(){
     } catch (error) {
         setUserLoading(false)
         return
-    } finally{
-        location.reload()
-    }
+    } 
     
 }
 
