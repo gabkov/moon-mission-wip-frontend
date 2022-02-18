@@ -16,12 +16,13 @@ async function loginUser(){
         if(chainId !== NETWORK_ID){
             try {
                 await Moralis.switchNetwork(NETWORK_ID);
+                await Moralis.authenticate().then(user => setUser(user))
             } catch (error) {
                 await addNetwork()
                 await Moralis.switchNetwork(NETWORK_ID);
+                await Moralis.authenticate().then(user => setUser(user))
             }
         }
-        await Moralis.authenticate().then(user => setUser(user))
     } catch (error) {
         setUserLoading(false)
         return
@@ -35,12 +36,12 @@ async function logoutUser(){
 }
 
 async function addNetwork(){
-    const chainName = "BSC TestNet"
-    const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
+    const chainName = "BSC Mainnet"
+    const rpcUrl = "https://bsc-dataseed.binance.org/"
     const chainId = store.state.chainId
     const currencyName = "Binance Coin";
     const currencySymbol = "BNB"
-    const blockExplorerUrl = "https://testnet.bscscan.com"
+    const blockExplorerUrl = "https://bscscan.com"
     await Moralis.addNetwork(chainId, chainName, currencyName, currencySymbol, rpcUrl, blockExplorerUrl);
 }
 
