@@ -6,10 +6,10 @@
         <div class="flex justify-center items-center w-full gap-2">
           <img class="w-14 h-14" src="https://polywantsacracker.farm/images/coins/quick.png" alt="fuel">
           <div class="items-center">
-            <button class="btn-primary pt-[0.15rem] pb-[0.15rem] bg-gray-800 hover:bg-sky-500 flex flex-row items-center w-full gap-2"><span class="self-center">+</span><img class="w-5 h-5 self-center" src="../assets/metamask.png" alt="metamask"></button>
+            <button @click="addFuelToMetamask()" class="btn-primary pt-[0.15rem] pb-[0.15rem] bg-gray-800 hover:bg-sky-500 flex flex-row items-center w-full gap-2"><span class="self-center">+</span><img class="w-5 h-5 self-center" src="../assets/metamask.png" alt="metamask"></button>
           </div>
         </div>
-        <a class="w-full" href=""><button class="btn-primary w-full">Buy FUEL</button></a>
+        <a class="w-full" href=""><button class="btn-primary sm:pt-1 sm:pb-1 w-full">Buy FUEL</button></a>
       </div>
       <div class="flex flex-col justify-between gap-1">
         <div class="text-2xl">FUEL to harvest</div>
@@ -78,6 +78,10 @@
 </template>
 
 <script>
+import { CONSTANTS } from '../consts/constants'
+import store from '../store'
+
+const constants = CONSTANTS[store.state.chainId] 
 
 export default {
   name: "Home",
@@ -86,7 +90,22 @@ export default {
       twitterUrl: 'https://twitter.com/digi_future2018?ref_src=twsrc%5Etfw'
     }
   },
-
+  methods:{
+    addFuelToMetamask(){
+      window.ethereum ? window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: constants.FUEL_TOKEN_ADDRESS,
+              symbol: "FUEL",
+              decimals: 18,
+              image: ""
+            }
+          }
+      }) : alert("Please connect your metamask or install metamask plugin in your browser")
+    }
+  },
   mounted(){   
     this.$nextTick(function () { twttr.widgets.load(); });
   }

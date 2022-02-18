@@ -3,9 +3,9 @@
     <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
       <ul class="flex flex-col py-4 space-y-3">
 
-        <SidebarLink to="/" menuOption="Home"/>
-        <SidebarLink to="/pre-sale" menuOption="Pre-sale"/>
-        <SidebarLink to="/farms" menuOption="Farms"/>
+        <SidebarLink @click="toggleMenuIfMobile()" to="/" menuOption="Home"/>
+        <SidebarLink @click="toggleMenuIfMobile()" to="/pre-sale" menuOption="Pre-sale"/>
+        <SidebarLink @click="toggleMenuIfMobile()" to="/farms" menuOption="Farms"/>
 
       </ul>
       <p v-show="menuOpen" class="mb-14 px-5 py-3 text-center text-xs">Copyright @2021</p>
@@ -20,9 +20,17 @@ import SidebarLink from './SidebarLink.vue'
 
 export default {
   props: {
-    menuOpen: Boolean
+    menuOpen: Boolean,
+    isMobile: Boolean
   },
   components: { SidebarLink },
+  methods: {
+    toggleMenuIfMobile(){
+      if(this.isMobile && this.menuOpen){
+        this.$emit('toggle-menu')
+      }
+    }
+  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-[url('./src/assets/background/bg-space.jpg')] bg-fixed bg-no-repeat bg-cover text-white ">
     <NavBar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen"/>
-    <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" />
+    <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" :isMobile="this.isMobile"/>
     <div v-bind:class="menuOpen ? 'md:ml-44' : ''" class="h-full mt-20 mb-10 ml-14">
       <router-view
         :poolInfos="poolInfos"
@@ -32,6 +32,7 @@ export default {
     return {
       poolInfos: [],
       menuOpen:  localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : true,
+      isMobile: false
     }
   },
   computed: {
@@ -80,6 +81,9 @@ export default {
     },
   },
   async created() {
+    if (screen.width <= 640) {
+      this.isMobile = true
+    } 
     const user = Moralis.User.current()
     if (user) {
       this.setUser(user)
