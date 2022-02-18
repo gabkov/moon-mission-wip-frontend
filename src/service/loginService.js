@@ -17,8 +17,13 @@ async function loginUser(){
             try {
                 await Moralis.switchNetwork(NETWORK_ID);
             } catch (error) {
-                await addNetwork()
-                await Moralis.switchNetwork(NETWORK_ID);
+                if(error.code !==  4001){
+                    await addNetwork()
+                    await Moralis.switchNetwork(NETWORK_ID);
+                }else{
+                    setUserLoading(false)
+                    return
+                }
             }
         }
         await Moralis.authenticate().then(user => setUser(user))

@@ -24,7 +24,7 @@
         </div>
         <div class="flex items-center justify-evenly mb-6">
             <button @click="closeModal(); amount=0" class="btn-primary w-full" >Cancel</button>
-            <button @click="$emit(methodType, pid, amount, poolAddress); confirmClicked=true" class="btn-primary w-full" :disabled="amount===0" v-bind:class="(amount == 0 || confirmClicked)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
+            <button @click="$emit(methodType, pid, amount, poolAddress);" class="btn-primary w-full" :disabled="amount===0" v-bind:class="(amount == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' ">Confirm</button>
         </div>
     </div>
 </div>
@@ -41,7 +41,6 @@ export default {
             depositToken: "deposit-token",
             withdrawToken: "withdraw-token",
             amount: 0,
-            confirmClicked: false
         }
     },
     props:{
@@ -84,7 +83,6 @@ export default {
                 if(this.amount > 0){ // only close the modal if value was submited
                     this.closeModal()
                     this.amount = 0
-                    this.confirmClicked = false
                 }
             }
         },
@@ -93,7 +91,6 @@ export default {
                 if(this.amount > 0){
                     this.closeModal()
                     this.amount = 0
-                    this.confirmClicked = false
                 }
             }
         }

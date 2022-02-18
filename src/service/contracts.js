@@ -32,7 +32,6 @@ store.watch(state => state.user,(userObject) => {
     }
 })
 
-
 function getJsonRpcProvider(){
     return new ethers.providers.JsonRpcProvider(constants.NODE_URL)
 }
