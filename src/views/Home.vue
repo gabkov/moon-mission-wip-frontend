@@ -25,7 +25,7 @@
 
     <div class="opacity-[0.98] flex flex-col w-full max-w-sm bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
       <div class="text-3xl self-center mb-4">Announcements</div>
-      <a class="twitter-timeline" data-width="500" data-height="300" data-theme="light" href="https://twitter.com/digi_future2018?ref_src=twsrc%5Etfw">Tweets by digi_future2018</a>
+      <a class="twitter-timeline" data-width="500" data-height="300" data-theme="light" :key="twitterUrl" :href="twitterUrl" >Tweets by digi_future2018</a>
     </div>
 
     <div class="opacity-[0.98] flex flex-col w-full max-w-sm bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium divide-y divide-gray-300/50">
@@ -64,23 +64,31 @@
     <div class="opacity-[0.98] flex flex-col lg:flex-row w-full max-w-sm lg:max-w-3xl  text-white font-medium gap-6">
       <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 gap-2">
         <div class="text-xl sm:text-2xl ">Total Value Locked (TVL)</div>
-        <div class="text-3xl font-bold">$3213213</div>
+        <div class="text-3xl font-bold">$321321433</div>
         <div class="text-sm">Across all Farms and Pools</div>
       </div>
       <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400  gap-2">
         <div class="text-xl sm:text-2xl ">Total Native Liquidity (TNL)</div>
-        <div class="text-3xl font-bold">$3213213</div>
+        <div class="text-3xl font-bold">$3213243413</div>
         <div class="text-sm">Across all Native LPs</div>
       </div>
     </div>
   </div>
+ 
 </template>
 
 <script>
 
-
 export default {
   name: "Home",
+  data(){
+    return{
+      twitterUrl: 'https://twitter.com/digi_future2018?ref_src=twsrc%5Etfw'
+    }
+  },
 
+  mounted(){   
+    this.$nextTick(function () { twttr.widgets.load(); });
+  }
 }
 </script>
