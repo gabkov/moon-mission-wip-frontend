@@ -2,7 +2,7 @@
   <div class="flex flex-col">
     <div class="self-center text-6xl">PRE-SALE</div>
     <div class="flex flex-wrap flex-row justify-center p-6 gap-5">
-      <div class="flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
+      <div class="opacity-[0.98] flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>pFUEL Remaining:</div>
@@ -18,7 +18,7 @@
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>You can buy up to:</div>
-          <div>600 PREFUEL</div>
+          <div>600 pFUEL</div>
         </div>
         <div v-show="preSaleStart===0" class="text-sm sm:text-base flex items-center justify-between">
           <div>Blocks til pre-sale ends:</div>
@@ -34,7 +34,7 @@
                 <button @click="setMaxBusdBalance()" class="btn-primary  px-3 pt-[0.09rem] pb-[0.09rem] rounded-2xl" type="submit">MAX</button>
               </div>
             </div>
-            <button class="btn-primary w-full mr-0 sm:mt-4" :disabled="amount === 0" v-bind:class="(amount == 0 )? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">BUY PREFUEL</button>
+            <button class="btn-primary w-full mr-0 sm:mt-4" :disabled="amount === 0" v-bind:class="(amount == 0 || amount > 3000)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">BUY PREFUEL</button>
           </div>
           <button v-else class="btn-primary w-full" @click="approveBusdForPreSale">Approve BUSD for pre-sale</button>
         </div>
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
+      <div class="opacity-[0.98] flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
         <div class="text-2xl text-center mb-4 text-violet-500">SWAP PREFUEL FOR <span class="text-yellow-300">FUEL</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>FUEL Remaining:</div>
@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-gray-800  p-6 self-center  w-full max-w-2xl rounded-xl drop-shadow-[0px_0_3px_#9ca3af] border-2 border-gray-400">
+    <div class="opacity-[0.98] bg-gray-800  p-6 self-center  w-full max-w-2xl rounded-xl drop-shadow-[0px_0_3px_#9ca3af] border-2 border-gray-400">
       <div class="flex flex-col">
         <div class="self-center text-2xl mb-3">Pre-sale info</div>
         <div class="text-sm sm:text-base flex items-center justify-between">
