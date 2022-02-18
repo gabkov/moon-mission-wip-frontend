@@ -16,18 +16,19 @@ async function loginUser(){
         if(chainId !== NETWORK_ID){
             try {
                 await Moralis.switchNetwork(NETWORK_ID);
-                await Moralis.authenticate().then(user => setUser(user))
             } catch (error) {
                 await addNetwork()
                 await Moralis.switchNetwork(NETWORK_ID);
-                await Moralis.authenticate().then(user => setUser(user))
             }
         }
+        await Moralis.authenticate().then(user => setUser(user))
     } catch (error) {
         setUserLoading(false)
         return
+    } finally{
+        location.reload()
     }
-    location.reload()
+    
 }
 
 async function logoutUser(){
