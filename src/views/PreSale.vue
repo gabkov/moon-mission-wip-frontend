@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="opacity-[0.98] bg-gray-800  p-6 self-center  w-full max-w-2xl rounded-xl drop-shadow-[0px_0_3px_#9ca3af] border-2 border-gray-400">
+    <div class="opacity-[0.98] bg-gray-800  p-6 self-center  w-full max-w-lg rounded-xl drop-shadow-[0px_0_3px_#9ca3af] border-2 border-gray-400">
       <div class="flex flex-col">
         <div class="self-center text-2xl mb-3">Pre-sale info</div>
         <div class="text-sm sm:text-base flex items-center justify-between">

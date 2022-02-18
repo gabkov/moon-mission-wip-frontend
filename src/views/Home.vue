@@ -47,6 +47,10 @@
           <div>Max Supply</div>
           <div class="font-bold">100 000</div>
         </div>
+        <div class="flex flex-row justify-between">
+          <div>Total FUEL burned</div>
+          <div class="font-bold">10 000</div>
+        </div>
         <div class="mb-5 flex flex-row justify-between">
           <div>New FUEL/block</div>
           <div class="font-bold">0.1</div>
