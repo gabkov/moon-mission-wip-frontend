@@ -5,9 +5,13 @@
     <div v-bind:class="menuOpen ? 'md:ml-44' : ''" class="h-full mt-20 mb-10 ml-14">
       <router-view
         :poolInfos="poolInfos"
+        :preSaleBasicInfo="preSaleBasicInfo"
+        :currentBlock="currentBlock"
+        :userPreSaleData="userPreSaleData"
         @deposit-token="this.depositToken"
         @withdraw-token="this.withdrawToken"
         @approve-token="this.approveToken"
+        @pre-sale-user-info="this.refreshPreSaleUserInfo"
       />
     </div>
   </div>
@@ -16,11 +20,12 @@
 <script>
 import Sidebar from "@/components/sidebar/Sidebar.vue"
 import NavBar from "@/components/navbar/NavBar.vue"
-import { callPoolAnalytics } from "./utils/callHelpers"
+import { callPoolAnalytics, callPreSaleBasicInfo, callPreSaleUserInfo } from "./utils/callHelpers"
 import { mapGetters, mapMutations } from "vuex"
 import { deposit, withdraw } from "./service/masterChefService"
 import { approveTokenForMasterChef } from "./service/poolService"
 import Moralis from "./plugins/moralis"
+import { getJsonRpcProvider } from './service/contracts'
 
 export default {
   name: "App",
@@ -32,7 +37,10 @@ export default {
     return {
       poolInfos: [],
       menuOpen:  localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : true,
-      isMobile: false
+      isMobile: false,
+      preSaleBasicInfo: {},
+      currentBlock: 0,
+      userPreSaleData: {}
     }
   },
   computed: {
@@ -70,6 +78,15 @@ export default {
     async approveToken(tokenAddress) {
       await approveTokenForMasterChef(tokenAddress)
       await this.updatePoolInfo(tokenAddress)
+    },    
+    
+    async getCurrentBlock(){
+      return await getJsonRpcProvider().getBlockNumber()
+    },
+
+    async buildBasicPreSaleInfo(){
+      this.currentBlock = await this.getCurrentBlock()
+      this.preSaleBasicInfo = await callPreSaleBasicInfo()
     },
 
     async buildPoolInfo(user) {
@@ -79,14 +96,19 @@ export default {
         this.poolInfos.push(extended)
       })
     },
+    async refreshPreSaleUserInfo(){
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+    }
   },
   async created() {
+    this.buildBasicPreSaleInfo()
     if (screen.width <= 640) {
       this.isMobile = true
     } 
     const user = Moralis.User.current()
     if (user) {
       this.setUser(user)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     } else {
       await this.buildPoolInfo(user)
     }
@@ -95,6 +117,7 @@ export default {
     async user(){
       this.poolInfos.splice(0)
       await this.buildPoolInfo(this.user)
+      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
     }
   }
 }

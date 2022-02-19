@@ -70,7 +70,7 @@
         
         <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
-            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{preFuelBalance}}</span> pFUEL for FUEL</button>
+            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{this.formatNumber(this.getBalanceNumber(preFuelBalance, preFuelDecimals), 0)}}</span> pFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>
@@ -123,8 +123,6 @@ import { buyPreFuel, approvePreFuelForSwap} from "../service/preFuelService"
 import {approveBusdForPreSale} from "../service/busdService"
 import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
-import Moralis from '../plugins/moralis'
-import { callPreSaleUserInfo, callPreSaleBasicInfo } from '../utils/callHelpers'
 import {formatNumber, getBalanceNumber, getRawBalanceNumber} from "../utils/format"
 import { getJsonRpcProvider } from '../service/contracts'
 
@@ -134,20 +132,13 @@ export default {
   inheritAttrs:false,
   data(){
     return {
-      amount: "",
-      userPreSaleData: {},
-      preFuelBalance: 0,
-      preFuelDecimals: 18,
-      fuelBalance: 0,
-      fuelDecimals: 18,
-      busdBalance: 0,
-      busdDecimals: 18,
-      preSaleBasicInfo: {},
-      currentBlock: 0,
-      preSaleStart: 0,
-      preSaleEnd: 0,
-      swapStart: 0
+      amount: ""
     }
+  },
+  props:{
+    preSaleBasicInfo: {},
+    currentBlock: Number,
+    userPreSaleData: {}
   },
   computed: {
     ...mapGetters({
@@ -158,7 +149,35 @@ export default {
     }),
     isAuthenticated(){
       return Object.keys(this.user).length > 0
+    },
+    preSaleStart(){
+      return this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock
+    },
+    preSaleEnd(){
+      return this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock
+    },
+    swapStart(){
+      return this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock
+    },
+    preFuelBalance(){
+      return this.userPreSaleData.preFuelBalance ? this.userPreSaleData.preFuelBalance : 0
+    },
+    preFuelDecimals(){
+      return this.userPreSaleData.preFuelDecimals ? this.userPreSaleData.preFuelDecimals : 18
+    },
+    fuelBalance(){
+      return this.userPreSaleData.fuelBalance ? this.userPreSaleData.fuelBalance : 0
+    },
+    fuelDecimals(){
+      return this.userPreSaleData.fuelDecimals ? this.userPreSaleData.fuelDecimals : 18
+    },
+    busdBalance(){
+      return this.userPreSaleData.busdBalance ? this.userPreSaleData.busdBalance : 0
+    },
+    busdDecimals(){
+      return this.userPreSaleData.busdDecimals ? this.userPreSaleData.busdDecimals : 18
     }
+
   },
   methods: {
     async login(){
@@ -188,54 +207,20 @@ export default {
     },
     async approveBusdForPreSale(){
       await approveBusdForPreSale()
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+      this.$emit("pre-sale-user-info")
     },
     async buyPreFuel(){
       await buyPreFuel(this.amount)
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
-    
+      this.$emit("pre-sale-user-info")
     },
     async approvePreFuelForSwap(){
       await approvePreFuelForSwap()
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+      this.$emit("pre-sale-user-info")
     },
     async swapPreFuelForFuel(){
       await swapPreFuelForFuel()
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
-    },
-    async fillUserPreSaleInfo(){
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
-      this.preFuelDecimals = this.userPreSaleData.preFuelDecimals
-      this.preFuelBalance = this.userPreSaleData.preFuelBalance
-      this.fuelDecimals = this.userPreSaleData.fuelDecimals
-      this.fuelBalance = this.userPreSaleData.fuelBalance
-      this.busdDecimals = this.userPreSaleData.busdDecimals
-      this.busdBalance = this.userPreSaleData.busdBalance
+      this.$emit("pre-sale-user-info")
     }
   },  
-  async created(){
-    this.preSaleBasicInfo = await callPreSaleBasicInfo()
-    this.currentBlock = await this.getCurrentBlock()
-    this.preSaleStart = this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock
-    this.preSaleEnd = this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock
-    this.swapStart = this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock 
-    if(Moralis.User.current()){
-      await this.fillUserPreSaleInfo()
-    }
-  },
-  watch: {
-    async user(userObject){
-      if(Object.keys(userObject).length > 0){
-        await this.fillUserPreSaleInfo()
-      }
-    }
-  }
 }
 </script>
-<style scoped>
-.logo{
-  max-width:30%;
-  max-height:30%;
-  object-fit: contain;
-}
-</style>
