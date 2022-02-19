@@ -18,20 +18,10 @@ async function callPreSaleBasicInfo(){
       params: [constants.PRE_FUEL_TOKEN_CONTRACT]
     },
     {
-      address: constants.PRE_FUEL_TOKEN_CONTRACT,
-      name: 'decimals',
-      abi: ERC20
-    },
-    {
       address:  constants.FUEL_TOKEN_ADDRESS,
       name:  'balanceOf',
       abi:  ERC20,
       params: [constants.FUEL_REEDEM_CONTRACT]
-    },
-    {
-      address: constants.FUEL_TOKEN_ADDRESS,
-      name: 'decimals',
-      abi: ERC20
     },
     {
       address:  constants.PRE_FUEL_TOKEN_CONTRACT,
@@ -50,13 +40,11 @@ async function callPreSaleBasicInfo(){
     },
   ]
 
-  const [preFuelRemaining, preFuelDecimals, fuelRemaining, fuelDecimals, preSaleStartBlock, preSaleEndBlock, swapStartBlock] = await multicall(calls)
+  const [preFuelRemaining, fuelRemaining, preSaleStartBlock, preSaleEndBlock, swapStartBlock] = await multicall(calls)
 
   return {
-    preFuelRemaining: new BigNumber(preFuelRemaining.toString()), 
-    preFuelDecimals: new BigNumber(preFuelDecimals.toString()).toNumber(),
+    preFuelRemaining: new BigNumber(preFuelRemaining.toString()),
     fuelRemaining: new BigNumber(fuelRemaining.toString()),
-    fuelDecimals: new BigNumber(fuelDecimals.toString()).toNumber(),
     preSaleStartBlock: new BigNumber(preSaleStartBlock).toNumber(),
     preSaleEndBlock: new BigNumber(preSaleEndBlock).toNumber(), 
     swapStartBlock: new BigNumber(swapStartBlock).toNumber()
@@ -78,11 +66,6 @@ async function callPreSaleUserInfo(account){
       params: [account, constants.FUEL_REEDEM_CONTRACT]
     },
     {
-      address: constants.PRE_FUEL_TOKEN_CONTRACT,
-      name: 'decimals',
-      abi: ERC20
-    },
-    {
       address:  constants.BUSD_TOKEN_CONTRACT,
       name:  'balanceOf',
       abi:  ERC20,
@@ -95,34 +78,21 @@ async function callPreSaleUserInfo(account){
       params: [account, constants.PRE_FUEL_TOKEN_CONTRACT]
     },
     {
-      address: constants.BUSD_TOKEN_CONTRACT,
-      name: 'decimals',
-      abi: ERC20
-    },
-    {
       address:  constants.FUEL_TOKEN_ADDRESS,
       name:  'balanceOf',
       abi:  ERC20,
       params: [account]
     },
-    {
-      address: constants.FUEL_TOKEN_ADDRESS,
-      name: 'decimals',
-      abi: ERC20
-    },
   ]
 
-  const [preFuelBalance, preFuelAllowance, preFuelDecimals, busdBalance, busdAllowance, busdDecimals, fuelBalance, fuelDecimals] = await multicall(calls)
+  const [preFuelBalance, preFuelAllowance, busdBalance, busdAllowance, fuelBalance] = await multicall(calls)
 
   return {
     preFuelBalance: new BigNumber(preFuelBalance.toString()), 
     preFuelAllowance: new BigNumber(preFuelAllowance.toString()),
-    preFuelDecimals: new BigNumber(preFuelDecimals.toString()).toNumber(),
     busdBalance: new BigNumber(busdBalance.toString()), 
     busdAllowance: new BigNumber(busdAllowance.toString()), 
-    busdDecimals: new BigNumber(busdDecimals.toString()).toNumber(),
     fuelBalance: new BigNumber(fuelBalance.toString()),
-    fuelDecimals: new BigNumber(fuelDecimals.toString()).toNumber(),
   }
 }
 

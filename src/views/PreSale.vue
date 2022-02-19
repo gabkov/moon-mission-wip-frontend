@@ -6,15 +6,15 @@
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>pFUEL Remaining:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.preFuelRemaining, preSaleBasicInfo.preFuelDecimals), 0)}}</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.preFuelRemaining, PRE_FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your pFUEL balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preFuelBalance, preFuelDecimals), 0)}}</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your BUSD balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(busdBalance, busdDecimals), 0)}}</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(busdBalance, BUSD_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>You can buy up to:</div>
@@ -53,11 +53,11 @@
         <div class="text-2xl text-center mb-4 text-violet-500">SWAP PREFUEL FOR <span class="text-yellow-300">FUEL</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>FUEL Remaining:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.fuelRemaining, preSaleBasicInfo.fuelDecimals), 0)}}</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.fuelRemaining, FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your FUEL balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(fuelBalance, fuelDecimals), 0)}}</div>
+          <div>{{this.formatNumber(this.getBalanceNumber(fuelBalance, FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>You can swap for up to:</div>
@@ -70,7 +70,7 @@
         
         <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
-            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{this.formatNumber(this.getBalanceNumber(preFuelBalance, preFuelDecimals), 0)}}</span> pFUEL for FUEL</button>
+            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{this.formatNumber(this.getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</span> pFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>
@@ -125,14 +125,20 @@ import {swapPreFuelForFuel} from "../service/fuelReedemService"
 import {loginUser} from "@/service/loginService"
 import {formatNumber, getBalanceNumber, getRawBalanceNumber} from "../utils/format"
 import { getJsonRpcProvider } from '../service/contracts'
+import { CONSTANTS } from '../consts/constants'
+import store from '../store'
 
+const constants = CONSTANTS[store.state.chainId]
 
 export default {
   name: 'PreSale',
   inheritAttrs:false,
   data(){
     return {
-      amount: ""
+      amount: "",
+      PRE_FUEL_DECIMALS: constants.PRE_FUEL_DECIMALS,
+      FUEL_DECIMALS: constants.FUEL_DECIMALS,
+      BUSD_DECIMALS: constants.BUSD_DECIMALS
     }
   },
   props:{
@@ -160,28 +166,24 @@ export default {
       return this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock
     },
     preFuelBalance(){
-      return this.userPreSaleData.preFuelBalance ? this.userPreSaleData.preFuelBalance : 0
-    },
-    preFuelDecimals(){
-      return this.userPreSaleData.preFuelDecimals ? this.userPreSaleData.preFuelDecimals : 18
+      return this.getBalance(this.userPreSaleData.preFuelBalance)
     },
     fuelBalance(){
-      return this.userPreSaleData.fuelBalance ? this.userPreSaleData.fuelBalance : 0
-    },
-    fuelDecimals(){
-      return this.userPreSaleData.fuelDecimals ? this.userPreSaleData.fuelDecimals : 18
+      return this.getBalance(this.userPreSaleData.fuelBalance)
     },
     busdBalance(){
-      return this.userPreSaleData.busdBalance ? this.userPreSaleData.busdBalance : 0
+      return this.getBalance(this.userPreSaleData.busdBalance)
     },
-    busdDecimals(){
-      return this.userPreSaleData.busdDecimals ? this.userPreSaleData.busdDecimals : 18
-    }
-
   },
   methods: {
     async login(){
       await loginUser()
+    },
+    getBalance(balance){
+      return balance ? balance : 0
+    },
+    getDecimals(decimals){
+      return decimals ? decimals : 18
     },
     formatNumber(num, numberOfDecimalValues) {
       return formatNumber(num, numberOfDecimalValues);
