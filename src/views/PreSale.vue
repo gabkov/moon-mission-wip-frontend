@@ -6,15 +6,15 @@
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>pFUEL Remaining:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.preFuelRemaining, PRE_FUEL_DECIMALS), 0)}}</div>
+          <div>{{formatNumber(getBalanceNumber(siteBasicInfo.preFuelRemaining, PRE_FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your pFUEL balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</div>
+          <div>{{formatNumber(getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your BUSD balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(busdBalance, BUSD_DECIMALS), 0)}}</div>
+          <div>{{formatNumber(getBalanceNumber(busdBalance, BUSD_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>You can buy up to:</div>
@@ -53,11 +53,11 @@
         <div class="text-2xl text-center mb-4 text-violet-500">SWAP PREFUEL FOR <span class="text-yellow-300">FUEL</span></div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>FUEL Remaining:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(preSaleBasicInfo.fuelRemaining, FUEL_DECIMALS), 0)}}</div>
+          <div>{{formatNumber(getBalanceNumber(siteBasicInfo.fuelRemaining, FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>Your FUEL balance:</div>
-          <div>{{this.formatNumber(this.getBalanceNumber(fuelBalance, FUEL_DECIMALS), 0)}}</div>
+          <div>{{formatNumber(getBalanceNumber(fuelBalance, FUEL_DECIMALS), 0)}}</div>
         </div>
         <div class="text-sm sm:text-base flex items-center justify-between">
           <div>You can swap for up to:</div>
@@ -70,7 +70,7 @@
         
         <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
-            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{this.formatNumber(this.getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</span> pFUEL for FUEL</button>
+            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{formatNumber(getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</span> pFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>
@@ -142,7 +142,7 @@ export default {
     }
   },
   props:{
-    preSaleBasicInfo: {},
+    siteBasicInfo: {},
     currentBlock: Number,
     userPreSaleData: {}
   },
@@ -157,13 +157,13 @@ export default {
       return Object.keys(this.user).length > 0
     },
     preSaleStart(){
-      return this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleStartBlock - this.currentBlock
+      return this.siteBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.preSaleStartBlock - this.currentBlock
     },
     preSaleEnd(){
-      return this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.preSaleEndBlock - this.currentBlock
+      return this.siteBasicInfo.preSaleEndBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.preSaleEndBlock - this.currentBlock
     },
     swapStart(){
-      return this.preSaleBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.preSaleBasicInfo.swapStartBlock - this.currentBlock
+      return this.siteBasicInfo.swapStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.swapStartBlock - this.currentBlock
     },
     preFuelBalance(){
       return this.getBalance(this.userPreSaleData.preFuelBalance)

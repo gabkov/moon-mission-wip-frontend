@@ -3,6 +3,7 @@ export const YEAR_IN_SECONDS = 365 * 24 * 3600;
 export const CONSTANTS = {
     97: {
         CHAIN_ID: 97,
+        BURN_ADDRESS: "0x000000000000000000000000000000000000dEaD",
         NODE_URL: 'https://speedy-nodes-nyc.moralis.io/73133d3aa8d0da86e1130a4e/bsc/testnet',
         PRE_FUEL_TOKEN_CONTRACT: '0xcbfcD61794a0e9D18F497CA52F008F036DD6C293',
         PRE_FUEL_DECIMALS: 18,

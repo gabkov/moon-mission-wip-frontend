@@ -23,7 +23,7 @@
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Earned</div>
-                <div class="text-md">{{ this.formatNumber(rewards) }}</div>
+                <div class="text-md">{{formatNumber(rewards) }}</div>
             </div>
         </td>
         <td class="hidden lg:table-cell lg:px-4 lg:py-5">
@@ -41,13 +41,13 @@
         <td class="hidden lg:table-cell lg:px-4 lg:py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Liquidity</div>
-                <div class="whitespace-nowrap">${{ this.formatNumber(tvl, 0) }}</div>
+                <div class="whitespace-nowrap">${{ formatNumber(tvl, 0) }}</div>
             </div>
         </td>
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Multiplier</div>
-                <div class="text-center bg-violet-600 rounded-full w-11">{{this.shortenNumber(allocPoint)}}x</div>
+                <div class="text-center bg-violet-600 rounded-full w-11">{{shortenNumber(allocPoint)}}x</div>
             </div>
         </td>
         <td class="px-4 py-5">
@@ -74,7 +74,7 @@
                 </div>
                 <div class="flex flex-row w-full justify-between lg:hidden mb-2">
                     <div class="text-md">Liquidity</div>
-                    <div class="whitespace-nowrap">${{ this.formatNumber(tvl, 0) }}</div>
+                    <div class="whitespace-nowrap">${{ formatNumber(tvl, 0) }}</div>
                 </div>
                 <div class="flex flex-row w-full justify-between lg:hidden">
                     <div class="text-md">Daily APR</div>
@@ -88,7 +88,7 @@
                     <div class="p-4 flex flex-col border-2 border-gray-500 rounded-2xl w-full">
                         <div class="text-xs uppercase" ><span class="text-yellow-300 ">Fuel</span> Earned</div>
                         <div class="flex items-center justify-between gap-2">
-                            <div class="text-xl">{{ this.formatNumber(rewards) }}</div>
+                            <div class="text-xl">{{ formatNumber(rewards) }}</div>
                             <button class="btn-primary" @click="$emit('withdraw-token', pid, 0, poolAddress)" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
                         </div>
                     </div>
@@ -97,8 +97,8 @@
                             <div class="text-xs uppercase"><span class="text-violet-500">BTC</span> staked</div>
                             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between gap-2">
                                 <div class="pt-1">
-                                    <div class="text-xl" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
-                                    <div class="text-[10px] text-gray-500" >~{{ this.formatNumber(stakedAmountUSD) }} USD</div>
+                                    <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
+                                    <div class="text-[10px] text-gray-500" >~{{ formatNumber(stakedAmountUSD) }} USD</div>
                                 </div>
                                 <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
                                     <button @click="openModal('withdraw-token')"

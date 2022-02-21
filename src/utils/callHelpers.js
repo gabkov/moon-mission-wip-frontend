@@ -9,7 +9,7 @@ import preFuelAbi from "../abi/PreFuelToken.json"
 
 const constants = CONSTANTS[store.state.chainId]
 
-async function callPreSaleBasicInfo(){
+async function callBasicSiteInfo(){
   const calls = [
     {
       address:  constants.PRE_FUEL_TOKEN_CONTRACT,
@@ -38,16 +38,29 @@ async function callPreSaleBasicInfo(){
       name:  'startBlock',
       abi:  preFuelAbi,
     },
+    {
+      address:  constants.FUEL_TOKEN_ADDRESS,
+      name:  'totalSupply',
+      abi:  ERC20,
+    },
+    {
+      address:  constants.FUEL_TOKEN_ADDRESS,
+      name:  'balanceOf',
+      abi:  ERC20,
+      params: [constants.BURN_ADDRESS]
+    },
   ]
 
-  const [preFuelRemaining, fuelRemaining, preSaleStartBlock, preSaleEndBlock, swapStartBlock] = await multicall(calls)
+  const [preFuelRemaining, fuelRemaining, preSaleStartBlock, preSaleEndBlock, swapStartBlock, fuelTotalSupply, totalBurned] = await multicall(calls)
 
   return {
     preFuelRemaining: new BigNumber(preFuelRemaining.toString()),
     fuelRemaining: new BigNumber(fuelRemaining.toString()),
     preSaleStartBlock: new BigNumber(preSaleStartBlock).toNumber(),
     preSaleEndBlock: new BigNumber(preSaleEndBlock).toNumber(), 
-    swapStartBlock: new BigNumber(swapStartBlock).toNumber()
+    swapStartBlock: new BigNumber(swapStartBlock).toNumber(),
+    fuelTotalSupply: new BigNumber(fuelTotalSupply.toString()),
+    totalBurned: new BigNumber(totalBurned.toString()),
   }
 }
 
@@ -262,7 +275,7 @@ async function callPoolAnalytics( pool, account) {
     daily,
     stakingTokenBalance,
     userAllowance: new BigNumber(userAllowance.toString()),
-    rewards: rewards.div(new BigNumber(10).pow(18)), // DCAU decimals
+    rewards: rewards.div(new BigNumber(10).pow(constants.FUEL_DECIMALS)),
     depositFeeBp: new BigNumber(depositFeeBp).toNumber()
   }
 }
@@ -270,5 +283,5 @@ async function callPoolAnalytics( pool, account) {
 export {
   callPoolAnalytics,
   callPreSaleUserInfo,
-  callPreSaleBasicInfo
+  callBasicSiteInfo
 }

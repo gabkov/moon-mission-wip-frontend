@@ -5,9 +5,10 @@
     <div v-bind:class="menuOpen ? 'md:ml-44' : ''" class="h-full mt-20 mb-10 ml-14">
       <router-view
         :poolInfos="poolInfos"
-        :preSaleBasicInfo="preSaleBasicInfo"
+        :siteBasicInfo="siteBasicInfo"
         :currentBlock="currentBlock"
         :userPreSaleData="userPreSaleData"
+        :fuelPrice="fuelPrice"
         @deposit-token="this.depositToken"
         @withdraw-token="this.withdrawToken"
         @approve-token="this.approveToken"
@@ -20,12 +21,14 @@
 <script>
 import Sidebar from "@/components/sidebar/Sidebar.vue"
 import NavBar from "@/components/navbar/NavBar.vue"
-import { callPoolAnalytics, callPreSaleBasicInfo, callPreSaleUserInfo } from "./utils/callHelpers"
+import { callPoolAnalytics, callBasicSiteInfo, callPreSaleUserInfo } from "./utils/callHelpers"
 import { mapGetters, mapMutations } from "vuex"
 import { deposit, withdraw } from "./service/masterChefService"
 import { approveTokenForMasterChef } from "./service/poolService"
 import Moralis from "./plugins/moralis"
 import { getJsonRpcProvider } from './service/contracts'
+import { getFuelPrice } from './utils/poolAnalytics'
+import BigNumber from 'bignumber.js'
 
 export default {
   name: "App",
@@ -38,9 +41,10 @@ export default {
       poolInfos: [],
       menuOpen:  localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : true,
       isMobile: false,
-      preSaleBasicInfo: {},
+      siteBasicInfo: {},
       currentBlock: 0,
-      userPreSaleData: {}
+      userPreSaleData: {},
+      fuelPrice: new BigNumber(0)
     }
   },
   computed: {
@@ -84,9 +88,9 @@ export default {
       return await getJsonRpcProvider().getBlockNumber()
     },
 
-    async buildBasicPreSaleInfo(){
+    async buildBasicSiteInfo(){
       this.currentBlock = await this.getCurrentBlock()
-      this.preSaleBasicInfo = await callPreSaleBasicInfo()
+      this.siteBasicInfo = await callBasicSiteInfo()
     },
 
     async buildPoolInfo(user) {
@@ -101,14 +105,15 @@ export default {
     }
   },
   async created() {
-    this.buildBasicPreSaleInfo()
+    this.buildBasicSiteInfo()
+    this.fuelPrice = await getFuelPrice()
     if (screen.width <= 640) {
       this.isMobile = true
     } 
     const user = Moralis.User.current()
     if (user) {
       this.setUser(user)
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+      this.refreshPreSaleUserInfo()
     } else {
       await this.buildPoolInfo(user)
     }
@@ -117,7 +122,7 @@ export default {
     async user(){
       this.poolInfos.splice(0)
       await this.buildPoolInfo(this.user)
-      this.userPreSaleData = await callPreSaleUserInfo(this.userAddress)
+      this.refreshPreSaleUserInfo()
     }
   }
 }

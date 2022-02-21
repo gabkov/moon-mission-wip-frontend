@@ -18,7 +18,7 @@
           <img class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
-            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">{{this.shortenNumber(allocPoint)}}X</div>
+            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">{{shortenNumber(allocPoint)}}X</div>
           </div>
         </div>
         <div class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}%</div>
@@ -39,15 +39,15 @@
         <div class="py-3">
           <div class="text-xs"><span class="text-violet-500">Fuel</span> Earned</div>
           <div class="flex items-center justify-between">
-            <div class="text-xl" >{{ this.formatNumber(rewards) }}</div>
+            <div class="text-xl" >{{ formatNumber(rewards) }}</div>
             <button @click="$emit('withdraw-token', pid, 0, poolAddress)" class="btn-primary" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
           </div>
           <div class="text-xs"><span class="text-violet-500">BTC</span> staked</div>
           <div v-if="isAuthenticated">
             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
               <div class="pt-0.5">
-                <div class="text-xl" >{{ this.formatNumber(this.getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
-                <div class="text-[10px] text-gray-500" >~{{ this.formatNumber(stakedAmountUSD) }} USD</div>
+                <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
+                <div class="text-[10px] text-gray-500" >~{{formatNumber(stakedAmountUSD) }} USD</div>
               </div>
               <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
                 <button @click="openModal('withdraw-token')"
@@ -88,7 +88,7 @@
         <div v-if="showDetails">
           <div class="pt-2 text-md flex items-center justify-between">
             <div>Total Liquidity:</div>
-            <div>${{ this.formatNumber(tvl, 0) }}</div>
+            <div>${{ formatNumber(tvl, 0) }}</div>
           </div>
           <div class="flex flex-col space-y-0.5 text-violet-500">
             <div class="flex">
@@ -145,13 +145,13 @@ export default {
     }
   },
   computed: {
-        ...mapGetters({
-            user: "getUser",
-            userLoading: "getUserLoading",
-        }),
-        isAuthenticated(){
-            return Object.keys(this.user).length > 0
-        }
+    ...mapGetters({
+        user: "getUser",
+        userLoading: "getUserLoading",
+    }),
+    isAuthenticated(){
+      return Object.keys(this.user).length > 0
+    }
   },
   methods: {
     loginUser,

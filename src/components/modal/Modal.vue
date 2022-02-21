@@ -13,7 +13,7 @@
             <div>
                 <div class="flex items-center justify-between">
                     <div>{{methodType === depositToken ? "Stake " : "Unstake "}}</div>
-                    <div>Balance: {{methodType === depositToken ? this.formatNumber(getRawBalanceNumber(stakingTokenBalance), 3) : this.formatNumber(getRawBalanceNumber(stakedAmount), 3)}}</div>
+                    <div>Balance: {{methodType === depositToken ? formatNumber(getRawBalanceNumber(stakingTokenBalance), 3) : formatNumber(getRawBalanceNumber(stakedAmount), 3)}}</div>
                 </div>
             </div>
             <div class="flex items-center justify-between">
