@@ -12,16 +12,16 @@
         <a class="w-full" href=""><button class="btn-primary sm:pt-1 sm:pb-1 w-full">Buy FUEL</button></a>
       </div>
       <div class="flex flex-col justify-between gap-1">
-        <div class="text-3xl">FUEL to harvest</div>
-        <div v-if="isAuthenticated" class="text-2xl">{{formatNumber(fuelToHarvest)}}</div>
+        <div class="text-2xl">FUEL to harvest</div>
+        <div v-if="isAuthenticated" class="text-3xl text-sky-500">{{formatNumber(fuelToHarvest, 2)}}</div>
         <div v-else class="text-xl">LOCKED</div>
-        <div class="text-sm">~${{formatNumber(harvestUsdValue)}}</div>
+        <div class="text-sm text-gray-400">~${{formatNumber(harvestUsdValue, 2)}}</div>
       </div>
       <div class="flex flex-col justify-between gap-1">
-        <div class="text-3xl">FUEL in wallet</div>
-        <div v-if="isAuthenticated" class="text-2xl">{{formatNumber(fuelBalance)}}</div>
+        <div class="text-2xl">FUEL in wallet</div>
+        <div v-if="isAuthenticated" class="text-3xl text-sky-500">{{formatNumber(fuelBalance, 2)}}</div>
         <div v-else class="text-xl">LOCKED</div>
-        <div class="text-sm">~${{formatNumber(walletUsdValue)}}</div>
+        <div class="text-sm text-gray-400">~${{formatNumber(walletUsdValue, 2)}}</div>
       </div>
     </div>
 
@@ -35,33 +35,33 @@
         <div class="text-3xl self-center">FUEL stats</div>
         <div class="flex flex-row justify-between">
           <div>Market Cap</div>
-          <div class="font-bold">${{formatNumber(marketCap, 0)}}</div>
+          <div class="font-bold text-sky-500">${{formatNumber(marketCap, 0)}}</div>
         </div>
         <div class="flex flex-row justify-between">
           <div>Total Minted</div>
-          <div class="font-bold">{{formatNumber(totalMinted, 0)}}</div>
+          <div class="font-bold text-sky-500">{{formatNumber(totalMinted, 0)}}</div>
         </div>
         <div class="flex flex-row justify-between">
           <div>Circulating Supply</div>
-          <div class="font-bold">{{formatNumber(circulationSupply, 0)}}</div>
+          <div class="font-bold text-sky-500">{{formatNumber(circulationSupply, 0)}}</div>
         </div>
         <div class="flex flex-row justify-between">
           <div>Max Supply</div>
-          <div class="font-bold">100 000</div>
+          <div class="font-bold text-sky-500">100,000</div>
         </div>
         <div class="flex flex-row justify-between">
           <div>Total FUEL burned</div>
-          <div class="font-bold">{{formatNumber(totalBurned, 0)}}</div>
+          <div class="font-bold text-sky-500">{{formatNumber(totalBurned, 0)}}</div>
         </div>
         <div class="mb-5 flex flex-row justify-between">
           <div>New FUEL/block</div>
-          <div class="font-bold">0.1</div>
+          <div class="font-bold text-sky-500">0.1</div>
         </div>
       </div>
       <div>
       <div class="text-xl mt-5 flex flex-row justify-between">
         <div>Initial Liquidity</div>
-        <div class="font-bold">$150 000</div>
+        <div class="font-bold text-sky-500">$150,000</div>
       </div>
       </div>
     </div>
@@ -70,12 +70,12 @@
     <div class="opacity-[0.98] flex flex-col lg:flex-row w-full max-w-sm lg:max-w-3xl  text-white font-medium gap-6">
       <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 gap-2">
         <div class="text-xl sm:text-2xl ">Total Value Locked (TVL)</div>
-        <div class="text-3xl font-bold">${{formatNumber(tvl, 0)}}</div>
+        <div class="text-3xl font-bold text-sky-500">${{formatNumber(tvl, 0)}}</div>
         <div class="text-sm">Across all Farms and Pools</div>
       </div>
       <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400  gap-2">
         <div class="text-xl sm:text-2xl ">Total Native Liquidity (TNL)</div>
-        <div class="text-3xl font-bold">${{formatNumber(nativeTvl, 0)}}</div>
+        <div class="text-3xl font-bold text-sky-500">${{formatNumber(nativeTvl, 0)}}</div>
         <div class="text-sm">Across all Native LPs</div>
       </div>
     </div>

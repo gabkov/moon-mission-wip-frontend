@@ -37,7 +37,7 @@ function formatNumber(num, numberOfDecimalValues = 3)  {
 
   const fmt = {
     decimalSeparator: '.',
-    groupSeparator: ' ',
+    groupSeparator: ',',
     groupSize: 3,
   }
 
