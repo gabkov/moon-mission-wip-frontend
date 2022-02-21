@@ -78,7 +78,7 @@ export default {
     ViewSelector
   },
   props: {
-    poolInfos: Object,
+    poolInfos: Array,
   },
   methods: {
     async depositToken(pid, amount, tokenAddress) {

@@ -53,6 +53,8 @@ export default {
         methodType: String
     },
     methods:{
+        formatNumber,
+        getRawBalanceNumber,
         isBalanceZero(){
             if(this.methodType === this.depositToken && new BigNumber(this.stakingTokenBalance).eq(0)){
                 return true
@@ -65,13 +67,6 @@ export default {
         },
         setMaxBalance(){
             this.amount = (this.methodType === this.depositToken) ? getRawBalanceNumber(this.stakingTokenBalance) : getRawBalanceNumber(this.stakedAmount)
-        },
-        formatNumber(num, numberOfDecimalValues) {
-            return formatNumber(num, numberOfDecimalValues);
-        },
-
-        getRawBalanceNumber(num, decimals) {
-            return getRawBalanceNumber(num, decimals);
         },
         closeModal(){
             this.$emit("close-modal")

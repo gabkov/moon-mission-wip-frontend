@@ -39,7 +39,7 @@
           <button v-else class="btn-primary w-full" @click="approveBusdForPreSale">Approve BUSD for pre-sale</button>
         </div>
         <div v-else>
-          <button v-if="!userLoading" class="w-full btn-primary" @click="login" >Connect Wallet</button>
+          <button v-if="!userLoading" class="w-full btn-primary" @click="loginUser()" >Connect Wallet</button>
           <div v-else class="pt-4 flex justify-center items-center" >
             <svg role="status" class="mr-2 w-9 h-9 animate-spin text-gray-600 fill-blue-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -74,7 +74,7 @@
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>
-          <button v-if="!userLoading" class="w-full btn-primary" @click="login" >Connect Wallet</button>
+          <button v-if="!userLoading" class="w-full btn-primary" @click="loginUser()" >Connect Wallet</button>
           <div v-else class="pt-4 flex justify-center items-center" >
             <svg role="status" class="mr-2 w-9 h-9 animate-spin text-gray-600 fill-blue-400" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
@@ -122,7 +122,7 @@ import { mapGetters } from "vuex"
 import { buyPreFuel, approvePreFuelForSwap} from "../service/preFuelService"
 import {approveBusdForPreSale} from "../service/busdService"
 import {swapPreFuelForFuel} from "../service/fuelReedemService"
-import {loginUser} from "@/service/loginService"
+import {loginUser} from "../service/loginService"
 import {formatNumber, getBalanceNumber, getRawBalanceNumber} from "../utils/format"
 import { getJsonRpcProvider } from '../service/contracts'
 import { CONSTANTS } from '../consts/constants'
@@ -176,23 +176,15 @@ export default {
     },
   },
   methods: {
-    async login(){
-      await loginUser()
-    },
+    loginUser,
+    formatNumber, 
+    getBalanceNumber, 
+    getRawBalanceNumber,
     getBalance(balance){
       return balance ? balance : 0
     },
     getDecimals(decimals){
       return decimals ? decimals : 18
-    },
-    formatNumber(num, numberOfDecimalValues) {
-      return formatNumber(num, numberOfDecimalValues);
-    },
-    getBalanceNumber(num, decimals){
-      return getBalanceNumber(num, decimals)
-    },
-    getRawBalanceNumber(num, decimals) {
-      return getRawBalanceNumber(num, decimals);
     },
     isApprovedBusdForPreSale(allowance){
       return allowance > 0
