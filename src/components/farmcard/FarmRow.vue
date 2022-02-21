@@ -15,7 +15,11 @@
         <td class="px-4 py-5">
             <div class="flex items-center text-sm">
                 <div class="w-9 h-9 mr-3 rounded-full">
-                    <img src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+                    <img v-if="single" class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+                    <div v-else class="relative">
+                        <img class="w-8 h-8 absolute top-0 -left-1 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+                        <img class="w-8 h-8 absolute top-3 left-2" src="https://polywantsacracker.farm/images/coins/quick.png" alt="fuel">
+                    </div>
                 </div>
                 <div class="text-sm">{{poolName}}</div>
             </div>
@@ -169,7 +173,8 @@ export default {
         userAllowance: BigNumber,
         lpDecimals: Number,
         stakingTokenBalance: Array,
-        depositFeeBp: Number
+        depositFeeBp: Number,
+        single: Boolean
     },
     computed: {
         ...mapGetters({

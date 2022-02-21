@@ -39,7 +39,7 @@ export const POOLS = {
         {
             pid: 0,
             address: '0xbffB3eD80f9541b5A4c1cd3581d80Fd827004477',
-            single: false,
+            single: true,
             native: false,
             name: 'FUEL/USDT',
             quoteTokenAddress: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0',
@@ -51,7 +51,7 @@ export const POOLS = {
         {
             pid: 0,
             address: '0xbffB3eD80f9541b5A4c1cd3581d80Fd827004477',
-            single: false,
+            single: true,
             native: false,
             name: 'FUEL/USDT',
             quoteTokenAddress: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0',

@@ -11,11 +11,15 @@
   @deposit-token="this.depositToken"
   @withdraw-token="this.withdrawToken"
   />
-  <div v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
+  <div v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col  w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
-          <img class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+          <img v-if="single" class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+          <div v-else class="mb-16">
+            <img class="w-12 h-12 absolute top-6 left-6 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+            <img class="w-12 h-12 absolute top-10 left-12" src="https://polywantsacracker.farm/images/coins/quick.png" alt="fuel">
+          </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
             <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">{{shortenNumber(allocPoint)}}X</div>
@@ -133,7 +137,8 @@ export default {
     userAllowance: BigNumber,
     lpDecimals: Number,
     stakingTokenBalance: Array,
-    depositFeeBp: Number
+    depositFeeBp: Number,
+    single: Boolean
   },
   data(){
     return {
