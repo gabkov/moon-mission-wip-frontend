@@ -1,5 +1,3 @@
-# Moon Mission WIP FE
-
 # Deployment: [moon-mission-dev](https://main--stupefied-golick-1b1465.netlify.app/#/)
 
 ## Project setup
