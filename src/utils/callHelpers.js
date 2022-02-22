@@ -180,12 +180,6 @@ async function callPoolAnalytics( pool, account) {
     },
     {
       address: constants.MASTERCHEF,
-      name: 'poolInfo',
-      abi: masterChefAbi,
-      params: [pool.pid]
-    },
-    {
-      address: constants.MASTERCHEF,
       name: 'totalAllocPoint',
       abi: masterChefAbi
     },
@@ -196,22 +190,22 @@ async function callPoolAnalytics( pool, account) {
     }
   ]
 
-  const [lpSupplyPool, lpDecimals, lpTotalSupply, quoteBalance, quoteDecimals, fuelDecimals, poolInfo, totalAllocPoint, fuelPerBlock] = await multicall(liquidityCalls)
+  const [lpSupplyPool, lpDecimals, lpTotalSupply, quoteBalanceInTheLpPair, quoteDecimals, fuelDecimals, totalAllocPoint, fuelPerBlock] = await multicall(liquidityCalls)
   const lpSupply = lpSupplyPool.lpSupply
   const depositFeeBp = lpSupplyPool.depositFeeBP
   const stakedAmount = stakedInfo.amount
 
-  const stakedAmountDecimalFixed = new BigNumber(stakedAmount.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
-  const lpSupplyDecimalFixed = new BigNumber(lpSupply.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
+  const stakedAmountByUserDecimalFixed = new BigNumber(stakedAmount.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
+  const lpTokenSupplyInPoolDecimalFixed = new BigNumber(lpSupply.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
 
   const poolWeight = new BigNumber(totalAllocPoint.toString()).eq(0)
     ? 0
-    : new BigNumber(poolInfo.allocPoint.toString()).div(new BigNumber(totalAllocPoint.toString()))
+    : new BigNumber(lpSupplyPool.allocPoint.toString()).div(new BigNumber(totalAllocPoint.toString()))
 
   let quotePrice = new BigNumber(0)
   let stakedInQuote = new BigNumber(0)
   let lpSupplyInQuote = new BigNumber(0)
-  let lpSupplyInQuoteMC = new BigNumber(0)
+
 
   if (pool.quoteTokenAddress === pool.stableTokenAddress) {
     quotePrice = new BigNumber(1)
@@ -221,9 +215,8 @@ async function callPoolAnalytics( pool, account) {
   }
 
   if (pool.single === true) {
-    stakedInQuote = stakedAmountDecimalFixed
-    lpSupplyInQuote = lpSupplyDecimalFixed
-    lpSupplyInQuoteMC = new BigNumber(poolInfo.lpSupply.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
+    stakedInQuote = stakedAmountByUserDecimalFixed
+    lpSupplyInQuote = lpTokenSupplyInPoolDecimalFixed
   }
 
   if (pool.single === false) {
@@ -231,32 +224,23 @@ async function callPoolAnalytics( pool, account) {
       ? 0
       : new BigNumber(lpSupply.toString())
           .div(new BigNumber(lpTotalSupply.toString()))
-          .times(new BigNumber(quoteBalance.toString()))
-          .div(new BigNumber(10).pow(new BigNumber(quoteDecimals.toString())))
-          .times(new BigNumber(2))
-
-    lpSupplyInQuoteMC = new BigNumber(lpTotalSupply.toString()).eq(0)
-      ? 0
-      : new BigNumber(poolInfo.lpSupply.toString())
-          .div(new BigNumber(lpTotalSupply.toString()))
-          .times(new BigNumber(quoteBalance.toString()))
+          .times(new BigNumber(quoteBalanceInTheLpPair.toString()))
           .div(new BigNumber(10).pow(new BigNumber(quoteDecimals.toString())))
           .times(new BigNumber(2))
 
     stakedInQuote = new BigNumber(lpSupply.toString()).eq(0)
       ? 0
-      : new BigNumber(stakedAmountDecimalFixed.toString())
-          .div(new BigNumber(lpSupplyDecimalFixed.toString()))
+      : new BigNumber(stakedAmountByUserDecimalFixed.toString())
+          .div(new BigNumber(lpTokenSupplyInPoolDecimalFixed.toString()))
           .times(new BigNumber(lpSupplyInQuote.toString()))
   }
 
   const stakedAmountUSD = quotePrice.times(stakedInQuote)
   const tvl = quotePrice.times(lpSupplyInQuote)
-  const tvlMC = quotePrice.times(lpSupplyInQuoteMC)
-
+  
   const fuelPrice = await getFuelPrice()
 
-  const poolAPR = getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvlMC)
+  const poolAPR = getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl)
   const daily = new BigNumber(poolAPR).div(365).toFixed(3)
 
   let rewards = new BigNumber(0)
@@ -266,7 +250,7 @@ async function callPoolAnalytics( pool, account) {
   return {
     stakedAmount: new BigNumber(stakedAmount.toString()),
     stakedAmountUSD: stakedAmountUSD,
-    allocPoint: new BigNumber(poolInfo.allocPoint.toString()).div(100),
+    allocPoint: new BigNumber(lpSupplyPool.allocPoint.toString()).div(100),
     totalAllocPoint,
     fuelPerBlock,
     tvl,
