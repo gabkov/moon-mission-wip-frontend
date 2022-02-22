@@ -98,7 +98,7 @@
                     </div>
                     <div class="p-4 flex place-self-end flex-col border-2 border-gray-500 rounded-2xl w-full"> 
                         <div v-if="isAuthenticated">
-                            <div class="text-xs uppercase"><span class="text-violet-500">BTC</span> staked</div>
+                            <div class="text-xs uppercase"><span class="text-violet-500">{{ poolName }}</span> staked</div>
                             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between gap-2">
                                 <div class="pt-1">
                                     <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
