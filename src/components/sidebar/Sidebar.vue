@@ -8,7 +8,13 @@
         <SidebarLink @click="toggleMenuIfMobile()" to="/farms" menuOption="Farms"/>
 
       </ul>
-      <p v-show="menuOpen" class="mb-14 px-5 py-3 text-center text-xs">Copyright @2021</p>
+      <div class="flex flex-row justify-center items-center mb-16 gap-1">
+        <div class="flex bg-gradient-to-b from-sky-500 via-sky-400 to-sky-600 fill-white rounded-full border-[2px] border-sky-200 justify-center w-fit">
+          <Fuel class="w-6 h-6 m-[0.4rem]" />
+          <!-- <img @click="$emit('toggle-menu')" class="w-6 h-6 m-[0.33rem] self-center cursor-pointer" src="@/assets/fuel.png" alt="fuel"> -->
+        </div>
+        <div v-show="menuOpen" class="text-center text-base self-center">${{formatNumber(fuelPrice, 2)}}</div>
+      </div>
     </div>
   </div>
 
@@ -16,15 +22,20 @@
 </template>
 
 <script>
+import BigNumber from 'bignumber.js'
 import SidebarLink from './SidebarLink.vue'
+import { formatNumber } from '../../utils/format'
+import Fuel from '../fuel/Fuel.vue'
 
 export default {
   props: {
     menuOpen: Boolean,
-    isMobile: Boolean
+    isMobile: Boolean,
+    fuelPrice: BigNumber
   },
-  components: { SidebarLink },
+  components: { SidebarLink, Fuel },
   methods: {
+    formatNumber,
     toggleMenuIfMobile(){
       if(this.isMobile && this.menuOpen){
         this.$emit('toggle-menu')

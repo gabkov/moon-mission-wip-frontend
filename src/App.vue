@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-[url('./src/assets/background/bg-space.jpg')] bg-fixed bg-no-repeat bg-cover text-white ">
     <NavBar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen"/>
-    <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" :isMobile="this.isMobile"/>
+    <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" :isMobile="this.isMobile" :fuelPrice="fuelPrice"/>
     <div v-bind:class="menuOpen ? 'md:ml-44' : ''" class="h-full mt-20 mb-10 ml-14">
       <router-view
         :poolInfos="poolInfos"

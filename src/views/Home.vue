@@ -4,7 +4,9 @@
       <div class="text-3xl self-center">Farms & Staking</div>
       <div class="flex flex-col sm:flex-row justify-between items-center gap-2">
         <div class="flex justify-center items-center w-full gap-2">
-          <img class="w-14 h-14" src="https://polywantsacracker.farm/images/coins/quick.png" alt="fuel">
+          <div class="flex bg-gradient-to-b from-sky-500 via-sky-400 to-sky-600 fill-white rounded-full border-[2px] border-sky-200 justify-center w-fit">
+            <Fuel class="w-10 h-10 m-[0.5rem]"/>
+          </div>
           <div class="items-center">
             <button @click="addFuelToMetamask()" class="btn-primary pt-[0.15rem] pb-[0.15rem] bg-gray-800 hover:bg-sky-500 flex flex-row items-center w-full gap-2"><span class="self-center">+</span><img class="w-5 h-5 self-center" src="../assets/metamask.png" alt="metamask"></button>
           </div>
@@ -89,12 +91,15 @@ import store from '../store'
 import {formatNumber, getBalanceNumber} from "../utils/format"
 import { mapGetters } from "vuex"
 import BigNumber from 'bignumber.js'
-
+import Fuel from '../components/fuel/Fuel.vue'
 
 const constants = CONSTANTS[store.state.chainId] 
 
 export default {
   name: "Home",
+  components:{
+    Fuel
+  },
   data(){
     return{
       FUEL_DECIMALS: constants.FUEL_DECIMALS,
