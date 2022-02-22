@@ -1,6 +1,6 @@
 <template>
     <Staking 
-        :poolInfos="poolInfos.filter(pool => !pool.single)"
+        :poolInfos="poolInfos.filter(pool => pool.single)"
         @deposit-token="this.depositToken"
         @withdraw-token="this.withdrawToken"
         @approve-token="this.approveToken"
