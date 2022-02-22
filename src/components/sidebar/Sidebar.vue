@@ -6,6 +6,7 @@
         <SidebarLink @click="toggleMenuIfMobile()" to="/" menuOption="Home"/>
         <SidebarLink @click="toggleMenuIfMobile()" to="/pre-sale" menuOption="Pre-sale"/>
         <SidebarLink @click="toggleMenuIfMobile()" to="/farms" menuOption="Farms"/>
+        <SidebarLink @click="toggleMenuIfMobile()" to="/pools" menuOption="Pools"/>
 
       </ul>
       <div class="flex flex-row justify-center items-center mb-16 gap-1">
