@@ -1,4 +1,6 @@
 <template>
+  <div class="flex flex-col">
+  <div class="self-center text-center my-2 text-5xl md:text-6xl drop-shadow-[0px_0_8px_#0ea5e9]">Moon Mission Yield Farm</div>
   <div class="flex flex-wrap justify-center gap-6 p-4 sm:p-8">
     <div class="opacity-[0.98] flex  flex-col w-full max-w-sm bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-6">
       <div class="text-3xl self-center">Farms & Staking</div>
@@ -80,7 +82,7 @@
       </div>
     </div>
   </div>
- 
+ </div>
 </template>
 
 <script>
