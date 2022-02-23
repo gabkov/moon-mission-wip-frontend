@@ -50,8 +50,8 @@
           <div v-if="isAuthenticated">
             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
               <div class="pt-0.5">
-                <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
-                <div class="text-[10px] text-gray-500" >~{{formatNumber(stakedAmountUSD) }} USD</div>
+                <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals), 2) }}</div>
+                <div class="text-[10px] text-gray-500" >~{{formatNumber(stakedAmountUSD, 1) }} USD</div>
               </div>
               <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
                 <button @click="openModal('withdraw-token')"

@@ -25,6 +25,18 @@ export const POOLS = {
             logo1: 'fuel',
             logo2: 'busd'
         },
+        {
+            pid: 2,
+            address: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            single: true,
+            native: false,
+            name: 'BUSD',
+            quoteTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            quoteStablePairAddress: '',  // FUEL-BUSD stable pair address
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  // BUSD address
+            logo1: 'busd',
+            logo2: ''
+        },
        /* {
             pid: 0,
             address: '0xbffB3eD80f9541b5A4c1cd3581d80Fd827004477',
