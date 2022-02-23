@@ -9,7 +9,7 @@ export const POOLS = {
             quoteTokenAddress: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0',
             quoteStablePairAddress: '0x51efE7b080BB9704610c5a6d777676B111E6226d',  // FUEL-BUSD stable pair address
             stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  // BUSD address
-            logo: '/src/assets/tokens/fuel_icon.png'
+            logo: './src/assets/tokens/fuel_icon.png'
         },
        /* {
             pid: 0,
