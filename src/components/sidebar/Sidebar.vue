@@ -10,10 +10,7 @@
 
       </ul>
       <div class="flex flex-row justify-center items-center mb-16 gap-1">
-        <div class="flex bg-gradient-to-b from-sky-500 via-sky-400 to-sky-600 fill-white rounded-full border-[2px] border-sky-200 justify-center w-fit">
-          <Fuel class="w-6 h-6 m-[0.4rem]" />
-          <!-- <img @click="$emit('toggle-menu')" class="w-6 h-6 m-[0.33rem] self-center cursor-pointer" src="@/assets/fuel.png" alt="fuel"> -->
-        </div>
+          <img  class="w-12 h-12" src="@/assets/tokens/fuel_icon.png" alt="fuel">
         <div v-show="menuOpen" class="text-center text-base self-center">${{formatNumber(fuelPrice, 2)}}</div>
       </div>
     </div>

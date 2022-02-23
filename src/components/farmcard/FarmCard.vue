@@ -18,7 +18,7 @@
           <img v-if="single" class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
           <div v-else class="mb-16">
             <img class="w-12 h-12 absolute top-6 left-6 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
-            <img class="w-12 h-12 absolute top-10 left-12" src="https://polywantsacracker.farm/images/coins/quick.png" alt="fuel">
+            <img class="w-12 h-12 absolute top-10 left-12" src="@/assets/tokens/fuel_icon.png" alt="fuel">
           </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>

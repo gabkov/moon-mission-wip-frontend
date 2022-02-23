@@ -5,6 +5,7 @@ import Farms from '../views/Farms.vue'
 import Pools from '../views/Pools.vue'
 
 
+
 const routes = [
   {
     path: '/',
