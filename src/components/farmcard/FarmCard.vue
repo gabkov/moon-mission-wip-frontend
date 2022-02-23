@@ -15,10 +15,10 @@
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
-          <img v-if="single" class="w-16" :src="'/tokens/' + logo + '.png'" :alt="logo">
+          <img v-if="single" class="w-16" :src="'/tokens/' + logo1 + '.png'" :alt="logo">
           <div v-else class="mb-16">
-            <img class="w-12 h-12 absolute top-6 left-6 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
-            <img class="w-12 h-12 absolute top-10 left-12" src="@/assets/tokens/fuel_icon.png" alt="fuel">
+            <img class="w-12 h-12 absolute top-6 left-6 " :src="'/tokens/' + logo2 + '.png'" :alt="logo">
+            <img class="w-12 h-12 absolute top-10 left-12" :src="'/tokens/' + logo1 + '.png'" :alt="logo">
           </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
@@ -139,7 +139,8 @@ export default {
     stakingTokenBalance: Array,
     depositFeeBp: Number,
     single: Boolean,
-    logo: String
+    logo1: String,
+    logo2: String
   },
   data(){
     return {
