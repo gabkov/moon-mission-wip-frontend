@@ -266,7 +266,8 @@ async function callPoolAnalytics( pool, account) {
     stakingTokenBalance,
     userAllowance: new BigNumber(userAllowance.toString()),
     rewards: rewards.div(new BigNumber(10).pow(constants.FUEL_DECIMALS)),
-    depositFeeBp: new BigNumber(depositFeeBp).toNumber()
+    depositFeeBp: new BigNumber(depositFeeBp).toNumber(),
+    tokenAddress: lpSupplyPool.lpToken.toString()
   }
 }
 

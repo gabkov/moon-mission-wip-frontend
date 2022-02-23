@@ -63,13 +63,16 @@ export default {
       this.menuOpen = localStorage.getItem("menuOpen") === 'true'
     },
     async updatePoolInfo(tokenAddress) {
-      const poolIndex = this.poolInfos.findIndex((pool) => pool.address == tokenAddress)
-      const poolInfo = await callPoolAnalytics(this.pools[poolIndex],this.userAddress)
-      const extended = Object.assign(this.pools[poolIndex], poolInfo)
-      this.poolInfos[poolIndex] = extended
+      const poolIndex = this.pools.findIndex((pool) => pool.address == tokenAddress)
+      const pool = this.pools[poolIndex]
+      const poolInfo = await callPoolAnalytics(pool, this.userAddress)
+      const extended = Object.assign(pool, poolInfo)
+      const poolInfoIndex = this.poolInfos.findIndex((pool) => pool.tokenAddress == tokenAddress)
+      this.poolInfos[poolInfoIndex] = extended
     },
 
     async depositToken(pid, amount, tokenAddress) {
+      console.log(this.poolInfos);
       await deposit(pid, amount)
       await this.updatePoolInfo(tokenAddress)
     },
