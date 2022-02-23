@@ -15,7 +15,7 @@
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
-          <img v-if="single" class="w-16" src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
+          <img v-if="single" class="w-16" :src="logo" alt="">
           <div v-else class="mb-16">
             <img class="w-12 h-12 absolute top-6 left-6 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
             <img class="w-12 h-12 absolute top-10 left-12" src="@/assets/tokens/fuel_icon.png" alt="fuel">
@@ -138,7 +138,8 @@ export default {
     lpDecimals: Number,
     stakingTokenBalance: Array,
     depositFeeBp: Number,
-    single: Boolean
+    single: Boolean,
+    logo: String
   },
   data(){
     return {

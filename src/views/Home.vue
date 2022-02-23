@@ -61,10 +61,17 @@
         </div>
       </div>
       <div>
-      <div class="text-xl mt-5 flex flex-row justify-between">
-        <div>Initial Liquidity</div>
-        <div class="font-bold text-sky-500">$150,000</div>
-      </div>
+        <div class="text-xl mt-5 flex flex-row justify-between">
+          <div>Initial Liquidity</div>
+          <div class="font-bold text-sky-500">$150,000</div>
+        </div>
+        <div v-if="farmStartBlock > 0" class="text-xl mt-5 flex flex-row justify-between">
+          <div>Blocks til farm start</div>
+          <div class="font-bold text-violet-500">{{farmStartBlock}}</div>
+        </div>
+        <div v-else class="text-xl mt-5 flex flex-row justify-center">
+          <div class="font-bold text-violet-500">Farming is Live!</div>
+        </div>
       </div>
     </div>
 
@@ -106,7 +113,8 @@ export default {
     poolInfos: Array,
     siteBasicInfo: {},
     userPreSaleData: {},
-    fuelPrice: BigNumber
+    fuelPrice: BigNumber,
+    currentBlock: Number
   },
   computed:{
     ...mapGetters({
@@ -115,6 +123,9 @@ export default {
     }),
     isAuthenticated(){
       return Object.keys(this.user).length > 0
+    },
+    farmStartBlock(){
+      return this.siteBasicInfo.farmStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.farmStartBlock - this.currentBlock
     },
     fuelBalance(){
       return this.getBalanceNumber(this.getBalance(this.userPreSaleData.fuelBalance), this.FUEL_DECIMALS)

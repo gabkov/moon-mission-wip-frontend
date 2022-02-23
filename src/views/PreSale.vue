@@ -34,7 +34,7 @@
                 <button @click="setMaxBusdBalance()" class="btn-primary  px-3 pt-[0.09rem] pb-[0.09rem] rounded-2xl" type="submit">MAX</button>
               </div>
             </div>
-            <button class="btn-primary w-full mr-0 sm:mt-4" :disabled="amount === 0" v-bind:class="(amount == 0 || amount > 3000)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">BUY PREFUEL</button>
+            <button class="btn-primary w-full mr-0 sm:mt-4" :disabled="amount === 0 || preSaleStart > 0 || amount > 3000" v-bind:class="(amount == 0 || amount > 3000 || preSaleStart > 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed' : '' " @click="buyPreFuel">Buy PREFUEL</button>
           </div>
           <button v-else class="btn-primary w-full" @click="approveBusdForPreSale">Approve BUSD for pre-sale</button>
         </div>
@@ -70,7 +70,7 @@
         
         <div class="text-xs sm:text-sm self-center my-4">Blocks remaing until swap: <span class="text-violet-500">{{swapStart}}</span></div>
         <div v-if="isAuthenticated" >
-            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{formatNumber(getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</span> pFUEL for FUEL</button>
+            <button v-if="isApprovedPreFuelForSwap(userPreSaleData.preFuelAllowance)" :disabled="swapStart > 0" :class="swapStart > 0 ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" @click="swapPreFuelForFuel" class="btn-primary w-full">Swap <span class="text-blue-900">{{formatNumber(getBalanceNumber(preFuelBalance, PRE_FUEL_DECIMALS), 0)}}</span> pFUEL for FUEL</button>
             <button v-else @click="approvePreFuelForSwap" class="btn-primary w-full">Approve PREFUEL for swap</button>
         </div>
         <div v-else>

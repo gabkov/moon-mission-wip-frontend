@@ -49,9 +49,14 @@ async function callBasicSiteInfo(){
       abi:  ERC20,
       params: [constants.BURN_ADDRESS]
     },
+    {
+      address:  constants.MASTERCHEF,
+      name:  'startBlock',
+      abi:  masterChefAbi
+    },
   ]
 
-  const [preFuelRemaining, fuelRemaining, preSaleStartBlock, preSaleEndBlock, swapStartBlock, fuelTotalSupply, totalBurned] = await multicall(calls)
+  const [preFuelRemaining, fuelRemaining, preSaleStartBlock, preSaleEndBlock, swapStartBlock, fuelTotalSupply, totalBurned, farmStartBlock] = await multicall(calls)
 
   return {
     preFuelRemaining: new BigNumber(preFuelRemaining.toString()),
@@ -61,6 +66,7 @@ async function callBasicSiteInfo(){
     swapStartBlock: new BigNumber(swapStartBlock).toNumber(),
     fuelTotalSupply: new BigNumber(fuelTotalSupply.toString()),
     totalBurned: new BigNumber(totalBurned.toString()),
+    farmStartBlock: new BigNumber(farmStartBlock).toNumber()
   }
 }
 

@@ -1,10 +1,13 @@
 <template>
-    <Staking 
-        :poolInfos="poolInfos.filter(pool => !pool.single)"
-        @deposit-token="this.depositToken"
-        @withdraw-token="this.withdrawToken"
-        @approve-token="this.approveToken"
-    />
+    <div class="flex flex-col">
+        <div class="self-center text-center my-2 text-6xl drop-shadow-[0px_0_8px_#0ea5e9]">Farms<div class="self-center text-center text-sm">Stake LP tokens</div></div>
+        <Staking 
+            :poolInfos="poolInfos.filter(pool => !pool.single)"
+            @deposit-token="this.depositToken"
+            @withdraw-token="this.withdrawToken"
+            @approve-token="this.approveToken"
+        />
+    </div>
 </template>
 
 <script>
