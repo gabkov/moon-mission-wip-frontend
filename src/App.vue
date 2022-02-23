@@ -4,7 +4,7 @@
     <Sidebar @toggle-menu="toggleMenu" :menuOpen="this.menuOpen" :isMobile="this.isMobile" :fuelPrice="fuelPrice"/>
     <div v-bind:class="menuOpen ? 'md:ml-44' : ''" class="h-full mt-20 mb-10 ml-14">
       <router-view
-        :poolInfos="poolInfos"
+        :poolInfos="poolInfosSorted"
         :siteBasicInfo="siteBasicInfo"
         :currentBlock="currentBlock"
         :userPreSaleData="userPreSaleData"
@@ -53,6 +53,9 @@ export default {
       userAddress: "getUserAddress",
       pools: "getPools",
     }),
+    poolInfosSorted(){
+      return this.poolInfos.sort((a, b) =>  a.pid - b.pid)
+    }
   },
   methods: {
     ...mapMutations({
@@ -72,7 +75,6 @@ export default {
     },
 
     async depositToken(pid, amount, tokenAddress) {
-      console.log(this.poolInfos);
       await deposit(pid, amount)
       await this.updatePoolInfo(tokenAddress)
     },
