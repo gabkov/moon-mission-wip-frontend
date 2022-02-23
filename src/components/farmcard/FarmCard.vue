@@ -15,14 +15,14 @@
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
-          <img v-if="single" class="w-16" :src="'/tokens/' + logo1 + '.png'" :alt="logo">
+          <img v-if="single" class="w-16" :src="'/tokens/' + logo1 + '.png'" :alt="logo1">
           <div v-else class="mb-16">
-            <img class="w-12 h-12 absolute top-6 left-6 " :src="'/tokens/' + logo2 + '.png'" :alt="logo">
-            <img class="w-12 h-12 absolute top-10 left-12" :src="'/tokens/' + logo1 + '.png'" :alt="logo">
+            <img class="w-12 h-12 absolute top-6 left-6 " :src="'/tokens/' + logo2 + '.png'" :alt="logo2">
+            <img class="w-12 h-12 absolute top-10 left-12" :src="'/tokens/' + logo1 + '.png'" :alt="logo1">
           </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
-            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full w-11">{{shortenNumber(allocPoint)}}X</div>
+            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full p-1">{{shortenNumber(allocPoint)}}X</div>
           </div>
         </div>
         <div class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}%</div>

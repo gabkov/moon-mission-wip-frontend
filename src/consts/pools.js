@@ -6,22 +6,22 @@ export const POOLS = {
             single: true,
             native: true,
             name: 'FUEL',
-            quoteTokenAddress: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0',
+            quoteTokenAddress: '0x51efE7b080BB9704610c5a6d777676B111E6226d',
             quoteStablePairAddress: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',  // FUEL-BUSD stable pair address
             stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  // BUSD address
             logo1: 'fuel',
             logo2: ''
         },
         {
-            pid: 0,
+            pid: 1,
             address: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',
             single: false,
             native: true,
             name: 'BUSD-FUEL',
-            quoteTokenAddress: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0',
+            quoteTokenAddress: '0x51efE7b080BB9704610c5a6d777676B111E6226d',
             quoteStablePairAddress: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',
             stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
-            tokenPair: '0x16D8bfd94E979b2b44599e3bcD2A158a87711Fc0/0x500F4cbbE7bE063D94cD5D03A4e8CB2e9C7476D1',
+            tokenPair: '0x51efE7b080BB9704610c5a6d777676B111E6226d/0x92325A71cdacf88E45aD12597EE59E662342D03a',
             logo1: 'fuel',
             logo2: 'busd'
         },

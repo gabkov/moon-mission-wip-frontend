@@ -24,7 +24,7 @@ function getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl) {
 }
 
 async function getFuelPrice(){
-  return getTokenPrice(constants.FUEL_TOKEN_ADDRESS, constants.USDT_ADDRESS, constants.FUEL_USDT_ADDRESS)
+  return getTokenPrice(constants.FUEL_TOKEN_ADDRESS, constants.BUSD_TOKEN_CONTRACT, constants.FUEL_BUSD_ADDRESS)
 }
 
 async function getTokenPrice(tokenAddress, stableAddress, stablePairAddress) {
@@ -55,9 +55,9 @@ async function getTokenPrice(tokenAddress, stableAddress, stablePairAddress) {
 
   let price = new BigNumber(0)
   if (new BigNumber(tokenBal.toString()).gt(0)) {
-    const usdteBalDecimalsFixed = new BigNumber(stableBal.toString()).div(new BigNumber(10).pow(new BigNumber(stableDecimals.toString())))
+    const busdBalDecimalsFixed = new BigNumber(stableBal.toString()).div(new BigNumber(10).pow(new BigNumber(stableDecimals.toString())))
     const fuelBalDecimalsFixed = new BigNumber(tokenBal.toString()).div(new BigNumber(10).pow(new BigNumber(tokenDecimals.toString())))
-    price = usdteBalDecimalsFixed.div(fuelBalDecimalsFixed)
+    price = busdBalDecimalsFixed.div(fuelBalDecimalsFixed)
   }
 
   return price
