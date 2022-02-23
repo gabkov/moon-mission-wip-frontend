@@ -1,6 +1,6 @@
 <template>
   <li>
-    <router-link active-class="bg-sky-800 border-2 border-sky-400"  :to="to" class="relative flex flex-row items-center h-11 hover:bg-sky-800 text-white-600 p-[2px] rounded-md hover:border-2 hover:border-sky-400 pr-6">
+    <router-link v-if="!external" active-class="bg-sky-800 border-2 border-sky-400"  :to="to" class="relative flex flex-row items-center h-11 hover:bg-sky-800 text-white-600 p-[2px] rounded-md hover:border-2 hover:border-sky-400 pr-6">
       <span class="inline-flex justify-center items-center ml-[0.6rem]">
         <svg v-show="to === '/'" class="w-6 h-6 stroke-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         <svg v-show="to === '/pre-sale'" class="w-6 h-6 stroke-white" fill="none" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
@@ -9,27 +9,24 @@
       </span>
       <span class="ml-1 text-sm tracking-wide truncate">{{menuOption}}</span>
     </router-link>
+    <a v-if="external" active-class="bg-sky-800 border-2 border-sky-400" :href="to" target="_blank" class="relative flex flex-row items-center h-11 hover:bg-sky-800 text-white-600 p-[2px] rounded-md hover:border-2 hover:border-sky-400 pr-6">
+      <span class="inline-flex justify-center items-center ml-[0.6rem]">
+        <svg v-show="menuOption === 'Chart'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+        <svg v-show="menuOption === 'Docs'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+      </span>
+      <span class="ml-1 text-sm tracking-wide truncate">{{menuOption}}</span>
+    </a>
   </li>
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
 
 export default {
   props: {
     to: String,
     menuOption: String,
-    menuOpen: Boolean
-  },
-  setup(props) {
-    const route = useRoute()
-    const isActive = computed(() => route.path === props.to)
-    return { isActive }
+    menuOpen: Boolean,
+    external: Boolean
   }
 }
 </script>
-
-<style scoped>
-</style>

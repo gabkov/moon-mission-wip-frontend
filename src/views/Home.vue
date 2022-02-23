@@ -89,15 +89,11 @@ import store from '../store'
 import {formatNumber, getBalanceNumber} from "../utils/format"
 import { mapGetters } from "vuex"
 import BigNumber from 'bignumber.js'
-import Fuel from '../components/fuel/Fuel.vue'
 
 const constants = CONSTANTS[store.state.chainId] 
 
 export default {
   name: "Home",
-  components:{
-    Fuel
-  },
   data(){
     return{
       FUEL_DECIMALS: constants.FUEL_DECIMALS,
