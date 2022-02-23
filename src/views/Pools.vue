@@ -29,10 +29,6 @@ export default {
 
         async approveToken(tokenAddress) {
             this.$emit("approve-token", tokenAddress);
-        },
-        setTableView(value){
-            localStorage.setItem("tableView", value)
-            this.tableView = value === 'true'
         }
     },
     emits: ["deposit-token", "withdraw-token", "approve-token"],
