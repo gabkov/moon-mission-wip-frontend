@@ -68,12 +68,12 @@
 
 
     <div class="opacity-[0.98] flex flex-col lg:flex-row w-full max-w-sm lg:max-w-3xl  text-white font-medium gap-6">
-      <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 gap-2">
+      <div class="opacity-[0.98] flex flex-col justify-center h-fit w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 gap-2">
         <div class="text-xl sm:text-2xl ">Total Value Locked (TVL)</div>
         <div class="text-3xl font-bold text-sky-500">${{formatNumber(tvl, 0)}}</div>
         <div class="text-sm">Across all Farms and Pools</div>
       </div>
-      <div class="opacity-[0.98] flex flex-col w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400  gap-2">
+      <div class="opacity-[0.98] flex flex-col justify-center h-fit w-full bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400  gap-2">
         <div class="text-xl sm:text-2xl ">Total Native Liquidity (TNL)</div>
         <div class="text-3xl font-bold text-sky-500">${{formatNumber(nativeTvl, 0)}}</div>
         <div class="text-sm">Across all Native LPs</div>
