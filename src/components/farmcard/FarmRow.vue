@@ -15,7 +15,7 @@
         <td class="px-4 py-5">
             <div class="flex items-center text-sm">
                 <div class="w-9 h-9 mr-3 rounded-full">
-                    <img v-if="single" class="w-16" :src="logo" alt="">
+                    <img v-if="single" class="w-16" :src="'/tokens/' + logo + '.png'" :alt="logo">
                     <div v-else class="relative">
                         <img class="w-8 h-8 absolute top-0 -left-1 " src="https://cronosapp.cougarswap.io/images/single-token/WBTC.png" alt="">
                         <img class="w-8 h-8 absolute top-3 left-2" src="@/assets/tokens/fuel_icon.png" alt="fuel">
