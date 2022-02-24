@@ -54,7 +54,7 @@ export default {
       pools: "getPools",
     }),
     poolInfosSorted(){
-      return this.poolInfos.sort((a, b) =>  a.pid - b.pid)
+      return this.poolInfos.sort((a, b) =>  a.order - b.order)
     }
   },
   methods: {

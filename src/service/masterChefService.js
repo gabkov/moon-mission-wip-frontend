@@ -15,8 +15,15 @@ async function withdraw(pid, amount){
 }
 
 
+async function add(allocPoint, address, depositFeeBP, withUpdate){
+    const tx = await masterChefContract().add(allocPoint, address, depositFeeBP, withUpdate)
+    const receipt = tx.wait()
+    return receipt
+}
+
 
 export {
     deposit,
     withdraw,
+    add
 }

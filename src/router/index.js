@@ -3,7 +3,7 @@ import Home from '../views/Home.vue'
 import PreSale from '../views/PreSale.vue'
 import Farms from '../views/Farms.vue'
 import Pools from '../views/Pools.vue'
-
+import Admin from '../views/Admin.vue'
 
 
 const routes = [
@@ -26,12 +26,17 @@ const routes = [
     path: '/pools',
     name: 'Pools',
     component: Pools
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: Admin
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
 })
 
 export default router
