@@ -22,6 +22,9 @@
     <button @click="addPool" class="btn-primary">ADD POOL</button>
   </div>
 </div>
+<div v-else class="justify-center flex items-center">
+  <div class="text-6xl">NAUGHTY BOY ACCES DENIED :P</div>
+</div>
 </template>
 
 <script>
