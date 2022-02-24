@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       poolInfos: [],
-      menuOpen:  localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : true,
       isMobile: false,
+      menuOpen:  false,
       siteBasicInfo: {},
       currentBlock: 0,
       userPreSaleData: {},
@@ -114,7 +114,8 @@ export default {
     this.fuelPrice = await getFuelPrice()
     if (screen.width <= 640) {
       this.isMobile = true
-    } 
+    }
+    this.menuOpen = localStorage.getItem("menuOpen") !== null ? localStorage.getItem("menuOpen") === 'true' : !this.isMobile
     const user = Moralis.User.current()
     if (user) {
       this.setUser(user)
