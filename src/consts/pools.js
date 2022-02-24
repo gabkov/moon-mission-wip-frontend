@@ -32,10 +32,49 @@ export const POOLS = {
             native: false,
             name: 'BUSD',
             quoteTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
-            quoteStablePairAddress: '',  // FUEL-BUSD stable pair address
+            quoteStablePairAddress: '', 
             stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  // BUSD address
             logo1: 'busd',
             logo2: ''
+        },
+        {
+            pid: 3,
+            address: '0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C',
+            single: true,
+            native: false,
+            name: 'WBNB',
+            mainNetTokenAddres: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', // REAL WBNB this needs to be removed on prod
+            quoteTokenAddress: '0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C', 
+            quoteStablePairAddress: '',
+            stableTokenAddress: '',  
+            logo1: 'wbnb',
+            logo2: ''
+        },
+        {
+            pid: 4,
+            address: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944',
+            single: true,
+            native: false,
+            name: 'BTCB',
+            mainNetTokenAddres: '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c', // REAL BTCB this needs to be removed on prod
+            quoteTokenAddress: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944', 
+            quoteStablePairAddress: '',
+            stableTokenAddress: '',  
+            logo1: 'btc',
+            logo2: ''
+        },
+        {
+            pid: 5,
+            address: '0xBb0D8659172F3F9Cc7660313ACa1389Fd7608693',
+            single: false,
+            native: true,
+            name: 'BUSD-WBNB',
+            quoteTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            quoteStablePairAddress: '',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            tokenPair: '0x92325A71cdacf88E45aD12597EE59E662342D03a/0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C',
+            logo1: 'wbnb',
+            logo2: 'busd'
         },
        /* {
             pid: 0,

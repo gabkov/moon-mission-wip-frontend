@@ -3,12 +3,13 @@ import { multicall } from './multicall'
 import {CONSTANTS, YEAR_IN_SECONDS } from '../consts/constants'
 import ERC20 from "../abi/ERC20.json"
 import store from '../store'
+import Moralis from '../plugins/moralis'
 
 const constants = CONSTANTS[store.state.chainId] 
 
 function getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl) {
   if (new BigNumber(tvl.toString()).eq(0)) {
-    return 0
+    return "0"
   }
   const fuelPerSecond = new BigNumber(fuelPerBlock).div(3) // average block time for bsc is 3 so we divide the per block value with 3
 
@@ -26,6 +27,17 @@ function getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl) {
 async function getFuelPrice(){
   return getTokenPrice(constants.FUEL_TOKEN_ADDRESS, constants.BUSD_TOKEN_CONTRACT, constants.FUEL_BUSD_ADDRESS)
 }
+
+async function getTokenPriceFromApi(tokenAddress){
+  const options = {
+    address: tokenAddress,
+    chain: "bsc",
+    exchange: "PancakeSwapv2",
+  };
+  const price = await Moralis.Web3API.token.getTokenPrice(options);
+  return price.usdPrice
+}
+
 
 async function getTokenPrice(tokenAddress, stableAddress, stablePairAddress) {
   const [tokenBal, tokenDecimals, stableBal, stableDecimals] = await multicall([
@@ -131,5 +143,6 @@ export {
   getAPR,
   getFuelPrice,
   getTokenPrice,
-  getPoolTVL
+  getPoolTVL,
+  getTokenPriceFromApi
 }

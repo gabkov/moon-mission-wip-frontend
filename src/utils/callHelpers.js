@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { multicall } from './multicall'
-import { getAPR, getFuelPrice, getTokenPrice } from './poolAnalytics'
+import { getAPR, getFuelPrice, getTokenPrice, getTokenPriceFromApi } from './poolAnalytics'
 import masterChefAbi from "../abi/MasterChefAbi.json"
 import ERC20 from "../abi/ERC20.json"
 import {CONSTANTS } from '../consts/constants'
@@ -212,12 +212,12 @@ async function callPoolAnalytics( pool, account) {
   let stakedInQuote = new BigNumber(0)
   let lpSupplyInQuote = new BigNumber(0)
 
-
   if (pool.quoteTokenAddress === pool.stableTokenAddress) {
     quotePrice = new BigNumber(1)
-  }
-  if (pool.quoteTokenAddress !== pool.stableTokenAddress) {
+  } else if (pool.quoteTokenAddress !== pool.stableTokenAddress && pool.native) {
     quotePrice = await getTokenPrice(pool.quoteTokenAddress, pool.stableTokenAddress, pool.quoteStablePairAddress)
+  } else {
+    quotePrice = new BigNumber(await getTokenPriceFromApi(pool.mainNetTokenAddres)) // on prod this will be pool.quoteTokenAddress !!!!!
   }
 
   if (pool.single === true) {
