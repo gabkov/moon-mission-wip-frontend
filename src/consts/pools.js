@@ -96,5 +96,33 @@ export const POOLS = {
             logo1: 'fuel',
             logo2: 'wbnb'
         },
+        {
+            pid: 7,
+            order: 7,
+            address: '0x8c4F2E1149e401Cb51dC39df4901c045C42eB329',
+            single: true,
+            native: false,
+            name: 'ETH',
+            mainNetTokenAddres: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8', // REAL ETH this needs to be removed on prod
+            quoteTokenAddress: '0x8c4F2E1149e401Cb51dC39df4901c045C42eB329', 
+            quoteStablePairAddress: '',
+            stableTokenAddress: '',  
+            logo1: 'eth',
+            logo2: ''
+        },
+        {
+            pid: 8,
+            order: 8,
+            address: '0x18702839B8bA4fAD972ec0f40dF01b5fAcB84433',
+            single: true,
+            native: false,
+            name: 'CAKE',
+            mainNetTokenAddres: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // REAL CAKE this needs to be removed on prod
+            quoteTokenAddress: '0x18702839B8bA4fAD972ec0f40dF01b5fAcB84433', 
+            quoteStablePairAddress: '',
+            stableTokenAddress: '',  
+            logo1: 'cake',
+            logo2: ''
+        },
     ]
 }

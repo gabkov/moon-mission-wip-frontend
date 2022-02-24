@@ -21,9 +21,16 @@ async function add(allocPoint, address, depositFeeBP, withUpdate){
     return receipt
 }
 
+async function set(pid, allocPoint, depositFeeBP, withUpdate){
+    const tx = await masterChefContract().set(pid, allocPoint, depositFeeBP, withUpdate)
+    const receipt = tx.wait()
+    return receipt
+}
+
 
 export {
     deposit,
     withdraw,
-    add
+    add,
+    set
 }
