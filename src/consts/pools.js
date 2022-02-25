@@ -134,5 +134,18 @@ export const POOLS = {
             logo1: 'polydoge',
             logo2: 'busd'
         },
+        {
+            pid: 10,
+            order: 1,
+            address: '0xe64D316e6AAe57f322A179b118689708b368E163',
+            single: true,
+            native: false,
+            name: 'PDOGE',
+            quoteTokenAddress: '0xe64D316e6AAe57f322A179b118689708b368E163', 
+            quoteStablePairAddress: '0x8Ef6125DE5F84056287e1f37dE821A808007886D',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
+            logo1: 'polydoge',
+            logo2: ''
+        },
     ]
 }
