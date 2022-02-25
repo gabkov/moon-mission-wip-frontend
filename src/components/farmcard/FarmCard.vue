@@ -63,7 +63,7 @@
                   <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">＋</span>
                 </button>
               </div>
-              <div v-else>
+              <div class="pb-1" v-else>
                 <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
               </div>
             </div>
