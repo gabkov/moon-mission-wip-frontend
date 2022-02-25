@@ -47,10 +47,9 @@ export const POOLS = {
             single: true,
             native: false,
             name: 'WBNB',
-            mainNetTokenAddres: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', // REAL WBNB this needs to be removed on prod
             quoteTokenAddress: '0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C', 
-            quoteStablePairAddress: '',
-            stableTokenAddress: '',  
+            quoteStablePairAddress: '0xBb0D8659172F3F9Cc7660313ACa1389Fd7608693',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
             logo1: 'wbnb',
             logo2: ''
         },
@@ -61,10 +60,9 @@ export const POOLS = {
             single: true,
             native: false,
             name: 'BTCB',
-            mainNetTokenAddres: '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c', // REAL BTCB this needs to be removed on prod
             quoteTokenAddress: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944', 
-            quoteStablePairAddress: '',
-            stableTokenAddress: '',  
+            quoteStablePairAddress: '0x669A2e0E27934Bce91f7043Fc3cDC0a0BE7B9CCF',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
             logo1: 'btc',
             logo2: ''
         },
@@ -103,10 +101,9 @@ export const POOLS = {
             single: true,
             native: false,
             name: 'ETH',
-            mainNetTokenAddres: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8', // REAL ETH this needs to be removed on prod
             quoteTokenAddress: '0x8c4F2E1149e401Cb51dC39df4901c045C42eB329', 
-            quoteStablePairAddress: '',
-            stableTokenAddress: '',  
+            quoteStablePairAddress: '0xb251495f6C01a7f4f52655c4AB59Aa68e8Ed1A01',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
             logo1: 'eth',
             logo2: ''
         },
@@ -117,10 +114,9 @@ export const POOLS = {
             single: true,
             native: false,
             name: 'CAKE',
-            mainNetTokenAddres: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // REAL CAKE this needs to be removed on prod
             quoteTokenAddress: '0x18702839B8bA4fAD972ec0f40dF01b5fAcB84433', 
-            quoteStablePairAddress: '',
-            stableTokenAddress: '',  
+            quoteStablePairAddress: '0x480666Cd9922C09BE8b95d300B4386c1792d5433',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
             logo1: 'cake',
             logo2: ''
         },

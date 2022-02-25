@@ -28,16 +28,6 @@ async function getFuelPrice(){
   return getTokenPrice(constants.FUEL_TOKEN_ADDRESS, constants.BUSD_TOKEN_CONTRACT, constants.FUEL_BUSD_ADDRESS)
 }
 
-async function getTokenPriceFromApi(tokenAddress){
-  const options = {
-    address: tokenAddress,
-    chain: "bsc",
-    exchange: "PancakeSwapv2",
-  };
-  const price = await Moralis.Web3API.token.getTokenPrice(options);
-  return price.usdPrice
-}
-
 
 async function getTokenPrice(tokenAddress, stableAddress, stablePairAddress) {
   const [tokenBal, tokenDecimals, stableBal, stableDecimals] = await multicall([
@@ -143,6 +133,5 @@ export {
   getAPR,
   getFuelPrice,
   getTokenPrice,
-  getPoolTVL,
-  getTokenPriceFromApi
+  getPoolTVL
 }
