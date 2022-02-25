@@ -11,6 +11,7 @@
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :pool="pool"
+      :staked="staked"
       @deposit-token="this.depositToken"
       @withdraw-token="this.withdrawToken"
       @approve-token="this.approveToken"
@@ -24,6 +25,7 @@
                 <FarmRow
                   v-for="pool in this.poolInfos" :key="pool.pid"
                   :pool="pool"
+                  :staked="staked"
                   @deposit-token="this.depositToken"
                   @withdraw-token="this.withdrawToken"
                   @approve-token="this.approveToken"
