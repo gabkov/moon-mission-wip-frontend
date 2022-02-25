@@ -11,7 +11,7 @@
     @deposit-token="this.depositToken"
     @withdraw-token="this.withdrawToken"
     />
-    <tr @click="rowOpen=!rowOpen" class="flex flex-wrap justify-evenly items-center sm:table-row bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
+    <tr v-show="!staked ||staked && stakedAmount > 0" @click="rowOpen=!rowOpen" class="flex flex-wrap justify-evenly items-center sm:table-row bg-gray-800 hover:bg-zinc-800 text-gray-200" v-bind:class="rowOpen ? 'bg-zinc-800' : ''">
         <td class="px-4 py-5">
             <div class="flex items-center text-sm">
                 <div class="w-9 h-9 mr-3 rounded-full">
@@ -68,7 +68,7 @@
             </div>
         </td>
     </tr>
-    <tr class="w-full bg-zinc-900 max-h-0" >
+    <tr v-show="!staked ||staked && stakedAmount > 0" class="w-full bg-zinc-900 max-h-0" >
         <td colspan="8" class="max-h-0" >
             <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-4 sm:p-8" v-show="rowOpen">
                 <div class="flex lg:self-center self-start flex-col space-y-1 text-violet-500 w-full max-w-[12rem]">
@@ -182,7 +182,8 @@ export default {
         depositFeeBp: Number,
         single: Boolean,
         logo1: String,
-        logo2: String
+        logo2: String,
+        staked: Boolean
 
     },
     computed: {

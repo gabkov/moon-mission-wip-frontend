@@ -2,8 +2,10 @@
 <div class="flex flex-col">
   <ViewSelector
   :tableView="tableView"
+  :staked="staked"
   @card-view="setTableView('false')"
   @table-view="setTableView('true')"
+  @toggle-staked="toggleStaked"
   />
   <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4">
     <FarmCard
@@ -25,6 +27,7 @@
       :single="pool.single"
       :logo1="pool.logo1"
       :logo2="pool.logo2"
+      :staked="staked"
       @deposit-token="this.depositToken"
       @withdraw-token="this.withdrawToken"
       @approve-token="this.approveToken"
@@ -54,6 +57,7 @@
                   :single="pool.single"
                   :logo1="pool.logo1"
                   :logo2="pool.logo2"
+                  :staked="staked"
                   @deposit-token="this.depositToken"
                   @withdraw-token="this.withdrawToken"
                   @approve-token="this.approveToken"
@@ -67,15 +71,16 @@
 </template>
 
 <script>
-import FarmCard from "../farmcard/FarmCard.vue";
-import FarmRow from '../farmcard/FarmRow.vue';
-import ViewSelector from '../viewselector/ViewSelector.vue';
+import FarmCard from "../farmcard/FarmCard.vue"
+import FarmRow from '../farmcard/FarmRow.vue'
+import ViewSelector from '../viewselector/ViewSelector.vue'
 
 export default {
   name: "Staking",
   data(){
     return{
-      tableView: localStorage.getItem("tableView") === 'true' || false
+      tableView: localStorage.getItem("tableView") === 'true' || false,
+      staked: localStorage.getItem("staked") === 'true' || false
     }
   },
   components: {
@@ -101,6 +106,10 @@ export default {
     setTableView(value){
       localStorage.setItem("tableView", value)
       this.tableView = value === 'true'
+    },
+    toggleStaked(){
+      localStorage.setItem("staked", !this.staked)
+      this.staked = !this.staked
     }
   },
   emits: ["deposit-token", "withdraw-token", "approve-token"],

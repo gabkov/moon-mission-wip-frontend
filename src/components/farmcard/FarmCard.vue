@@ -11,7 +11,7 @@
   @deposit-token="this.depositToken"
   @withdraw-token="this.withdrawToken"
   />
-  <div v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
+  <div v-show="!staked ||staked && stakedAmount > 0" v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-6 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
@@ -46,14 +46,14 @@
             <div class="text-xl" >{{ formatNumber(rewards) }}</div>
             <button @click="$emit('withdraw-token', pid, 0, poolAddress)" class="btn-primary" :disabled="rewards==0" v-bind:class="(rewards == 0)? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed shadow-none' : '' ">Harvest</button>
           </div>
-          <div class="text-xs"><span class="text-violet-500">{{ poolName }}</span> staked</div>
+          <div class="text-xs pt-2"><span class="text-violet-500">{{ poolName }}</span> staked</div>
           <div v-if="isAuthenticated">
             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
-              <div class="pt-0.5">
+              <div>
                 <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals), 2) }}</div>
                 <div class="text-[10px] text-gray-500" >~{{formatNumber(stakedAmountUSD, 1) }} USD</div>
               </div>
-              <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
+              <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex pt-2">
                 <button @click="openModal('withdraw-token')"
                   class="inline-flex items-center justify-center p-0.5 mr-1 overflow-hidden text-sm font-extrabold rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 text-white focus:ring-1 focus:ring-cyan-800">
                   <span class="px-3.5 py-2.5 transition-all ease-in duration-75 bg-gray-900 rounded-md group-hover:bg-opacity-0">－</span>
@@ -67,7 +67,7 @@
                 <button class="btn-primary" @click="openModal('deposit-token')">Stake</button>
               </div>
             </div>
-            <div v-else class="pt-3">
+            <div v-else class="pt-1">
               <button class="w-full btn-primary" @click="$emit('approve-token', poolAddress)" >Approve {{poolName}}</button>
             </div>
           </div>
@@ -140,7 +140,8 @@ export default {
     depositFeeBp: Number,
     single: Boolean,
     logo1: String,
-    logo2: String
+    logo2: String,
+    staked: Boolean
   },
   data(){
     return {
