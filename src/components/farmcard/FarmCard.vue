@@ -101,7 +101,7 @@
               <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
             <div class="flex">
-              <a class="text-sm" href="">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <a class="text-sm" :href="C.BSC_SCAN + poolAddress" target="_blank">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
             <div class="flex">
               <a class="text-sm" href="">See pair info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
@@ -115,10 +115,12 @@
 
 <script>
 import {formatNumber, getBalanceNumber, shortenNumber, getRawBalanceNumber} from "@/utils/format"
-import BigNumber from 'bignumber.js';
 import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
 import Modal from "../modal/Modal.vue"
+import { CONSTANTS } from "@/consts/constants"
+
+const C = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
 
 export default {
   name: "FarmCard",
@@ -126,23 +128,7 @@ export default {
     Modal
   },
   props: {
-    pid: Number,
-    poolName: String,
-    stakedAmount: BigNumber,
-    stakedAmountUSD: BigNumber,
-    allocPoint: BigNumber,
-    tvl: BigNumber,
-    poolAPR: String,
-    daily: String,
-    rewards: BigNumber,
-    poolAddress: String,
-    userAllowance: BigNumber,
-    lpDecimals: Number,
-    stakingTokenBalance: Array,
-    depositFeeBp: Number,
-    single: Boolean,
-    logo1: String,
-    logo2: String,
+    pool: Object,
     staked: Boolean
   },
   data(){
@@ -151,7 +137,25 @@ export default {
       amountToWithdraw: 0,
       showDetails: false,
       showModal: false,
-      methodType: ""
+      methodType: "",
+      C: C,
+      poolName: this.pool.name,
+      allocPoint: this.pool.allocPoint,
+      daily: this.pool.daily,
+      pid: this.pool.pid,
+      poolAddress: this.pool.address,
+      poolAPR: this.pool.poolAPR,
+      rewards: this.pool.rewards,
+      stakedAmount: this.pool.stakedAmount,
+      stakedAmountUSD: this.pool.stakedAmountUSD,
+      tvl: this.pool.tvl,
+      userAllowance: this.pool.userAllowance,
+      lpDecimals: this.pool.lpDecimals,
+      stakingTokenBalance: this.pool.stakingTokenBalance,
+      depositFeeBp: this.pool.depositFeeBp,
+      single: this.pool.single,
+      logo1: this.pool.logo1,
+      logo2: this.pool.logo2,
     }
   },
   computed: {

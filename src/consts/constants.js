@@ -15,6 +15,17 @@ export const CONSTANTS = {
         MASTERCHEF: '0xaFFF67E11bFb5b4B8Db4ACc7bE1e92CC37927F38',
         MULTICALL: '0xF2D29DB672276f49a7B1d658C894A7529f0BE426',
         FUEL_BUSD_ADDRESS: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',
+        PANCKE_ADD: 'https://pancake.kiemtienonline360.com/#/add/',
+        PANCAKE_SWAP: 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=',
+        PANCAKE_POOL_INFO: 'https://pancake.kiemtienonline360.com/#/pool/',
+        BSC_SCAN: 'https://testnet.bscscan.com/address/'
+    },
+
+    56:{
+        PANCKE_ADD: 'https://pancakeswap.finance/add/',
+        PANCAKE_SWAP: 'https://pancakeswap.finance/swap?outputCurrency=',
+        PANCAKE_POOL_INFO: 'https://pancakeswap.finance/info/pool/',
+        BSC_SCAN: 'https://bscscan.com/address/'
     }
 }
 

@@ -148,7 +148,6 @@
 
 <script>
 import {formatNumber, getBalanceNumber, shortenNumber, getRawBalanceNumber} from "@/utils/format"
-import BigNumber from 'bignumber.js';
 import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
 import Modal from "../modal/Modal.vue"
@@ -158,33 +157,33 @@ export default {
     components:{
         Modal
     },
+    props: {
+        pool: Object,
+        staked: Boolean
+    },
     data(){
         return{
             rowOpen: false,
             showModal: false,
-            methodType: ""
+            methodType: "",
+            poolName: this.pool.name,
+            allocPoint: this.pool.allocPoint,
+            daily: this.pool.daily,
+            pid: this.pool.pid,
+            poolAddress: this.pool.address,
+            poolAPR: this.pool.poolAPR,
+            rewards: this.pool.rewards,
+            stakedAmount: this.pool.stakedAmount,
+            stakedAmountUSD: this.pool.stakedAmountUSD,
+            tvl: this.pool.tvl,
+            userAllowance: this.pool.userAllowance,
+            lpDecimals: this.pool.lpDecimals,
+            stakingTokenBalance: this.pool.stakingTokenBalance,
+            depositFeeBp: this.pool.depositFeeBp,
+            single: this.pool.single,
+            logo1: this.pool.logo1,
+            logo2: this.pool.logo2,
         }
-    },
-    props: {
-        pid: Number,
-        poolName: String,
-        stakedAmount: BigNumber,
-        stakedAmountUSD: BigNumber,
-        allocPoint: BigNumber,
-        tvl: BigNumber,
-        poolAPR: String,
-        daily: String,
-        rewards: BigNumber,
-        poolAddress: String,
-        userAllowance: BigNumber,
-        lpDecimals: Number,
-        stakingTokenBalance: Array,
-        depositFeeBp: Number,
-        single: Boolean,
-        logo1: String,
-        logo2: String,
-        staked: Boolean
-
     },
     computed: {
         ...mapGetters({
