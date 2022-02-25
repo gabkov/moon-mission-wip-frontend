@@ -70,7 +70,7 @@ export const POOLS = {
         },
         {
             pid: 5,
-            order: 6,
+            order: 9,
             address: '0xBb0D8659172F3F9Cc7660313ACa1389Fd7608693',
             single: false,
             native: false,
@@ -123,6 +123,20 @@ export const POOLS = {
             stableTokenAddress: '',  
             logo1: 'cake',
             logo2: ''
+        },
+        {
+            pid: 9,
+            order: 6,
+            address: '0x8Ef6125DE5F84056287e1f37dE821A808007886D',
+            single: false,
+            native: false,
+            name: 'BUSD-PDOGE',
+            quoteTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            quoteStablePairAddress: '',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
+            tokenPair: '0x92325A71cdacf88E45aD12597EE59E662342D03a/0xe64D316e6AAe57f322A179b118689708b368E163',
+            logo1: 'polydoge',
+            logo2: 'busd'
         },
     ]
 }

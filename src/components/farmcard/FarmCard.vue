@@ -25,7 +25,7 @@
             <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full p-1">{{shortenNumber(allocPoint)}}X</div>
           </div>
         </div>
-        <div class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}%</div>
+        <div class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}% <span v-if="poolName === 'BUSD-PDOGE'" class="text-xs text-red-500">(All being burned🔥)</span></div>
         <div class="flex flex-col space-y-1 ">
           <div class="text-sm flex items-center justify-between">
             <div>APR:</div>

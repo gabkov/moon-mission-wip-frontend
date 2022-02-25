@@ -55,6 +55,12 @@
             </div>
         </td>
         <td class="px-4 py-5">
+            <div class="flex flex-col">
+                <div class="text-xs">Fee</div>
+                <div class="text-md" :class="poolName === 'BUSD-PDOGE' ? 'text-red-500' : ''">{{poolName === 'BUSD-PDOGE' ? '🔥':''}}{{depositFeeBp / 100}}%</div>
+            </div>
+        </td>
+        <td class="px-4 py-5">
             <div class="flex text-violet-500">
                 <div class="">Details</div>
                 <svg v-if="!rowOpen" class="w-5 h-5 self-end " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -63,7 +69,7 @@
         </td>
     </tr>
     <tr class="w-full bg-zinc-900 max-h-0" >
-        <td colspan="7" class="max-h-0" >
+        <td colspan="8" class="max-h-0" >
             <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-4 sm:p-8" v-show="rowOpen">
                 <div class="flex lg:self-center self-start flex-col space-y-1 text-violet-500 w-full max-w-[12rem]">
                     <div class="flex flex-row">
