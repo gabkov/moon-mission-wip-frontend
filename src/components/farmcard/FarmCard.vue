@@ -11,7 +11,7 @@
   @deposit-token="this.depositToken"
   @withdraw-token="this.withdrawToken"
   />
-  <div v-show="!staked ||staked && stakedAmount > 0" v-bind:class="!showModal ? 'opacity-[0.98]' : '' " class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
+  <div v-show="!staked ||staked && stakedAmount > 0" :class="[!showModal ? 'opacity-[0.98]' : '', native ? 'drop-shadow-[0px_0_8px_#0ea5e9] border-sky-400 border-[3px]' : 'drop-shadow-[0px_0_3px_#9ca3af]' ]" class="flex justify-around flex-col self-baseline w-full max-w-[22rem] bg-gray-800 rounded-3xl p-5 border-2 border-gray-400 text-white font-medium">
     <div class="divide-y divide-gray-300/50">
       <div class="pb-5 flex flex-col justify-between">
         <div class="py-1 flex items-center justify-between">
@@ -154,7 +154,8 @@ export default {
       single: this.pool.single,
       logo1: this.pool.logo1,
       logo2: this.pool.logo2,
-      tokenPair: this.pool.tokenPair
+      tokenPair: this.pool.tokenPair,
+      native: this.pool.native
     }
   },
   computed: {
