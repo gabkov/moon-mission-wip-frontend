@@ -98,13 +98,13 @@
           </div>
           <div class="flex flex-col space-y-0.5 text-violet-500">
             <div class="flex">
-              <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <a class="text-sm" :href="single ? C.PANCAKE_SWAP + poolAddress : C.PANCKE_ADD + tokenPair" target="_blank">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
             <div class="flex">
               <a class="text-sm" :href="C.BSC_SCAN + poolAddress" target="_blank">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
             <div class="flex">
-              <a class="text-sm" href="">See pair info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <a class="text-sm" :href="single ? C.PANCAKE_TOKEN_INFO + poolAddress : C.PANCAKE_POOL_INFO + poolAddress" target="_blank">See {{single ? 'token' : 'pair'}} info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
           </div>
         </div>
@@ -133,8 +133,6 @@ export default {
   },
   data(){
     return {
-      amountToStake: 100,
-      amountToWithdraw: 0,
       showDetails: false,
       showModal: false,
       methodType: "",
@@ -156,6 +154,7 @@ export default {
       single: this.pool.single,
       logo1: this.pool.logo1,
       logo2: this.pool.logo2,
+      tokenPair: this.pool.tokenPair
     }
   },
   computed: {

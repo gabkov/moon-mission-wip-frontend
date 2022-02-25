@@ -17,14 +17,16 @@ export const CONSTANTS = {
         FUEL_BUSD_ADDRESS: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',
         PANCKE_ADD: 'https://pancake.kiemtienonline360.com/#/add/',
         PANCAKE_SWAP: 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=',
-        PANCAKE_POOL_INFO: 'https://pancake.kiemtienonline360.com/#/pool/',
+        PANCAKE_POOL_INFO: 'https://pancakeswap.finance/info/pool/',
+        PANCAKE_TOKEN_INFO: 'https://pancakeswap.finance/info/token/',
         BSC_SCAN: 'https://testnet.bscscan.com/address/'
     },
 
-    56:{
+    56: {
         PANCKE_ADD: 'https://pancakeswap.finance/add/',
         PANCAKE_SWAP: 'https://pancakeswap.finance/swap?outputCurrency=',
         PANCAKE_POOL_INFO: 'https://pancakeswap.finance/info/pool/',
+        PANCAKE_TOKEN_INFO: 'https://pancakeswap.finance/info/token/',
         BSC_SCAN: 'https://bscscan.com/address/'
     }
 }

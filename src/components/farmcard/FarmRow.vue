@@ -73,13 +73,13 @@
             <div class="flex lg:flex-row flex-col-reverse items-center gap-1 p-4 sm:p-8" v-show="rowOpen">
                 <div class="flex lg:self-center self-start flex-col space-y-1 text-violet-500 w-full max-w-[12rem]">
                     <div class="flex flex-row">
-                        <a class="text-sm" href="">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        <a class="text-sm" :href="single ? C.PANCAKE_SWAP + poolAddress : C.PANCKE_ADD + tokenPair" target="_blank">Get {{poolName}}</a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </div>
                     <div class="flex flex-row">
-                        <a class="text-sm" href="">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        <a class="text-sm" :href="C.BSC_SCAN + poolAddress" target="_blank">View Contract </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </div>
                     <div class="flex flex-row">
-                        <a class="text-sm" href="">See pair info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                        <a class="text-sm" :href="single ? C.PANCAKE_TOKEN_INFO + poolAddress : C.PANCAKE_POOL_INFO + poolAddress" target="_blank">See {{single ? 'token' : 'pair'}} info </a><svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                     </div>
                 </div>
                 <div class="flex flex-row w-full justify-between lg:hidden mb-2">
@@ -151,6 +151,9 @@ import {formatNumber, getBalanceNumber, shortenNumber, getRawBalanceNumber} from
 import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
 import Modal from "../modal/Modal.vue"
+import { CONSTANTS } from "@/consts/constants"
+
+const C = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
 
 export default {
     name: "FarmRow",
@@ -166,6 +169,7 @@ export default {
             rowOpen: false,
             showModal: false,
             methodType: "",
+            C: C,
             poolName: this.pool.name,
             allocPoint: this.pool.allocPoint,
             daily: this.pool.daily,
@@ -183,6 +187,7 @@ export default {
             single: this.pool.single,
             logo1: this.pool.logo1,
             logo2: this.pool.logo2,
+            tokenPair: this.pool.tokenPair
         }
     },
     computed: {
