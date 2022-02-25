@@ -81,15 +81,15 @@ export default {
     async addPool(){
       console.log(this.allocPoint, this.address, this.depositFeeBP, this.withUpdate);
       if(this.address === "" || this.depositFeeBP === 0 || this.allocPoint === 0){
-        alert("Address is empty")
+        alert("Address is empty or this.depositFeeBP is 0 or allocpoint is 0")
       }
 
       await add(this.allocPoint, this.address, this.depositFeeBP, this.withUpdate)
     },
     async updatePool(){
       console.log(this.pid, this.allocPoint, this.depositFeeBP, this.withUpdate);
-      if(this.depositFeeBP === 0 || this.allocPoint === 0){
-        alert("DepostiFeeBP is 0 or AllocPoint is 0")
+      if(this.depositFeeBP === 0 || this.allocPoint === 0 || this.depositFeeBP < 200){
+        alert("DepostiFeeBP is 0 or AllocPoint is 0 or this.depositFeeBP < 200")
       }
 
       await set(this.pid, this.allocPoint, this.depositFeeBP, this.withUpdate)

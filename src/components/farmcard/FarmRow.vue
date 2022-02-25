@@ -57,7 +57,7 @@
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Fee</div>
-                <div class="text-md" :class="poolName === 'BUSD-PDOGE' ? 'text-red-500' : ''">{{poolName === 'BUSD-PDOGE' ? '🔥':''}}{{depositFeeBp / 100}}%</div>
+                <div class="text-md" :class="poolName === 'BUSD-PDOGE' || poolName === 'PDOGE' ? 'text-red-500' : ''">{{poolName === 'BUSD-PDOGE' || poolName === 'PDOGE' ? '🔥':''}}{{depositFeeBp / 100}}%</div>
             </div>
         </td>
         <td class="px-4 py-5">

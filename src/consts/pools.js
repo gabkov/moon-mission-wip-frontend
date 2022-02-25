@@ -14,6 +14,19 @@ export const POOLS = {
             logo2: ''
         },
         {
+            pid: 10,
+            order: 1,
+            address: '0xe64D316e6AAe57f322A179b118689708b368E163',
+            single: true,
+            native: false,
+            name: 'PDOGE',
+            quoteTokenAddress: '0xe64D316e6AAe57f322A179b118689708b368E163', 
+            quoteStablePairAddress: '0x8Ef6125DE5F84056287e1f37dE821A808007886D',
+            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
+            logo1: 'polydoge',
+            logo2: ''
+        },
+        {
             pid: 1,
             order: 1,
             address: '0x98aD770f6d281732D8Ea33494e8eC2b63Da8Ba6C',
@@ -133,19 +146,6 @@ export const POOLS = {
             tokenPair: '0x92325A71cdacf88E45aD12597EE59E662342D03a/0xe64D316e6AAe57f322A179b118689708b368E163',
             logo1: 'polydoge',
             logo2: 'busd'
-        },
-        {
-            pid: 10,
-            order: 1,
-            address: '0xe64D316e6AAe57f322A179b118689708b368E163',
-            single: true,
-            native: false,
-            name: 'PDOGE',
-            quoteTokenAddress: '0xe64D316e6AAe57f322A179b118689708b368E163', 
-            quoteStablePairAddress: '0x8Ef6125DE5F84056287e1f37dE821A808007886D',
-            stableTokenAddress: '0x92325A71cdacf88E45aD12597EE59E662342D03a',  
-            logo1: 'polydoge',
-            logo2: ''
         },
     ]
 }
