@@ -94,7 +94,7 @@
                     <div class="text-md">APR</div>
                     <div class="text-md">{{poolAPR}}%</div>
                 </div>
-                <div class="flex md:flex-row flex-col items-center justify-between w-full max-w-4xl gap-4">
+                <div class="flex md:flex-row flex-col items-center justify-between w-full gap-4">
                     <div class="p-4 flex flex-col border-2 border-gray-500 rounded-2xl w-full">
                         <div class="text-xs uppercase" ><span class="text-yellow-300 ">Fuel</span> Earned</div>
                         <div class="flex items-center justify-between gap-2">
