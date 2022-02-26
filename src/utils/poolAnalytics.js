@@ -3,7 +3,6 @@ import { multicall } from './multicall'
 import {CONSTANTS, YEAR_IN_SECONDS } from '../consts/constants'
 import ERC20 from "../abi/ERC20.json"
 import store from '../store'
-import Moralis from '../plugins/moralis'
 
 const constants = CONSTANTS[store.state.chainId] 
 

@@ -7,7 +7,7 @@
   @table-view="setTableView('true')"
   @toggle-staked="toggleStaked"
   />
-  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-4">
+  <div v-show="!tableView" class="flex flex-wrap justify-center p-6 gap-6">
     <FarmCard
       v-for="pool in this.poolInfos" :key="pool.pid"
       :pool="pool"

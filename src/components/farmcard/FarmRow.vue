@@ -51,7 +51,7 @@
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Multiplier</div>
-                <div class="text-center bg-violet-600 rounded-full self-start px-1">{{shortenNumber(allocPoint)}}x</div>
+                <div class="text-center bg-violet-600 rounded-full self-start px-2">{{shortenNumber(allocPoint)}}x</div>
             </div>
         </td>
         <td class="px-4 py-5">

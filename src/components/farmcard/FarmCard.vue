@@ -22,7 +22,7 @@
           </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
-            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full p-1">{{shortenNumber(allocPoint)}}X</div>
+            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full px-2 py-1">{{shortenNumber(allocPoint)}}X</div>
           </div>
         </div>
         <div :class="poolName === 'BUSD-PDOGE' || poolName === 'PDOGE' ? '' : 'pb-3' " class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}% </div>
