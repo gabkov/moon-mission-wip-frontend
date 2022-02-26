@@ -122,10 +122,8 @@ export default {
     ...mapGetters({
         user: "getUser",
         userLoading: "getUserLoading",
+        isAuthenticated: "isAuthenticated"
     }),
-    isAuthenticated(){
-      return Object.keys(this.user).length > 0
-    },
     farmStartBlock(){
       return this.siteBasicInfo.farmStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.farmStartBlock - this.currentBlock
     },

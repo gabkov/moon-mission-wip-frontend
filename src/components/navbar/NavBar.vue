@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import { computed } from 'vue'
 import { mapGetters, useStore } from 'vuex'
 import {loginUser, logoutUser} from "@/service/loginService"
 
@@ -29,7 +28,8 @@ export default {
   computed: {
     ...mapGetters({
         user: "getUser",
-        userAddress: "getUserAddress"
+        userAddress: "getUserAddress",
+        isAuthenticated: "isAuthenticated"
     })
   },
   setup() {
@@ -45,9 +45,7 @@ export default {
 
     return {
       login,
-      logout,
-      isAuthenticated: computed(() => Object.keys(store.state.user).length > 0),
-      user: computed(() => store.state.user)
+      logout
     }
   }
 }

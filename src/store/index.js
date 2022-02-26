@@ -24,7 +24,8 @@ const store = createStore({
     getUserAddress: state => state.user.get('ethAddress'),
     getUserLoading: state => state.userLoading,
     getChainId: state => state.chainId,
-    getPools: state => state.pools
+    getPools: state => state.pools,
+    isAuthenticated: state =>  Object.keys(state.user).length > 0
   }
 })
 

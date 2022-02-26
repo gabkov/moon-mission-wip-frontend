@@ -194,10 +194,8 @@ export default {
         ...mapGetters({
             user: "getUser",
             userLoading: "getUserLoading",
-        }),
-        isAuthenticated(){
-            return Object.keys(this.user).length > 0
-        }
+            isAuthenticated: "isAuthenticated"
+        })
     },
     methods: {
         loginUser,

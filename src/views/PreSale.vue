@@ -132,7 +132,7 @@ const constants = CONSTANTS[store.state.chainId]
 
 export default {
   name: 'PreSale',
-  inheritAttrs:false,
+  inheritAttrs: false,
   data(){
     return {
       amount: "",
@@ -151,11 +151,9 @@ export default {
       user: "getUser",
       userAddress: "getUserAddress",
       userLoading: "getUserLoading",
-      chainId: "getChainId"
+      chainId: "getChainId",
+      isAuthenticated: "isAuthenticated"
     }),
-    isAuthenticated(){
-      return Object.keys(this.user).length > 0
-    },
     preSaleStart(){
       return this.siteBasicInfo.preSaleStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.preSaleStartBlock - this.currentBlock
     },
