@@ -8,10 +8,10 @@
         <div class="flex justify-center items-center w-full gap-2">
             <img  class="w-14 h-14" src="@/assets/tokens/fuel_icon.png" alt="fuel">
           <div class="items-center">
-            <button @click="addFuelToMetamask()" class="btn-primary pt-[0.15rem] pb-[0.15rem] bg-gray-800 hover:bg-sky-500 flex flex-row items-center w-full gap-2"><span class="self-center">+</span><img class="w-5 h-5 self-center" src="../assets/metamask.png" alt="metamask"></button>
+            <button @click="addFuelToMetamask" class="btn-primary pt-[0.15rem] pb-[0.15rem] bg-gray-800 hover:bg-sky-500 flex flex-row items-center w-full gap-2"><span class="self-center">+</span><img class="w-5 h-5 self-center" src="../assets/metamask.png" alt="metamask"></button>
           </div>
         </div>
-        <a class="w-full" href=""><button class="btn-primary sm:pt-1 sm:pb-1 w-full">Buy FUEL</button></a>
+        <a class="w-full" :href="PANCAKE_SWAP + FUEL_TOKEN_ADDRESS" target="_blank"><button class="btn-primary sm:pt-1 sm:pb-1 w-full">Buy FUEL</button></a>
       </div>
       <div class="flex flex-col justify-between gap-1">
         <div class="text-2xl">FUEL to harvest</div>
@@ -106,6 +106,8 @@ export default {
   data(){
     return{
       FUEL_DECIMALS: constants.FUEL_DECIMALS,
+      FUEL_TOKEN_ADDRESS: constants.FUEL_TOKEN_ADDRESS,
+      PANCAKE_SWAP: constants.PANCAKE_SWAP,
       twitterUrl: 'https://twitter.com/digi_future2018?ref_src=twsrc%5Etfw'
     }
   },
@@ -173,7 +175,7 @@ export default {
               address: constants.FUEL_TOKEN_ADDRESS,
               symbol: "FUEL",
               decimals: 18,
-              image: ""
+              image: "https://main--stupefied-golick-1b1465.netlify.app/tokens/fuel.png"
             }
           }
       }) : alert("Please connect your metamask or install metamask plugin in your browser")
