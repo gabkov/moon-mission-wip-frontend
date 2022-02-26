@@ -148,10 +148,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      user: "getUser",
-      userAddress: "getUserAddress",
       userLoading: "getUserLoading",
-      chainId: "getChainId",
       isAuthenticated: "isAuthenticated"
     }),
     preSaleStart(){

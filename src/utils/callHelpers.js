@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { multicall } from './multicall'
-import { getAPR, getFuelPrice, getTokenPrice } from './poolAnalytics'
+import { getAPR, getTokenPrice } from './poolAnalytics'
 import masterChefAbi from "../abi/MasterChefAbi.json"
 import ERC20 from "../abi/ERC20.json"
 import {CONSTANTS } from '../consts/constants'
@@ -242,7 +242,7 @@ async function callPoolAnalytics( pool, account) {
   const stakedAmountUSD = quotePrice.times(stakedInQuote)
   const tvl = quotePrice.times(lpSupplyInQuote)
   
-  const fuelPrice = await getFuelPrice()
+  const fuelPrice = store.state.fuelPrice
 
   const poolAPR = getAPR(poolWeight, fuelPerBlock, fuelDecimals, fuelPrice, tvl)
   const daily = new BigNumber(poolAPR).div(365).toFixed(3)

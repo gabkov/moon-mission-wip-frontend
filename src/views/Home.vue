@@ -115,14 +115,12 @@ export default {
     poolInfos: Array,
     siteBasicInfo: {},
     userPreSaleData: {},
-    fuelPrice: BigNumber,
     currentBlock: Number
   },
   computed:{
     ...mapGetters({
-        user: "getUser",
-        userLoading: "getUserLoading",
-        isAuthenticated: "isAuthenticated"
+        isAuthenticated: "isAuthenticated",
+        fuelPrice : "getFuelPrice"
     }),
     farmStartBlock(){
       return this.siteBasicInfo.farmStartBlock - this.currentBlock < 0 ? 0 : this.siteBasicInfo.farmStartBlock - this.currentBlock

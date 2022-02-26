@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { POOLS } from '../consts/pools'
-
+import BigNumber from 'bignumber.js'
 
 const store = createStore({
   state () {
@@ -8,7 +8,8 @@ const store = createStore({
       user: {},
       userLoading: false,
       chainId: parseInt(import.meta.env.VITE_APP_CHAIN_ID),
-      pools: POOLS[import.meta.env.VITE_APP_CHAIN_ID]
+      pools: POOLS[import.meta.env.VITE_APP_CHAIN_ID],
+      fuelPrice: new BigNumber(0)
     }
   },
   mutations: {
@@ -18,6 +19,14 @@ const store = createStore({
     setUserLoading(state, payload){
       state.userLoading = payload
     },
+    setFuelPrice(state, payload){
+      state.fuelPrice = payload
+    }  
+  },
+  actions: {
+    async setFuelPriceAsync(state, payload){
+      state.commit("setFuelPrice", payload)
+    }
   },
   getters: {
     getUser : state => state.user,
@@ -25,7 +34,8 @@ const store = createStore({
     getUserLoading: state => state.userLoading,
     getChainId: state => state.chainId,
     getPools: state => state.pools,
-    isAuthenticated: state =>  Object.keys(state.user).length > 0
+    isAuthenticated: state =>  Object.keys(state.user).length > 0,
+    getFuelPrice: state => state.fuelPrice
   }
 })
 

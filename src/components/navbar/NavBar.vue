@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters, useStore } from 'vuex'
+import { mapGetters } from 'vuex'
 import {loginUser, logoutUser} from "@/service/loginService"
 
 
@@ -27,14 +27,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-        user: "getUser",
         userAddress: "getUserAddress",
         isAuthenticated: "isAuthenticated"
     })
   },
   setup() {
-    const store = useStore()
-    
     const login = async () => {
       await loginUser()
     }
@@ -43,10 +40,7 @@ export default {
       await logoutUser()
     }
 
-    return {
-      login,
-      logout
-    }
+    return {login, logout }
   }
 }
 </script>

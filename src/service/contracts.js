@@ -11,7 +11,6 @@ import Moralis from '../plugins/moralis'
 
 const constants = CONSTANTS[store.state.chainId] 
 
-
 // putting the contracts initalizations to a separate file so it is easier just to import from here instead of reinitializing everywhere
 
 let signer = null
