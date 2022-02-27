@@ -1,4 +1,4 @@
-# Deployment: [moon-mission-dev](https://main--stupefied-golick-1b1465.netlify.app/#/)
+# Deployment: [moon-mission-dev](https://moon-mission.netlify.app/#/)
 
 ## Project setup
 ```
