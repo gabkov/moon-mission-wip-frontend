@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col">
-    <div class="self-center text-6xl drop-shadow-[0px_0_8px_#171717]">PRE-SALE</div>
+    <div class="self-center text-6xl mt-4 drop-shadow-[0px_0_8px_#171717]">PRE-SALE</div>
     <div class="flex flex-wrap flex-row justify-center p-6 gap-6">
       <div class="opacity-[0.98] flex justify-around flex-col w-full max-w-lg bg-gray-800 drop-shadow-[0px_0_3px_#9ca3af] rounded-3xl p-5 border-2 border-gray-400 text-white font-medium gap-1">
         <div class="text-2xl text-center mb-4 text-violet-500">BUY PREFUEL WITH <span class="text-yellow-300">BUSD</span></div>
