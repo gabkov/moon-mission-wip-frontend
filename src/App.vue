@@ -28,6 +28,7 @@ import Moralis from "./plugins/moralis"
 import { getJsonRpcProvider } from './service/contracts'
 import { getFuelPrice } from './utils/poolAnalytics'
 
+
 export default {
   name: "App",
   components: {
@@ -68,7 +69,7 @@ export default {
       const poolInfo = await callPoolAnalytics(pool, this.userAddress)
       const extended = Object.assign(pool, poolInfo)
       const poolInfoIndex = this.poolInfos.findIndex((pool) => pool.tokenAddress == tokenAddress)
-      this.poolInfos[poolInfoIndex] = extended
+      this.poolInfos.splice(poolInfoIndex, 1, extended)
     },
 
     async depositToken(pid, amount, tokenAddress) {

@@ -119,6 +119,7 @@ import { mapGetters } from "vuex"
 import {loginUser} from "@/service/loginService"
 import Modal from "../modal/Modal.vue"
 import { CONSTANTS } from "@/consts/constants"
+import BigNumber from 'bignumber.js'
 
 const C = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
 
@@ -128,34 +129,33 @@ export default {
     Modal
   },
   props: {
-    pool: Object,
-    staked: Boolean
+    pid: Number,
+    poolName: String,
+    stakedAmount: BigNumber,
+    stakedAmountUSD: BigNumber,
+    allocPoint: BigNumber,
+    tvl: BigNumber,
+    poolAPR: String,
+    daily: String,
+    rewards: BigNumber,
+    poolAddress: String,
+    userAllowance: BigNumber,
+    lpDecimals: Number,
+    stakingTokenBalance: Array,
+    depositFeeBp: Number,
+    single: Boolean,
+    logo1: String,
+    logo2: String,
+    tokenPair: String,
+    native: Boolean,
+    staked: Boolean,
   },
   data(){
     return {
       showDetails: false,
       showModal: false,
       methodType: "",
-      C: C,
-      poolName: this.pool.name,
-      allocPoint: this.pool.allocPoint,
-      daily: this.pool.daily,
-      pid: this.pool.pid,
-      poolAddress: this.pool.address,
-      poolAPR: this.pool.poolAPR,
-      rewards: this.pool.rewards,
-      stakedAmount: this.pool.stakedAmount,
-      stakedAmountUSD: this.pool.stakedAmountUSD,
-      tvl: this.pool.tvl,
-      userAllowance: this.pool.userAllowance,
-      lpDecimals: this.pool.lpDecimals,
-      stakingTokenBalance: this.pool.stakingTokenBalance,
-      depositFeeBp: this.pool.depositFeeBp,
-      single: this.pool.single,
-      logo1: this.pool.logo1,
-      logo2: this.pool.logo2,
-      tokenPair: this.pool.tokenPair,
-      native: this.pool.native
+      C: C
     }
   },
   computed: {
