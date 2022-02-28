@@ -200,7 +200,7 @@ async function callPoolAnalytics( pool, account) {
   const lpSupply = lpSupplyPool.lpSupply
   const depositFeeBp = lpSupplyPool.depositFeeBP
   const stakedAmount = stakedInfo.amount
-
+  
   const stakedAmountByUserDecimalFixed = new BigNumber(stakedAmount.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
   const lpTokenSupplyInPoolDecimalFixed = new BigNumber(lpSupply.toString()).div(new BigNumber(10).pow(lpDecimals.toString()))
 

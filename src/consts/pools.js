@@ -151,5 +151,47 @@ export const POOLS = {
             logo1: 'polydoge',
             logo2: 'busd'
         },
+        {
+            pid: 11,
+            order: 10,
+            address: "0xE8F53AdE01f093E824fFEE8e09e2028A927405C1",
+            single: false,
+            native: false,
+            name: 'BUSD-USDT',
+            quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
+            quoteStablePairAddress: "",
+            stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
+            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0x500F4cbbE7bE063D94cD5D03A4e8CB2e9C7476D1',
+            logo1: 'usdt',
+            logo2: 'busd'
+        },
+        {
+            pid: 12,
+            order: 11,
+            address: "0x6fD92a30935708c444Dd33764B4f8B88daaa5487",
+            single: false,
+            native: false,
+            name: 'BUSD-USDC',
+            quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
+            quoteStablePairAddress: "",
+            stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
+            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0xD6e69dcEE63D3A106EA79F970dFE425F286fc336',
+            logo1: 'usdc',
+            logo2: 'busd'
+        },
+        {
+            pid: 13,
+            order: 12,
+            address: "0xeD61faC63DEEA6bE0f9a588f939Dcd51B6269C42",
+            single: false,
+            native: false,
+            name: 'BTCB-ETH',
+            quoteTokenAddress: "0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944",
+            quoteStablePairAddress: "0x669A2e0E27934Bce91f7043Fc3cDC0a0BE7B9CCF",
+            stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
+            tokenPair: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944/0x8c4F2E1149e401Cb51dC39df4901c045C42eB329',
+            logo1: 'eth',
+            logo2: 'btc'
+        },
     ]
 }

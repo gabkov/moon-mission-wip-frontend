@@ -19,6 +19,7 @@ export default {
     name: "ViewSelector",
     props: {
         tableView: Boolean,
-        staked: Boolean    }
+        staked: Boolean    
+    }
 }
 </script>
