@@ -1,48 +1,71 @@
 <template>
-<div v-if="isAuthenticatedAndAdmin" class="justify-center flex items-center gap-3">
-  <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl">
-    <div class="self-center text-3xl">ADD POOL</div>
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Allocation Point</div>
-      <input class="text-black" type="number" v-model="allocPoint">
-    </div>
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Pool address</div>
-      <input class="text-black" type="text" v-model="address"></div>
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Deposit Fee BP</div>
-      <input class="text-black" type="number" v-model="depositFeeBP">
+<div v-if="isAuthenticatedAndAdmin" class="justify-center flex flex-col items-center gap-10 mt-10">
+  <div class="flex flex-row gap-6 ">
+    <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white">
+      <div class="self-center text-3xl">ADD POOL</div>
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Allocation Point</div>
+        <input class="text-black" type="number" v-model="allocPoint">
       </div>
-    <div class="flex flex-row gap-9 items-center ">
-      <div >With Update</div>
-      <div >
-        <input type="checkbox" :checked="withUpdate">
-      </div>
-      </div>
-    <button @click="addPool" class="btn-primary">ADD POOL</button>
-  </div>
-  <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl">
-    <div class="self-center text-3xl">UPDATE POOL</div>
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Pid</div>
-      <input class="text-black" type="number" v-model="pid">
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Pool address</div>
+        <input class="text-black" type="text" v-model="address"></div>
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Deposit Fee BP</div>
+        <input class="text-black" type="number" v-model="depositFeeBP">
+        </div>
+      <div class="flex flex-row gap-9 items-center ">
+        <div >With Update</div>
+        <div >
+          <input type="checkbox" :checked="withUpdate">
+        </div>
+        </div>
+      <button @click="addPool" class="btn-primary">ADD POOL</button>
     </div>
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Allocation Point</div>
-      <input class="text-black" type="number" v-model="allocPoint">
-    </div>
+    <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white">
+      <div class="self-center text-3xl">UPDATE POOL</div>
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Pid</div>
+        <input class="text-black" type="number" v-model="pid">
+      </div>
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Allocation Point</div>
+        <input class="text-black" type="number" v-model="allocPoint">
+      </div>
     
-    <div class="flex flex-row gap-2 items-center justify-between">
-      <div >Deposit Fee BP</div>
-      <input class="text-black" type="number" v-model="depositFeeBP">
-      </div>
-    <div class="flex flex-row gap-9 items-center ">
-      <div >With Update</div>
-      <div >
-        <input type="checkbox" :checked="withUpdate">
-      </div>
-      </div>
-    <button @click="updatePool" class="btn-primary">UPDATE POOL</button>
+      <div class="flex flex-row gap-2 items-center justify-between">
+        <div >Deposit Fee BP</div>
+        <input class="text-black" type="number" v-model="depositFeeBP">
+        </div>
+      <div class="flex flex-row gap-9 items-center ">
+        <div >With Update</div>
+        <div >
+          <input type="checkbox" :checked="withUpdate">
+        </div>
+        </div>
+      <button @click="updatePool" class="btn-primary">UPDATE POOL</button>
+    </div>
+  </div>
+  <div class="text-4xl">ADD MAIN POOLS</div>
+  <div class="flex flex-row justify-center gap-6">
+    <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
+      <button class="btn-primary max-w-md" @click="addFUEL">ADD FUEL</button>
+      <button class="btn-primary max-w-md" @click="addPDOGE">ADD PDOGE</button>
+      <button class="btn-primary max-w-md" @click="addBUSD">ADD BUSD</button>
+      <button class="btn-primary max-w-md" @click="addWBNB">ADD WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBTCB">ADD BTCB</button>
+      <button class="btn-primary max-w-md" @click="addETH"> ADD ETH</button>
+      <button class="btn-primary max-w-md" @click="addCAKE">ADD CAKE </button>
+    </div>
+    <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
+      <button class="btn-primary max-w-md" @click="addFUEL_BUSD">ADD FUEL_BUSD </button>
+      <button class="btn-primary max-w-md" @click="addFUEL_WBNB">ADD FUEL_WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_PDOGE">ADD BUSD_PDOGE</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_WBNB">ADD BUSD_WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_USDT">ADD BUSD_USDT</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_USDC">ADD BUSD_USDC</button>
+      <button class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
+    </div>
   </div>
 </div>
 <div v-else class="justify-center flex items-center">
@@ -53,8 +76,10 @@
 <script>
 import { mapGetters } from 'vuex'
 import { add, set } from '../service/masterChefService'
+import {poolConfig} from "../consts/poolAddresses"
 
 const ADMIN = import.meta.env.VITE_ADMIN_ADDRESS
+const poolAddresses = poolConfig[import.meta.env.VITE_APP_CHAIN_ID]
 
 export default {
   name:"Admin",
@@ -71,7 +96,7 @@ export default {
     ...mapGetters({
           user: "getUser",
           userAddress: "getUserAddress",
-          pools: "getPools",
+          poolAddresses: "getPools",
       }),
     isAuthenticatedAndAdmin(){
       return Object.keys(this.user).length > 0 && this.userAddress.toLowerCase() === ADMIN.toLowerCase()
@@ -93,7 +118,49 @@ export default {
       }
 
       await set(this.pid, this.allocPoint, this.depositFeeBP, this.withUpdate)
-    }
+    },
+    async addFUEL(){
+      await add(1000, poolAddresses.FUEL, 0, true) // 0
+    },
+    async addPDOGE(){
+      await add(500, poolAddresses.PDOGE, 300, true) // 1
+    },
+    async addBUSD(){
+      await add(500, poolAddresses.BUSD, 400, true) // 2
+    },
+    async addWBNB(){
+      await add(500, poolAddresses.WBNB, 400, true) // 3
+    },
+    async addBTCB(){
+      await add(700, poolAddresses.BTCB, 400, true) // 4
+    },
+    async addETH(){
+      await add(600, poolAddresses.ETH, 400, true) // 5
+    },
+    async addCAKE(){
+      await add(500, poolAddresses.CAKE, 400, true) // 6
+    },
+    async addFUEL_BUSD(){
+      await add(1000, poolAddresses.FUEL_BUSD, 0, true) // 7
+    },
+    async addFUEL_WBNB(){
+      await add(1000, poolAddresses.FUEL_WBNB, 0, true) // 8
+    },
+    async addBUSD_PDOGE(){
+      await add(1000, poolAddresses.BUSD_PDOGE, 200, true) // 9
+    },
+    async addBUSD_WBNB(){
+      await add(1000, poolAddresses.BUSD_WBNB, 400, true) //10
+    },
+    async addBUSD_USDT(){
+      await add(1000, poolAddresses.BUSD_USDT, 400, true) // 11
+    },
+    async addBUSD_USDC(){
+      await add(1000, poolAddresses.BUSD_USDC, 400, true) // 12
+    },
+    async addBTCB_ETH(){
+      await add(1000, poolAddresses.BTCB_ETH, 400, true) // 13
+    },
   }
 
 }
