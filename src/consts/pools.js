@@ -1,6 +1,7 @@
-import { CONSTANTS } from "./constants"
+import { CONSTANTS, poolAddresses } from "./constants"
 
 const C = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
+const PA = poolAddresses[import.meta.env.VITE_APP_CHAIN_ID]
 
 export const POOLS = {
     97: [
@@ -20,12 +21,12 @@ export const POOLS = {
         {
             pid: 1,
             order: 1,
-            address: '0x29E37b668F0aB680Ff140f9ffF30EF41E635EB05',
+            address: PA.PDOGE,
             single: true,
             native: false,
             name: 'PDOGE',
-            quoteTokenAddress: '0x29E37b668F0aB680Ff140f9ffF30EF41E635EB05', 
-            quoteStablePairAddress: '0xf141A066CA00309D5a89488D750e6EE2510A8faB',
+            quoteTokenAddress: PA.PDOGE, 
+            quoteStablePairAddress: PA.BUSD_PDOGE,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,  
             logo1: 'polydoge',
             logo2: ''
@@ -46,12 +47,12 @@ export const POOLS = {
         {
             pid: 3,
             order: 3,
-            address: '0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C',
+            address: PA.WBNB,
             single: true,
             native: false,
             name: 'WBNB',
-            quoteTokenAddress: '0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C', 
-            quoteStablePairAddress: '0xBb0D8659172F3F9Cc7660313ACa1389Fd7608693',
+            quoteTokenAddress: PA.WBNB, 
+            quoteStablePairAddress: PA.BUSD_WBNB,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,  
             logo1: 'wbnb',
             logo2: ''
@@ -59,12 +60,12 @@ export const POOLS = {
         {
             pid: 4,
             order: 4,
-            address: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944',
+            address: PA.BTCB,
             single: true,
             native: false,
             name: 'BTCB',
-            quoteTokenAddress: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944', 
-            quoteStablePairAddress: '0x669A2e0E27934Bce91f7043Fc3cDC0a0BE7B9CCF',
+            quoteTokenAddress: PA.BTCB, 
+            quoteStablePairAddress: PA.BTCB_BUSD,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,  
             logo1: 'btc',
             logo2: ''
@@ -72,12 +73,12 @@ export const POOLS = {
         {
             pid: 5,
             order: 5,
-            address: '0x8c4F2E1149e401Cb51dC39df4901c045C42eB329',
+            address: PA.ETH,
             single: true,
             native: false,
             name: 'ETH',
-            quoteTokenAddress: '0x8c4F2E1149e401Cb51dC39df4901c045C42eB329', 
-            quoteStablePairAddress: '0xb251495f6C01a7f4f52655c4AB59Aa68e8Ed1A01',
+            quoteTokenAddress: PA.ETH, 
+            quoteStablePairAddress: PA.ETH_BUSD,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,  
             logo1: 'eth',
             logo2: ''
@@ -85,12 +86,12 @@ export const POOLS = {
         {
             pid: 6,
             order: 6,
-            address: '0x18702839B8bA4fAD972ec0f40dF01b5fAcB84433',
+            address: PA.CAKE,
             single: true,
             native: false,
             name: 'CAKE',
-            quoteTokenAddress: '0x18702839B8bA4fAD972ec0f40dF01b5fAcB84433', 
-            quoteStablePairAddress: '0x480666Cd9922C09BE8b95d300B4386c1792d5433',
+            quoteTokenAddress: PA.CAKE, 
+            quoteStablePairAddress: PA.CAKE_BUSD,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,  
             logo1: 'cake',
             logo2: ''
@@ -119,77 +120,77 @@ export const POOLS = {
             quoteTokenAddress: C.FUEL_TOKEN_ADDRESS,
             quoteStablePairAddress: C.FUEL_BUSD_ADDRESS,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: C.FUEL_TOKEN_ADDRESS + '/0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C',
+            tokenPair: C.FUEL_TOKEN_ADDRESS + "/" + PA.WBNB,
             logo1: 'fuel',
             logo2: 'wbnb'
         },
         {
             pid: 9,
             order: 9,
-            address: '0xf141A066CA00309D5a89488D750e6EE2510A8faB',
+            address: PA.BUSD_PDOGE,
             single: false,
             native: false,
             name: 'BUSD-PDOGE',
             quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
             quoteStablePairAddress: '',
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0x29E37b668F0aB680Ff140f9ffF30EF41E635EB05',
+            tokenPair: C.BUSD_TOKEN_CONTRACT + PA.PDOGE,
             logo1: 'polydoge',
             logo2: 'busd'
         },
         {
             pid: 10,
             order: 10,
-            address: '0xBb0D8659172F3F9Cc7660313ACa1389Fd7608693',
+            address: PA.BUSD_WBNB,
             single: false,
             native: false,
             name: 'BUSD-WBNB',
             quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
             quoteStablePairAddress: '',
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0x1fC2B7369FFA75070fCd0559cC62F45f570ed45C',
+            tokenPair: C.BUSD_TOKEN_CONTRACT + "/" + PA.WBNB,
             logo1: 'wbnb',
             logo2: 'busd'
         },
         {
             pid: 11,
             order: 11,
-            address: "0xE8F53AdE01f093E824fFEE8e09e2028A927405C1",
+            address: PA.BUSD_USDT,
             single: false,
             native: false,
             name: 'BUSD-USDT',
             quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
             quoteStablePairAddress: "",
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0x500F4cbbE7bE063D94cD5D03A4e8CB2e9C7476D1',
+            tokenPair: C.BUSD_TOKEN_CONTRACT + '/' + PA.USDT,
             logo1: 'usdt',
             logo2: 'busd'
         },
         {
             pid: 12,
             order: 12,
-            address: "0x6fD92a30935708c444Dd33764B4f8B88daaa5487",
+            address: PA.BUSD_USDC,
             single: false,
             native: false,
             name: 'BUSD-USDC',
             quoteTokenAddress: C.BUSD_TOKEN_CONTRACT,
             quoteStablePairAddress: "",
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: C.BUSD_TOKEN_CONTRACT + '/0xD6e69dcEE63D3A106EA79F970dFE425F286fc336',
+            tokenPair: C.BUSD_TOKEN_CONTRACT + '/' + PA.USDC,
             logo1: 'usdc',
             logo2: 'busd'
         },
         {
             pid: 13,
             order: 13,
-            address: "0xeD61faC63DEEA6bE0f9a588f939Dcd51B6269C42",
+            address: PA.BTCB_ETH,
             single: false,
             native: false,
             name: 'BTCB-ETH',
-            quoteTokenAddress: "0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944",
-            quoteStablePairAddress: "0x669A2e0E27934Bce91f7043Fc3cDC0a0BE7B9CCF",
+            quoteTokenAddress: PA.BTCB,
+            quoteStablePairAddress: PA.BTCB_BUSD,
             stableTokenAddress: C.BUSD_TOKEN_CONTRACT,
-            tokenPair: '0xEb6b13139204cbc9a0EBEc599A49bF6E8d025944/0x8c4F2E1149e401Cb51dC39df4901c045C42eB329',
+            tokenPair: PA.BTCB + "/" + PA.ETH,
             logo1: 'eth',
             logo2: 'btc'
         },

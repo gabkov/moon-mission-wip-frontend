@@ -124,10 +124,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import { add, set } from '../service/masterChefService'
-import {poolConfig} from "../consts/poolAddresses"
+import { CONSTANTS } from '../consts/constants'
+
 
 const ADMIN = import.meta.env.VITE_ADMIN_ADDRESS
-const poolAddresses = poolConfig[import.meta.env.VITE_APP_CHAIN_ID]
+const poolAddresses = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
 
 
 export default {
