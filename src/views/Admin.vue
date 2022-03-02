@@ -1,5 +1,53 @@
 <template>
 <div v-if="isAuthenticatedAndAdmin" class="justify-center flex flex-col items-center gap-10 mt-10">
+  <div class="flex flex-row gap-2 w-full justify-center">
+    <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white w-full max-w-2xl">
+        <div class="self-center text-3xl">SINLGE POOLS</div>
+        <table class="table-fixed">
+          <thead class="text-left bg-gray-500">
+            <tr>
+              <th>Name</th>
+              <th>Pid</th>
+              <th>Daily apr</th>
+              <th>Alloc point</th>
+              <th>Fee</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700" @click="e => e.target.classList.toggle('bg-violet-400')">
+            <tr v-show="pool.single" v-for="pool in this.poolInfos" :key="pool.pid" class="even:bg-gray-700">
+              <td>{{pool.name}}</td>
+              <td>{{pool.pid}}</td>
+              <td>{{pool.daily}}%</td>
+              <td>{{pool.allocPoint}}</td>
+              <td>{{pool.depositFeeBp}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white w-full max-w-2xl">
+        <div class="self-center text-3xl">LPS</div>
+        <table class="table-fixed">
+          <thead class="text-left bg-gray-500">
+            <tr>
+              <th>Name</th>
+              <th>Pid</th>
+              <th>Daily apr</th>
+              <th>Alloc point</th>
+              <th>Fee</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700" @click="e => e.target.classList.toggle('bg-violet-400')">
+            <tr v-show="!pool.single" v-for="pool in this.poolInfos" :key="pool.pid" class="odd:bg-gray-700">
+              <td>{{pool.name}}</td>
+              <td>{{pool.pid}}</td>
+              <td>{{pool.daily}}%</td>
+              <td>{{pool.allocPoint}}</td>
+              <td>{{pool.depositFeeBp}}</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
   <div class="flex flex-row gap-6 ">
     <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white">
       <div class="self-center text-3xl">ADD POOL</div>
@@ -81,6 +129,7 @@ import {poolConfig} from "../consts/poolAddresses"
 const ADMIN = import.meta.env.VITE_ADMIN_ADDRESS
 const poolAddresses = poolConfig[import.meta.env.VITE_APP_CHAIN_ID]
 
+
 export default {
   name:"Admin",
   data(){
@@ -89,9 +138,13 @@ export default {
       allocPoint: 0,
       address: "",
       depositFeeBP: 400, 
-      withUpdate: true
+      withUpdate: true,
+      
     }
   },
+  props: {
+      poolInfos: Array,
+    },
   computed:{
     ...mapGetters({
           user: "getUser",

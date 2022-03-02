@@ -171,7 +171,7 @@ export default {
               address: constants.FUEL_TOKEN_ADDRESS,
               symbol: "FUEL",
               decimals: 18,
-              image: "https://main--stupefied-golick-1b1465.netlify.app/tokens/fuel.png"
+              image: "https://moon-mission.netlify.app/assets/fuel_icon.b7651675.png"
             }
           }
       }) : alert("Please connect your metamask or install metamask plugin in your browser")

@@ -67,10 +67,16 @@ function shortenNumber(value) {
     const realRet = parseInt(ret) / 100
     return `${realRet}M`
   }
-  const newValue = value / 10000000
+  if(parsed.length < 13){
+    const newValue = value / 10000000
+    const ret = newValue.toString()
+    const realRet = parseInt(ret) / 100
+    return `${realRet}B`
+  }
+  const newValue = value / 10000000000
   const ret = newValue.toString()
   const realRet = parseInt(ret) / 100
-  return `${realRet}B`
+  return `${realRet}T`
 }
 
 export {

@@ -22,7 +22,7 @@
           </div>
           <div class="grid text-center">
             <div class="text-xl" >{{ poolName }}</div>
-            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full px-2 py-1">{{shortenNumber(allocPoint)}}X</div>
+            <div class="justify-self-end bg-violet-600 shadow-md shadow-purple-800/80 rounded-full px-2 py-1">{{allocPoint}}X</div>
           </div>
         </div>
         <div :class="poolName === 'BUSD-PDOGE' || poolName === 'PDOGE' ? '' : 'pb-3' " class="py-1 self-center">Deposit fee: {{depositFeeBp / 100}}% </div>
@@ -52,7 +52,7 @@
           <div v-if="isAuthenticated">
             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between">
               <div>
-                <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals), 2) }}</div>
+                <div class="text-xl" >{{ poolName === "PDOGE" ? shortenNumber(getBalanceNumber(stakedAmount, lpDecimals)) : formatNumber(getBalanceNumber(stakedAmount, lpDecimals), 2) }}</div>
                 <div class="text-[10px] text-gray-500" >~{{formatNumber(stakedAmountUSD, 1) }} USD</div>
               </div>
               <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex pt-2">

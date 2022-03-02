@@ -51,7 +51,7 @@
         <td class="px-4 py-5">
             <div class="flex flex-col">
                 <div class="text-xs">Multiplier</div>
-                <div class="text-center bg-violet-600 rounded-full self-start px-2">{{shortenNumber(allocPoint)}}x</div>
+                <div class="text-center bg-violet-600 rounded-full self-start px-2">{{allocPoint}}x</div>
             </div>
         </td>
         <td class="px-4 py-5">
@@ -107,7 +107,7 @@
                             <div class="text-xs uppercase"><span class="text-violet-500">{{ poolName }}</span> staked</div>
                             <div v-if="isPoolApproved(userAllowance)" class="flex items-center justify-between gap-2">
                                 <div class="pt-1">
-                                    <div class="text-xl" >{{ formatNumber(getBalanceNumber(stakedAmount, lpDecimals)) }}</div>
+                                    <div class="text-xl" >{{ poolName === "PDOGE" ? shortenNumber(getBalanceNumber(stakedAmount, lpDecimals)) : formatNumber(getBalanceNumber(stakedAmount, lpDecimals), 2) }}</div>
                                     <div class="text-[10px] text-gray-500" >~{{ formatNumber(stakedAmountUSD) }} USD</div>
                                 </div>
                                 <div v-if="this.getBalanceNumber(stakedAmount, lpDecimals) > 0" class="flex ">
