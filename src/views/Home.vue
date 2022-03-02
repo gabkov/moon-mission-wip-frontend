@@ -153,7 +153,7 @@ export default {
       return this.poolInfos.reduce((prev, next) => prev.plus(next.tvl), new BigNumber(0))
     },
     nativeTvl(){
-      return this.poolInfos.filter(pool => pool.native && !pool.single).reduce((prev, next) => prev.plus(next.tvl), new BigNumber(0))
+      return this.poolInfos.filter(pool => pool.native).reduce((prev, next) => prev.plus(next.tvl), new BigNumber(0))
     }
   },
   methods:{
