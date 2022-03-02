@@ -2,7 +2,7 @@
 <div v-if="isAuthenticatedAndAdmin" class="justify-center flex flex-col items-center gap-10 mt-10">
   <div class="flex flex-row gap-2 w-full justify-center">
     <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white w-full max-w-2xl">
-        <div class="self-center text-3xl">SINLGE POOLS</div>
+        <div class="self-center text-3xl">SINGLE POOLS</div>
         <table class="table-fixed">
           <thead class="text-left bg-gray-500">
             <tr>
@@ -97,22 +97,22 @@
   <div class="text-4xl">ADD MAIN POOLS</div>
   <div class="flex flex-row justify-center gap-2">
     <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
-      <button :class="poolInfos.filter(pool => pool.pid === 0) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL">ADD FUEL</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 1) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addPDOGE">ADD PDOGE</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 2) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD">ADD BUSD</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 3) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addWBNB">ADD WBNB</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 4) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBTCB">ADD BTCB</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 5) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addETH"> ADD ETH</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 6) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addCAKE">ADD CAKE </button>
+      <button class="btn-primary max-w-md" @click="addFUEL">ADD FUEL</button>
+      <button class="btn-primary max-w-md" @click="addPDOGE">ADD PDOGE</button>
+      <button class="btn-primary max-w-md" @click="addBUSD">ADD BUSD</button>
+      <button class="btn-primary max-w-md" @click="addWBNB">ADD WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBTCB">ADD BTCB</button>
+      <button class="btn-primary max-w-md" @click="addETH"> ADD ETH</button>
+      <button class="btn-primary max-w-md" @click="addCAKE">ADD CAKE </button>
     </div>
     <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
-      <button :class="poolInfos.filter(pool => pool.pid === 7) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL_BUSD">ADD FUEL_BUSD </button>
-      <button :class="poolInfos.filter(pool => pool.pid === 8) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL_WBNB">ADD FUEL_WBNB</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 9) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_PDOGE">ADD BUSD_PDOGE</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 10) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_WBNB">ADD BUSD_WBNB</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 11) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_USDT">ADD BUSD_USDT</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 12) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_USDC">ADD BUSD_USDC</button>
-      <button :class="poolInfos.filter(pool => pool.pid === 13) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
+      <button class="btn-primary max-w-md" @click="addFUEL_BUSD">ADD FUEL_BUSD </button>
+      <button class="btn-primary max-w-md" @click="addFUEL_WBNB">ADD FUEL_WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_PDOGE">ADD BUSD_PDOGE</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_WBNB">ADD BUSD_WBNB</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_USDT">ADD BUSD_USDT</button>
+      <button class="btn-primary max-w-md" @click="addBUSD_USDC">ADD BUSD_USDC</button>
+      <button class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
     </div>
   </div>
 </div>
@@ -124,11 +124,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import { add, set } from '../service/masterChefService'
-import { CONSTANTS } from '../consts/constants'
+import { poolAddresses } from '../consts/constants'
 
 
 const ADMIN = import.meta.env.VITE_ADMIN_ADDRESS
-const poolAddresses = CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID]
+const  PA = poolAddresses[import.meta.env.VITE_APP_CHAIN_ID]
 
 
 export default {
@@ -149,7 +149,6 @@ export default {
     ...mapGetters({
           user: "getUser",
           userAddress: "getUserAddress",
-          poolAddresses: "getPools",
       }),
     isAuthenticatedAndAdmin(){
       return Object.keys(this.user).length > 0 && this.userAddress.toLowerCase() === ADMIN.toLowerCase()
@@ -173,46 +172,46 @@ export default {
       await set(this.pid, this.allocPoint, this.depositFeeBP, this.withUpdate)
     },
     async addFUEL(){
-      await add(1000, poolAddresses.FUEL, 0, true) // 0
+      await add(1000,  PA.FUEL, 0, true) // 0
     },
     async addPDOGE(){
-      await add(500, poolAddresses.PDOGE, 300, true) // 1
+      await add(500,  PA.PDOGE, 300, true) // 1
     },
     async addBUSD(){
-      await add(500, poolAddresses.BUSD, 400, true) // 2
+      await add(500,  PA.BUSD, 400, true) // 2
     },
     async addWBNB(){
-      await add(500, poolAddresses.WBNB, 400, true) // 3
+      await add(500,  PA.WBNB, 400, true) // 3
     },
     async addBTCB(){
-      await add(700, poolAddresses.BTCB, 400, true) // 4
+      await add(700,  PA.BTCB, 400, true) // 4
     },
     async addETH(){
-      await add(600, poolAddresses.ETH, 400, true) // 5
+      await add(600,  PA.ETH, 400, true) // 5
     },
     async addCAKE(){
-      await add(500, poolAddresses.CAKE, 400, true) // 6
+      await add(500,  PA.CAKE, 400, true) // 6
     },
     async addFUEL_BUSD(){
-      await add(1000, poolAddresses.FUEL_BUSD, 0, true) // 7
+      await add(1000,  PA.FUEL_BUSD, 0, true) // 7
     },
     async addFUEL_WBNB(){
-      await add(1000, poolAddresses.FUEL_WBNB, 0, true) // 8
+      await add(1000,  PA.FUEL_WBNB, 0, true) // 8
     },
     async addBUSD_PDOGE(){
-      await add(1000, poolAddresses.BUSD_PDOGE, 200, true) // 9
+      await add(1000,  PA.BUSD_PDOGE, 200, true) // 9
     },
     async addBUSD_WBNB(){
-      await add(1000, poolAddresses.BUSD_WBNB, 400, true) //10
+      await add(1000,  PA.BUSD_WBNB, 400, true) //10
     },
     async addBUSD_USDT(){
-      await add(1000, poolAddresses.BUSD_USDT, 400, true) // 11
+      await add(1000,  PA.BUSD_USDT, 400, true) // 11
     },
     async addBUSD_USDC(){
-      await add(1000, poolAddresses.BUSD_USDC, 400, true) // 12
+      await add(1000,  PA.BUSD_USDC, 400, true) // 12
     },
     async addBTCB_ETH(){
-      await add(1000, poolAddresses.BTCB_ETH, 400, true) // 13
+      await add(1000,  PA.BTCB_ETH, 400, true) // 13
     },
   }
 
