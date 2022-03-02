@@ -95,24 +95,24 @@
     </div>
   </div>
   <div class="text-4xl">ADD MAIN POOLS</div>
-  <div class="flex flex-row justify-center gap-6">
+  <div class="flex flex-row justify-center gap-2">
     <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
-      <button class="btn-primary max-w-md" @click="addFUEL">ADD FUEL</button>
-      <button class="btn-primary max-w-md" @click="addPDOGE">ADD PDOGE</button>
-      <button class="btn-primary max-w-md" @click="addBUSD">ADD BUSD</button>
-      <button class="btn-primary max-w-md" @click="addWBNB">ADD WBNB</button>
-      <button class="btn-primary max-w-md" @click="addBTCB">ADD BTCB</button>
-      <button class="btn-primary max-w-md" @click="addETH"> ADD ETH</button>
-      <button class="btn-primary max-w-md" @click="addCAKE">ADD CAKE </button>
+      <button :class="poolInfos.filter(pool => pool.pid === 0) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL">ADD FUEL</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 1) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addPDOGE">ADD PDOGE</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 2) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD">ADD BUSD</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 3) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addWBNB">ADD WBNB</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 4) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBTCB">ADD BTCB</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 5) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addETH"> ADD ETH</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 6) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addCAKE">ADD CAKE </button>
     </div>
     <div class="flex flex-col gap-2 bg-gray-800 p-6 rounded-2xl border-2 border-white">
-      <button class="btn-primary max-w-md" @click="addFUEL_BUSD">ADD FUEL_BUSD </button>
-      <button class="btn-primary max-w-md" @click="addFUEL_WBNB">ADD FUEL_WBNB</button>
-      <button class="btn-primary max-w-md" @click="addBUSD_PDOGE">ADD BUSD_PDOGE</button>
-      <button class="btn-primary max-w-md" @click="addBUSD_WBNB">ADD BUSD_WBNB</button>
-      <button class="btn-primary max-w-md" @click="addBUSD_USDT">ADD BUSD_USDT</button>
-      <button class="btn-primary max-w-md" @click="addBUSD_USDC">ADD BUSD_USDC</button>
-      <button class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 7) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL_BUSD">ADD FUEL_BUSD </button>
+      <button :class="poolInfos.filter(pool => pool.pid === 8) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addFUEL_WBNB">ADD FUEL_WBNB</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 9) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_PDOGE">ADD BUSD_PDOGE</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 10) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_WBNB">ADD BUSD_WBNB</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 11) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_USDT">ADD BUSD_USDT</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 12) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBUSD_USDC">ADD BUSD_USDC</button>
+      <button :class="poolInfos.filter(pool => pool.pid === 13) !== null ? 'bg-gray-400 opacity-20 hover:bg-gray-400 cursor-not-allowed':''" class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
     </div>
   </div>
 </div>
@@ -139,7 +139,6 @@ export default {
       address: "",
       depositFeeBP: 400, 
       withUpdate: true,
-      
     }
   },
   props: {
