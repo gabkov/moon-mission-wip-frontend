@@ -2,6 +2,7 @@ import preFuelAbi from "../abi/PreFuelToken.json"
 import fuelReedemAbi from "../abi/FuelReedem.json"
 import masterChefAbi from "../abi/MasterChefAbi.json"
 import multiCallAbi from "../abi/Multicall.json"
+import ownable from "../abi/Ownable.json"
 import ERC20 from "../abi/ERC20.json"
 import {ethers} from 'ethers'
 import store from '../store'
@@ -52,6 +53,13 @@ const fuelContract = () => new ethers.Contract(
     signer
 );
 
+const fuelContractOwnable = () => new ethers.Contract(
+    constants.FUEL_TOKEN_ADDRESS,
+    ownable,
+    signer
+);
+
+
 const fuelReedemContract = () => new ethers.Contract(
     constants.FUEL_REEDEM_CONTRACT,
     fuelReedemAbi,
@@ -80,6 +88,7 @@ export {
     preFuelContract,
     busdContract,
     fuelContract,
+    fuelContractOwnable,
     fuelReedemContract,
     masterChefContract,
     multiCallContract,

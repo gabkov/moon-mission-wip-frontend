@@ -25,7 +25,7 @@
         </table>
     </div>
     <div class="flex flex-col gap-1 text-white bg-gray-800 p-6 rounded-2xl border-2 border-white w-full max-w-2xl">
-        <div class="self-center text-3xl">LPS</div>
+        <div class="self-center text-3xl">LPs</div>
         <table class="table-fixed">
           <thead class="text-left bg-gray-500">
             <tr>
@@ -115,6 +115,9 @@
       <button class="btn-primary max-w-md" @click="addBTCB_ETH">ADD BTCB_ETH</button>
     </div>
   </div>
+  <div>
+    <button @click="transferFuelOwnership" class="btn-primary w-full">Transfer Fuel OwnerShip to MasterChef</button>
+  </div>
 </div>
 <div v-else class="justify-center flex items-center">
   <div class="text-6xl">NAUGHTY BOY ACCES DENIED :P</div>
@@ -124,11 +127,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import { add, set } from '../service/masterChefService'
-import { poolAddresses } from '../consts/constants'
+import { poolAddresses, CONSTANTS } from '../consts/constants'
+import { fuelContractOwnable } from '../service/contracts'
 
 
 const ADMIN = import.meta.env.VITE_ADMIN_ADDRESS
 const  PA = poolAddresses[import.meta.env.VITE_APP_CHAIN_ID]
+const MASTERCHEF =  CONSTANTS[import.meta.env.VITE_APP_CHAIN_ID].MASTERCHEF
 
 
 export default {
@@ -155,6 +160,9 @@ export default {
     },
   },
   methods:{
+    async transferFuelOwnership(){
+        await fuelContractOwnable().transferOwnership(MASTERCHEF)
+    },
     async addPool(){
       console.log(this.allocPoint, this.address, this.depositFeeBP, this.withUpdate);
       if(this.address === "" || this.depositFeeBP === 0 || this.allocPoint === 0){
