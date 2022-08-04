@@ -32,7 +32,7 @@ export const CONSTANTS = {
     97: {
         CHAIN_ID: 97,
         BURN_ADDRESS: "0x000000000000000000000000000000000000dEaD",
-        NODE_URL: 'https://speedy-nodes-nyc.moralis.io/73133d3aa8d0da86e1130a4e/bsc/testnet',
+        NODE_URL: 'https://nd-677-274-560.p2pify.com/df7d1d1186f9deb6653ae2b471983ad4',
         PRE_FUEL_TOKEN_CONTRACT: '0x689a23D592A925ad0814F1978fd3D01d708b81fc',
         PRE_FUEL_DECIMALS: 18,
         BUSD_TOKEN_CONTRACT: '0x92325A71cdacf88E45aD12597EE59E662342D03a',
