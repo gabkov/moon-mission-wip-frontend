@@ -57,7 +57,7 @@
         </div>
         <div class="mb-5 flex flex-row justify-between">
           <div>New FUEL/block</div>
-          <div class="font-bold text-sky-500">0.1</div>
+          <div class="font-bold text-sky-500">0.2</div>
         </div>
       </div>
       <div>
